@@ -5,7 +5,6 @@ import ShowingsListing from './pages/Login/ShowingsListing';
 function App() {
   return (
     <div className="App">
-      <h1>Start</h1>
       <Routes>
         <Route path="/showings" element={ <ShowingsListing/> } />
       </Routes>
