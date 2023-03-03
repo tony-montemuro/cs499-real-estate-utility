@@ -8,6 +8,7 @@
 # testing
 /coverage
 .vs
+.vs/slnx.sqlite
 
 # production
 /build
