@@ -1,0 +1,8 @@
+.title {
+    background-color: rgb(37, 165, 127); 
+    border-radius: 12px; 
+    border-bottom: 12px; 
+    height: 1.5vw; 
+    box-shadow: 0 12px 8px rgba(0, 0, 0, 0.2); 
+    color: #073a1e; 
+}
