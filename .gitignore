@@ -7,8 +7,6 @@
 
 # testing
 /coverage
-.vs
-.vs/slnx.sqlite
 
 # production
 /build
@@ -19,6 +17,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.vs
+.vs/slnx.sqlite
 
 npm-debug.log*
 yarn-debug.log*
