@@ -1,17 +1,17 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import DetailedListing from "./pages/DetailedListing/DetailedListing";
-import DetailedShowing from "./pages/DetailedShowing/DetailedShowing";
-import Forms from "./pages/Forms/Forms";
-import HomePage from "./pages/Home/Home";
-import PropertyListing from "./pages/PropertyListing/PropertyListing";
-import ShowingsListing from "./pages/ShowingsListing/ShowingsListing";
+import DetailedListing from "./pages/DetailedListing/DetailedListing.jsx";
+import DetailedShowing from "./pages/DetailedShowing/DetailedShowing.jsx";
+import Forms from "./pages/Forms/Forms.jsx";
+import Home from "./pages/Home/Home.jsx";
+import PropertyListing from "./pages/PropertyListing/PropertyListing.jsx";
+import ShowingsListing from "./pages/ShowingsListing/ShowingsListing.jsx";
 
 function App() {
   return (
       <div className="App">
       <Routes>
-        <Route path="/" element={ <HomePage /> } />
+        <Route path="/" element={ <Home /> } />
         <Route path="/forms" element={ <Forms /> } /> 
         <Route path="/listings" element={ <PropertyListing /> } />
         <Route path="/listings/:listing" element={ <DetailedListing /> } />
