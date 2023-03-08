@@ -1,15 +1,16 @@
-import AbrvShowingInstance from "./AbrvShowingInstance.jsx";
-import ListOfShowingsCmp from "./ListOfShowingsCmp.jsx";
+import AbrvShowingInstance from "./ShowingsListingComponents/AbrvShowingInstance.jsx";
+import ListOfShowingsCmp from "./ShowingsListingComponents/ListOfShowingsCmp.jsx";
 
 function ShowingsListing() {
 
     return (
-        <><h1>Showings</h1>
-        <AbrvShowingInstance 
-            address="Adress, addresss, asdf"  
-            time= "9:00-10:00 p.m., March 3rd, 2010" 
-            agencyInfo="Guy Person, QLTyProperties"/>
+        <>
+        <h1>Showings</h1>
+
+        <AbrvShowingInstance address={"toot"} time={"time"} agencyInfo={"Croed"} />
+
         <ListOfShowingsCmp/>
+
         </>
     )
 };
