@@ -1,0 +1,13 @@
+.showings-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1vh;
+    padding: 1vh 1vh 2vh;
+    height: 18vh;
+    aspect-ratio: 6/1;
+    justify-content: center;
+}
+
+.list-display {
+    background-color: darkslategray;
+}

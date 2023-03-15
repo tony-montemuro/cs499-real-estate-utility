@@ -7,8 +7,6 @@ function ShowingsListing() {
         <>
         <h1>Showings</h1>
 
-        <AbrvShowingInstance address={"toot"} time={"time"} agencyInfo={"Croed"} />
-
         <ListOfShowingsCmp/>
 
         </>
