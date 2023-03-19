@@ -1,0 +1,27 @@
+.property-listings-header {
+    text-align: center;
+}
+
+.property-listing-body {
+    display: flex;
+    justify-content: center;
+}
+
+.property-listing-body table {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.property-listing-body th {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.property-listing-body td {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.property-listing-body a {
+    text-decoration: none;
+}
