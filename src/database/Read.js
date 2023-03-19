@@ -5,12 +5,13 @@ const Read = () => {
     /* ===== FUNCTIONS ===== */
     
     // FUNCTION 1: fetchAbbreviatedListings - fetch array of abbreviated listings from the database
-    // PRECONDITIONS
-    // none [for now, this will change]
+    // PRECONDITIONS (2 parameters):
+    // 1.) lower - an integer representing the lowest inclusive index of the query to include
+    // 2.) upper - an integer representing the upper inclusive index of the query to include
     // POSTCONDITIONS (1 possible outcome):
     // await the call to fetch array of Abbreviated Listings objects from the database. if an error is detected, handle it. 
     // otherwise, just return the data
-    const fetchAbbreviatedListings = async () => {
+    const fetchAbbreviatedListings = async (lower, upper) => {
         try {
             const { data: abbreviatedListings, error, status } = await supabase
                 .from("listing")
@@ -30,7 +31,9 @@ const Read = () => {
                         street,
                         zip
                     )
-                `);
+                `)
+                .range(lower, upper)
+                .order("listing_id");
 
             // error handling
             if (error && status !== 406) {
@@ -38,6 +41,7 @@ const Read = () => {
             }
 
             // return data
+            console.log(abbreviatedListings);
             return abbreviatedListings;
 
         } catch (error) {

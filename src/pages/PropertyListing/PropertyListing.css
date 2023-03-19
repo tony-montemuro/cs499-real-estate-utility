@@ -25,3 +25,12 @@
 .property-listing-body a {
     text-decoration: none;
 }
+
+.property-listing-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.property-listing-footer button {
+    margin: 10px;
+}
