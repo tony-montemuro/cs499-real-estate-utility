@@ -2,17 +2,20 @@
 import "./PropertyListing.css";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import FrontendHelper from "../../util/FrontendHelper";
 import PropertyListingsLogic from "./PropertyListing.js";
 
 function PropertyListing() {
     /* ===== VARIABLES ===== */
     const NUM_PAGE_RESULTS = 10;
-    const dollar = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 
     /* ===== STATES & FUNCTIONS ===== */
 
     // states and functions from the PropertyListing js file
     const { listings, pageNumber, getListings } = PropertyListingsLogic();
+
+    // helper functions
+    const { floatToUSD, formatFloat, getAddress } = FrontendHelper();
 
     /* ===== EFFECTS ===== */
     useEffect(() => {
@@ -55,9 +58,9 @@ function PropertyListing() {
                                         <td>
                                             <Link to={ `${ listing.listing_id }` }>📄</Link>
                                         </td>
-                                        <td>{ dollar.format(listing.price) }</td>
-                                        <td>{ listing.property.street }, { listing.property.city }, { listing.property.state } { listing.property.zip }</td>
-                                        <td>{ listing.property.sqr_feet.toLocaleString("en-US") }</td>
+                                        <td>{ floatToUSD(listing.price) }</td>
+                                        <td>{ getAddress(listing.property) }</td>
+                                        <td>{ formatFloat(listing.property.sqr_feet) }</td>
                                         <td>{ listing.agent.agency.name }</td>
                                         <td>{ listing.agent.name }</td>
                                     </tr>
@@ -69,12 +72,34 @@ function PropertyListing() {
 
                     { /* Property Listing Footer - contains footer information for this page */ }
                     <div className="property-listing-footer">
-                        { pageNumber > 1 &&
-                            <button onClick={ () => getListings(pageNumber-1, NUM_PAGE_RESULTS) }>Previous Page</button>
-                        }
-                        { listings.length === 10 && 
-                            <button onClick={ () => getListings(pageNumber+1, NUM_PAGE_RESULTS) }>Next Page</button>
-                        }
+
+                        { /* Button that moves back 1 page */ }
+                        <button 
+                            disabled={ pageNumber.current === 1 } 
+                            onClick={ () => getListings(pageNumber.current-1, NUM_PAGE_RESULTS) }
+                        >
+                            Previous Page
+                        </button>
+
+                        { /* Page number selector - allows user to select any page from 1 to pageNumber.max */ }
+                        <div className="property-listing-page-select">
+                            <label htmlFor="pageNumber">Page Number: </label>
+                            <select id="pageNumber" value={ pageNumber.current } onChange={ (e) => getListings(parseInt(e.target.value), NUM_PAGE_RESULTS) }>
+                            { Array.from({ length: pageNumber.max }, (_, i) => i + 1).map(num => (
+                                <option key={ num } value={ num }>
+                                    { num }
+                                </option>
+                            ))}
+                            </select>
+                        </div>
+
+                        { /* Button that moves forward 1 page */ }
+                        <button 
+                            disabled={ pageNumber.current === pageNumber.max } 
+                            onClick={ () => getListings(pageNumber.current+1, NUM_PAGE_RESULTS) }
+                        >
+                            Next Page
+                        </button>
                     </div>
                 </>
 

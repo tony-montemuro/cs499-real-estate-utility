@@ -31,6 +31,11 @@
     justify-content: center;
 }
 
-.property-listing-footer button {
+.property-listing-footer {
     margin: 10px;
+}
+
+.property-listing-page-select {
+    margin-left: 10px;
+    margin-right: 10px;
 }

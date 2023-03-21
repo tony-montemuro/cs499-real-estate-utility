@@ -21,15 +21,19 @@ const PropertyListings = () => {
     // await the call to fetch array of Abbreviated Listings objects from the database. once the data has been receieved,
     // update the listing state by calling the setListing() function
     const getListings = async (num, pageLength) => {
-        // update the page number state
-        setPageNumber(num);
-
+        console.log(num);
         // compute the range of indicies to query
         const lower = num * pageLength - pageLength;
         const upper = num * pageLength - 1;
 
         // fetch array of listings from the database, and update the listings state
-        const abbreviatedListings = await fetchAbbreviatedListings(lower, upper);
+        const { abbreviatedListings, count } = await fetchAbbreviatedListings(lower, upper);
+
+        // compute the max number of pages based on the count
+        const maxPageNumber = Math.ceil(count / pageLength);
+
+        // update states
+        setPageNumber({ current: num, max: maxPageNumber });
         setListings(abbreviatedListings);
     };
 
