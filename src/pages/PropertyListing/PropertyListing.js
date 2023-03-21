@@ -21,7 +21,6 @@ const PropertyListings = () => {
     // await the call to fetch array of Abbreviated Listings objects from the database. once the data has been receieved,
     // update the listing state by calling the setListing() function
     const getListings = async (num, pageLength) => {
-        console.log(num);
         // compute the range of indicies to query
         const lower = num * pageLength - pageLength;
         const upper = num * pageLength - 1;
