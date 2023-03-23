@@ -2,7 +2,8 @@
 import "./PropertyListing.css";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import FrontendHelper from "../../util/FrontendHelper";
+import FrontendHelper from "../../util/FrontendHelper.js";
+import PropertyImage from "../../ui/PropertyImage/PropertyImage.jsx";
 import PropertyListingsLogic from "./PropertyListing.js";
 
 function PropertyListing() {
@@ -42,6 +43,7 @@ function PropertyListing() {
                             <thead>
                                 <tr>
                                     <th>Details</th>
+                                    <th>Image</th>
                                     <th>List Price</th>
                                     <th>Address</th>
                                     <th>Square Footage</th>
@@ -57,6 +59,7 @@ function PropertyListing() {
                                         <td>
                                             <Link to={ `${ listing.listing_id }` }>📄</Link>
                                         </td>
+                                        <td><PropertyImage filename={ listing.property.small } width={ 200 } /></td>
                                         <td>{ floatToUSD(listing.price) }</td>
                                         <td>{ getAddress(listing.property) }</td>
                                         <td>{ formatFloat(listing.property.sqr_feet) }</td>
