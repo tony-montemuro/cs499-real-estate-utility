@@ -12,15 +12,14 @@ function PropertyListing() {
     /* ===== STATES & FUNCTIONS ===== */
 
     // states and functions from the PropertyListing js file
-    const { listings, pageNumber, getListings } = PropertyListingsLogic();
+    const { listings, pageNumber, getListings, filterListingsByPage, handlePageChange } = PropertyListingsLogic();
 
     // helper functions
     const { floatToUSD, formatFloat, getAddress } = FrontendHelper();
 
     /* ===== EFFECTS ===== */
     useEffect(() => {
-        const defaultPageNumber = 1;
-        getListings(defaultPageNumber, NUM_PAGE_RESULTS);
+        getListings(NUM_PAGE_RESULTS);
         // eslint-disable-next-line
     }, []);
 
@@ -53,7 +52,7 @@ function PropertyListing() {
 
                             { /* Table Body - Listing information, rendered for each listing object in the listing state. */ }
                             <tbody>
-                                { listings.map(listing => {
+                                { filterListingsByPage(NUM_PAGE_RESULTS).map(listing => {
                                     return <tr key={ listing.listing_id }>
                                         <td>
                                             <Link to={ `${ listing.listing_id }` }>📄</Link>
@@ -76,7 +75,7 @@ function PropertyListing() {
                         { /* Button that moves back 1 page */ }
                         <button 
                             disabled={ pageNumber.current === 1 } 
-                            onClick={ () => getListings(pageNumber.current-1, NUM_PAGE_RESULTS) }
+                            onClick={ () => handlePageChange(pageNumber.current-1) }
                         >
                             Previous Page
                         </button>
@@ -84,7 +83,7 @@ function PropertyListing() {
                         { /* Page number selector - allows user to select any page from 1 to pageNumber.max */ }
                         <div className="property-listing-page-select">
                             <label htmlFor="pageNumber">Page Number: </label>
-                            <select id="pageNumber" value={ pageNumber.current } onChange={ (e) => getListings(parseInt(e.target.value), NUM_PAGE_RESULTS) }>
+                            <select id="pageNumber" value={ pageNumber.current } onChange={ (e) => handlePageChange(parseInt(e.target.value)) }>
                             { Array.from({ length: pageNumber.max }, (_, i) => i + 1).map(num => (
                                 <option key={ num } value={ num }>
                                     { num }
@@ -96,7 +95,7 @@ function PropertyListing() {
                         { /* Button that moves forward 1 page */ }
                         <button 
                             disabled={ pageNumber.current === pageNumber.max } 
-                            onClick={ () => getListings(pageNumber.current+1, NUM_PAGE_RESULTS) }
+                            onClick={ () => handlePageChange(pageNumber.current+1) }
                         >
                             Next Page
                         </button>

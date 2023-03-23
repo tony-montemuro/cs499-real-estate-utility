@@ -5,17 +5,15 @@ const Read = () => {
     /* ===== FUNCTIONS ===== */
     
     // FUNCTION 1: fetchAbbreviatedListings - fetch array of abbreviated listings from the database
-    // PRECONDITIONS (2 parameters):
-    // 1.) lower - an integer representing the lowest inclusive index of the query to include
-    // 2.) upper - an integer representing the upper inclusive index of the query to include
-    // POSTCONDITIONS (2 returns, 1 possible outcome):
+    // PRECONDITIONS (0 parameters):
+    // this will have parameters soon...
+    // POSTCONDITIONS (1 returns, 1 possible outcome):
     // await the call to fetch array of Abbreviated Listings objects from the database. if an error is detected, handle it. 
-    // otherwise, we return two pieces of data:
+    // otherwise, we return:
     // 1.) abbreviatedListings: the array of abbreviatedListing objects
-    // 2.) count: the number of listings that satisfy the query
-    const fetchAbbreviatedListings = async (lower, upper) => {
+    const fetchAbbreviatedListings = async () => {
         try {
-            const { data: abbreviatedListings, count, error, status } = await supabase
+            const { data: abbreviatedListings, error, status } = await supabase
                 .from("listing")
                 .select(`
                     agent (
@@ -33,8 +31,7 @@ const Read = () => {
                         street,
                         zip
                     )
-                `, { count: "exact" })
-                .range(lower, upper)
+                `)
                 .order("listing_id");
 
             // error handling
@@ -44,8 +41,7 @@ const Read = () => {
 
             // return data
             console.log(abbreviatedListings);
-            console.log(count);
-            return { abbreviatedListings: abbreviatedListings, count: count };
+            return abbreviatedListings;
 
         } catch (error) {
             console.log(error);
