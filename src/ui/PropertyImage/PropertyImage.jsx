@@ -1,8 +1,9 @@
 /* ===== IMPORTS ===== */
+import "./PropertyImage.css";
 import { useEffect } from "react";
 import PropertyImageLogic from "./PropertyImage.js";
 
-function PropertyImage({ filename, width }) {
+function PropertyImage({ filename }) {
   /* ===== STATES & FUNCTIONS ===== */
   const { img, fetchImage } = PropertyImageLogic();
 
@@ -15,7 +16,7 @@ function PropertyImage({ filename, width }) {
   }, []);
 
   /* ===== PROPERTY IMAGE COMPONENT ===== */
-  return <img style={ { width: width } } src={ img } alt={ filename } />
+  return <img id="property-image" src={ img } alt={ filename } />
 };
 
 /* ===== EXPORTS ===== */

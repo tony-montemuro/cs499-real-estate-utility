@@ -43,7 +43,7 @@ function PropertyListing() {
                             <thead>
                                 <tr>
                                     <th>Details</th>
-                                    <th>Image</th>
+                                    <th>Property Photo</th>
                                     <th>List Price</th>
                                     <th>Address</th>
                                     <th>Square Footage</th>
@@ -59,7 +59,11 @@ function PropertyListing() {
                                         <td>
                                             <Link to={ `${ listing.listing_id }` }>📄</Link>
                                         </td>
-                                        <td><PropertyImage filename={ listing.property.small } width={ 200 } /></td>
+                                        <td id="property-listing-img-td">
+                                            <div className="property-listing-img-container">
+                                                <PropertyImage filename={ listing.property.small } />
+                                            </div>
+                                        </td>
                                         <td>{ floatToUSD(listing.price) }</td>
                                         <td>{ getAddress(listing.property) }</td>
                                         <td>{ formatFloat(listing.property.sqr_feet) }</td>
