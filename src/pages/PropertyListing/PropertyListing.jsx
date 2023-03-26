@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import FrontendHelper from "../../util/FrontendHelper.js";
 import PropertyImage from "../../ui/PropertyImage/PropertyImage.jsx";
-import PropertyListingsLogic from "./PropertyListing.js";
+import PropertyListingLogic from "./PropertyListing.js";
+import RangeInputs from "./ui/RangeInputs";
 
 function PropertyListing() {
     /* ===== VARIABLES ===== */
@@ -13,7 +14,15 @@ function PropertyListing() {
     /* ===== STATES & FUNCTIONS ===== */
 
     // states and functions from the PropertyListing js file
-    const { listings, pageNumber, getListings, filterListingsByPage, handlePageChange } = PropertyListingsLogic();
+    const { 
+        listings, 
+        pageNumber,
+        filterForm, 
+        getListings, 
+        dispatchFilterForm, 
+        filterListingsByPage, 
+        handlePageChange 
+    } = PropertyListingLogic();
 
     // helper functions
     const { floatToUSD, formatFloat, getAddress } = FrontendHelper();
@@ -37,43 +46,85 @@ function PropertyListing() {
                 <>
                     { /* Property Listings Body - render the listings */ }
                     <div className="property-listing-body">
-                        <table>
 
-                            { /* Table Header */ }
-                            <thead>
-                                <tr>
-                                    <th>Details</th>
-                                    <th>Property Photo</th>
-                                    <th>List Price</th>
-                                    <th>Address</th>
-                                    <th>Square Footage</th>
-                                    <th>Listing Agency</th>
-                                    <th>Listing Agent</th>
-                                </tr>
-                            </thead>
+                        { /* Multiple Listing Service */ }
+                        <div className="property-listing-mls">
+                            <table>
 
-                            { /* Table Body - Listing information, rendered for each listing object in the listing state. */ }
-                            <tbody>
-                                { filterListingsByPage(NUM_PAGE_RESULTS).map(listing => {
-                                    return <tr key={ listing.listing_id }>
-                                        <td>
-                                            <Link to={ `${ listing.listing_id }` }>📄</Link>
-                                        </td>
-                                        <td id="property-listing-img-td">
-                                            <div className="property-listing-img-container">
-                                                <PropertyImage filename={ listing.property.small } />
-                                            </div>
-                                        </td>
-                                        <td>{ floatToUSD(listing.price) }</td>
-                                        <td>{ getAddress(listing.property) }</td>
-                                        <td>{ formatFloat(listing.property.sqr_feet) }</td>
-                                        <td>{ listing.agent.agency.name }</td>
-                                        <td>{ listing.agent.name }</td>
+                                { /* Table Header */ }
+                                <thead>
+                                    <tr>
+                                        <th>Details</th>
+                                        <th>Property Photo</th>
+                                        <th>List Price</th>
+                                        <th>Address</th>
+                                        <th>Square Footage</th>
+                                        <th>Listing Agency</th>
+                                        <th>Listing Agent</th>
                                     </tr>
-                                }) }
-                            </tbody>
+                                </thead>
 
-                        </table>
+                                { /* Table Body - Listing information, rendered for each listing object in the listing state. */ }
+                                <tbody>
+                                    { filterListingsByPage(NUM_PAGE_RESULTS).map(listing => {
+                                        return <tr key={ listing.listing_id }>
+                                            <td>
+                                                <Link to={ `${ listing.listing_id }` }>📄</Link>
+                                            </td>
+                                            <td id="property-listing-img-td">
+                                                <div className="property-listing-img-container">
+                                                    <PropertyImage filename={ listing.property.small } />
+                                                </div>
+                                            </td>
+                                            <td>{ floatToUSD(listing.price) }</td>
+                                            <td>{ getAddress(listing.property) }</td>
+                                            <td>{ formatFloat(listing.property.sqr_feet) }</td>
+                                            <td>{ listing.agent.agency.name }</td>
+                                            <td>{ listing.agent.name }</td>
+                                        </tr>
+                                    }) }
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        { /* Multiple Listing Service Filter */ }
+                        <div className="property-listing-filters">
+                            <h2>Filters</h2>
+                            <div className="property-listing-filters-form">
+
+                                { /* Form used to set search filters */ }
+                                <form>
+
+                                    { /* Price range */ }
+                                    <b><p>Price</p></b>
+                                    <RangeInputs type={ "price" } formState={ filterForm } updateFormState={ dispatchFilterForm } />
+
+                                    { /* Square footage range */ }
+                                    <b><p>Square Footage</p></b>
+                                    <RangeInputs type={ "sqrFeet" } formState={ filterForm } updateFormState={ dispatchFilterForm } />
+
+                                    { /* Zip code */ }
+                                    <b><p>Zip</p></b>
+                                    <div>
+                                        <label htmlFor="zip">Zip: </label>
+                                        <input 
+                                            id="zip" 
+                                            name="zip" 
+                                            type="text" 
+                                            pattern="[0-9]*" 
+                                            value={ filterForm.zip }
+                                            onChange={ (e) => dispatchFilterForm({ type: e.target.id, value: e.target.value }) }
+                                        />
+                                    </div>
+
+                                    { /* Form button */ }
+                                    <button>Filter</button>
+
+                                </form>
+
+                            </div>
+                        </div>
                     </div>
 
                     { /* Property Listing Footer - contains footer information for this page */ }
@@ -106,7 +157,9 @@ function PropertyListing() {
                         >
                             Next Page
                         </button>
+
                     </div>
+                    
                 </>
 
             :
