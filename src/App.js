@@ -1,5 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import REUNavbar from './ui/Navbar/Navbar.jsx';
 import DetailedListing from "./pages/DetailedListing/DetailedListing.jsx";
 import DetailedShowing from "./pages/DetailedShowing/DetailedShowing.jsx";
 import Forms from "./pages/Forms/Forms.jsx";
@@ -10,6 +11,7 @@ import ShowingsListing from "./pages/ShowingsListing/ShowingsListing.jsx";
 function App() {
   return (
       <div className="App">
+      <REUNavbar />
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="/forms" element={ <Forms /> } /> 

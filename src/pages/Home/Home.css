@@ -1,1 +1,12 @@
 /* for styling */
+.container {
+    justify-content: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: flex;
+}
+.introduction {
+    text-align: center;
+}
+.hotproperty {
+    text-align: center;
+}
