@@ -2,6 +2,7 @@
 import "./App.css";
 import { ImagesContext } from "./Contexts";
 import { Route, Routes } from "react-router-dom";
+import REUNavbar from './ui/Navbar/Navbar.jsx';
 import DetailedListing from "./pages/DetailedListing/DetailedListing.jsx";
 import DetailedShowing from "./pages/DetailedShowing/DetailedShowing.jsx";
 import Forms from "./pages/Forms/Forms.jsx";
