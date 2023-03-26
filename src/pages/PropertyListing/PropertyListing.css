@@ -1,15 +1,17 @@
+/* Header styling */
 .property-listings-header {
     text-align: center;
 }
 
+/* Body styling */
 .property-listing-body {
     display: flex;
     justify-content: center;
 }
 
 .property-listing-body table {
-    border-collapse: collapse;
     border: 1px solid black;
+    border-collapse: collapse;
 }
 
 .property-listing-body th {
@@ -19,13 +21,27 @@
 
 .property-listing-body td {
     border: 1px solid black;
-    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 5px;
+    padding-right: 10px;
+    height: 112.5px;
 }
 
 .property-listing-body a {
     text-decoration: none;
 }
 
+#property-listing-img-td {
+    padding: 0px;
+}
+
+.property-listing-img-container {
+    width: 200px;
+    height: 112.5px;
+}
+
+/* Footer styling */
 .property-listing-footer {
     display: flex;
     justify-content: center;
