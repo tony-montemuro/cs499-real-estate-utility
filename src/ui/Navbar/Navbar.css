@@ -1,9 +1,9 @@
 .header {
     width: 75%;
     height: 25%; 
-    display: block;
+    display: flex;
     align-items: center; 
-    justify-content: space-between; 
+    justify-content: space-evenly; 
     background-color: rgb(151, 195, 220); 
     box-shadow: 0 20px 12px rgba(0, 0, 0, 0.2); 
     margin: 15px auto; 
@@ -19,6 +19,15 @@
     text-align: center; 
 }
 
+.header img {
+    align-items: left; 
+    max-width: 10%;
+    height: auto;
+    padding-right: 5vw;
+    margin-top: 0.5vw; 
+    margin-bottom: 0.5vw; 
+  }
+  
 .nav {
     display: flex;
 }
@@ -28,13 +37,13 @@
     list-style: none; 
     margin: 0;
     padding: 0; 
-    display: flex; 
-    align-items: baseline;
+    display: flex;
 }
 
 .header li {
     display: inline;
-    margin-right: 1.5vw; 
+    margin-left: 2vw; 
+    margin-right: 2vw; 
     text-align: center; 
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }

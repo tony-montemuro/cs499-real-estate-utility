@@ -1,5 +1,9 @@
 import classes from "./Navbar.css";
 import { Link } from "react-router-dom";
+import logo from './assets/Logo_withText.png'; // Tell webpack this JS file uses this image
+
+console.log(logo); // /logo.84287d09.png
+
 //import TitleStyle from "../pages/Forms/Components/Styles/TitleStyle";
 //import ButtonStyle from "../pages/Forms/Components/Styles/ButtonStyle";
 
@@ -8,10 +12,7 @@ function REUNavbar(props){
 	return (
 
 		<header className="header">
-		
-			<div className={"title"}>REU PROPERTIES</div>
-
-			
+			<img src={logo} alt="logo" />
 
 			<nav className="nav">
 				<ul className="header ul">

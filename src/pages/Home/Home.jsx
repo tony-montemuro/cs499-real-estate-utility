@@ -1,5 +1,6 @@
 // for presentation
 import "./Home.css";
+import PropertyImage from "../../ui/PropertyImage/PropertyImage.jsx";
 
 function Home() {
 
