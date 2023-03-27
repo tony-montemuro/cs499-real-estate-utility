@@ -18,6 +18,7 @@ function App() {
   return (
     <ImagesContext.Provider value={ { imagesCache } }>
       <div className="App">
+        <REUNavbar />
         <Routes>
           <Route path="/" element={ <Home /> } />
           <Route path="/forms" element={ <Forms /> } /> 
