@@ -1,14 +1,16 @@
 /* ===== IMPORTS ===== */
 import "./PropertyListing.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import FrontendHelper from "../../util/FrontendHelper.js";
+import HomeIcon from '@mui/icons-material/Home';
 import PropertyImage from "../../ui/PropertyImage/PropertyImage.jsx";
 import PropertyListingLogic from "./PropertyListing.js";
 import RangeInputs from "./ui/RangeInputs";
 
 function PropertyListing() {
     /* ===== VARIABLES ===== */
+    const navigate = useNavigate();
     const NUM_PAGE_RESULTS = 10;
 
     /* ===== STATES & FUNCTIONS ===== */
@@ -20,6 +22,7 @@ function PropertyListing() {
         filterForm, 
         getListings, 
         dispatchFilterForm, 
+        applyFilters,
         filterListingsByPage, 
         handlePageChange 
     } = PropertyListingLogic();
@@ -69,7 +72,7 @@ function PropertyListing() {
                                     { filterListingsByPage(NUM_PAGE_RESULTS).map(listing => {
                                         return <tr key={ listing.listing_id }>
                                             <td>
-                                                <Link to={ `${ listing.listing_id }` }>📄</Link>
+                                                <HomeIcon onClick={ () => navigate(`${ listing.listing_id }`) } />
                                             </td>
                                             <td id="property-listing-img-td">
                                                 <div className="property-listing-img-container">
@@ -94,7 +97,7 @@ function PropertyListing() {
                             <div className="property-listing-filters-form">
 
                                 { /* Form used to set search filters */ }
-                                <form>
+                                <form onSubmit={ applyFilters }>
 
                                     { /* Price range */ }
                                     <b><p>Price</p></b>

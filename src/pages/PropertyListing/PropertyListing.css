@@ -37,8 +37,12 @@
     height: 112.5px;
 }
 
-.property-listing-mls a {
-    text-decoration: none;
+.property-listing-mls svg {
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    width: 35px;
+    height: auto;
 }
 
 #property-listing-img-td {

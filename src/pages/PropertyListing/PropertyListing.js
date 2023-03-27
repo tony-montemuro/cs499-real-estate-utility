@@ -66,7 +66,18 @@ const PropertyListings = () => {
         setPageNumber({ current: 1, max: maxPageNumber });
     };
 
-    // FUNCTION 3: filterListings - generate a filtered array of listings based on the page number and page length
+    // FUNCTION 3: applyFilters function
+    // PRECONDITIONS (1 parameter):
+    // 1.) e: an event object generated when the form is submitted
+    const applyFilters = (e) => {
+        // prevent page from reloading (default form submission behavior)
+        e.preventDefault();
+        
+        // log filterForm object to console
+        console.log(filterForm);
+    };
+
+    // FUNCTION 4: filterListings - generate a filtered array of listings based on the page number and page length
     // PRECONDITIONS (1 parameter):
     // 1.) pageLength - an integer value representing the number of results to be rendered per page
     // it is required the the pageNumber state be defined before this function is called
@@ -84,7 +95,7 @@ const PropertyListings = () => {
         });
     };
 
-    // FUNCTION 4: handlePageChange - function that handles when the user switches to a different page
+    // FUNCTION 5: handlePageChange - function that handles when the user switches to a different page
     // PRECONDITIONS (1 parameter):
     // 1.) num - an integer value representing the new page number. this number must be between 1 and pageNumber.max
     // POSTCONDITIONS (1 possible outcome):
@@ -101,6 +112,7 @@ const PropertyListings = () => {
         filterForm, 
         getListings, 
         dispatchFilterForm, 
+        applyFilters,
         filterListingsByPage, 
         handlePageChange
     };
