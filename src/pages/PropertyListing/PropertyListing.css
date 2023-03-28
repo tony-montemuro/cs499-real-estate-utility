@@ -1,25 +1,34 @@
-/* Header styling */
+/* ===== HEADER STYLING ===== */
+
 .property-listings-header {
     text-align: center;
 }
 
-/* Body styling */
+/* ===== BODY STYLING ===== */
+
 .property-listing-body {
     display: flex;
     justify-content: center;
 }
 
-.property-listing-body table {
-    border: 1px solid black;
-    border-collapse: collapse;
+/* MLS */
+.property-listing-mls {
+    flex: 0.75;
 }
 
-.property-listing-body th {
+.property-listing-mls table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.property-listing-mls th {
     border: 1px solid black;
     padding: 5px;
 }
 
-.property-listing-body td {
+.property-listing-mls td {
     border: 1px solid black;
     padding-top: 0px;
     padding-bottom: 0px;
@@ -28,8 +37,12 @@
     height: 112.5px;
 }
 
-.property-listing-body a {
-    text-decoration: none;
+.property-listing-mls svg {
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    width: 35px;
+    height: auto;
 }
 
 #property-listing-img-td {
@@ -41,7 +54,33 @@
     height: 112.5px;
 }
 
-/* Footer styling */
+/* Filters */
+.property-listing-filters {
+    flex: 0.25;
+    text-align: center;
+}
+
+.property-listings-range-inputs {
+    display: flex;
+    flex-direction: row;
+}
+
+.property-listing-filters-form {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.property-listing-filters-form button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.property-listings-range-inputs input[type="number"] {
+    width: 35%;
+}
+
+/* ===== FOOTER STYLING ===== */
+
 .property-listing-footer {
     display: flex;
     justify-content: center;

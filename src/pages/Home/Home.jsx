@@ -5,7 +5,7 @@ function Home() {
 
     return (
         <>
-        <div class="container">
+        <div className="container">
             <div className="introduction">
             <h1>Welcome to REU Properties!</h1>
             <p>This is the official web-based application of REU Properties!</p>
