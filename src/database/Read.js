@@ -53,7 +53,47 @@ const Read = () => {
         };
     };
 
-    return { fetchAbbreviatedListings };
+    const fetchFullListing = async (id) => {
+        try{
+            const { data: fullListing, error, status } = await supabase
+            .from("listing")
+            .select(`
+            agent (
+                agency (
+                    name
+                ),
+                name
+            ),
+            listing_id,
+            price,
+            property (
+                city,
+                sqr_feet,
+                state,
+                street,
+                zip
+            )
+        `)
+            .eq("listing_id", id);
+            
+
+            // error handling
+            if (error && status !== 406) {
+                throw error;
+            }
+
+            //return data
+            console.log(fullListing);
+            return{fullListing: fullListing}
+        }
+        catch (error) {
+            console.log(error);
+            alert(error.message);
+            return [];
+        }
+    }
+
+    return { fetchAbbreviatedListings , fetchFullListing};
 };
 
 /* ===== EXPORTS ===== */
