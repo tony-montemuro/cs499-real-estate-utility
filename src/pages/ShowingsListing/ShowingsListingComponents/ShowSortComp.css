@@ -1,0 +1,26 @@
+.property-listing-filters {
+    flex: 0.25;
+    text-align:center;
+}
+
+.property-listings-range-inputs {
+    display: flex;
+    flex-direction: row;
+}
+
+.property-listing-filters-form {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    width: fit-content;
+    height: fit-content;
+}
+
+.property-listing-filters-form button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.property-listings-range-inputs input[type="number"] {
+    width: 35%;
+}
