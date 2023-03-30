@@ -1,0 +1,88 @@
+.header {
+    text-align: center;
+}
+
+.docheader{
+    font-size: 1.25vw;
+    margin-left: 5%;
+    height: 5vh;
+    padding-top: 1%;
+    text-decoration: underline;
+    text-align:left;
+}
+
+.content{
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.infoblock{
+    height: 7vh; 
+    display: flex; 
+    border-bottom: 1px solid black;
+    text-align: center;
+    background-color: white;
+}
+
+.block{ 
+    height: 8vw; 
+    display: flex; 
+}
+
+.question {
+    font-size: 1.25vw;
+    padding-left: 10%;
+    width: 50%;
+    flex: 7;
+    text-align: left;
+}
+
+.prompt {
+    font-size: 1.25vw;
+    padding-left: 10%;
+    width: 50%;
+    flex: 2;
+    text-decoration: underline;
+    text-decoration-color: bold;
+}
+
+.info {
+    flex: 8;
+    width: 4px;
+    padding-top: .5%;
+    font-size: 1.25vw;
+}
+
+.textblock {
+    height: 14vh;
+    display: flex;
+}
+
+.additional{
+    flex: 3; 
+    font-size: 1.25vw;
+    padding-left: 10%; 
+    width: 50%;
+    text-align: left;
+}
+
+.notes{
+    flex: 7; 
+    width: 4px;
+}
+
+.answer{
+    flex: 3; 
+    width: 4px;
+    padding-top: 2%;
+    
+    padding-right: 4%;
+}
+
+.submit{
+    margin-top: 2%;
+    width: 13.5vw; 
+    height: 4vh; 
+    font-size: 1.5vw;
+
+}
