@@ -10,7 +10,6 @@
 
 .right {
     flex: .5;
-   
 }
 
 .box {
@@ -24,4 +23,9 @@
 
 .header {
     text-align: center;
+}
+
+.content{
+    padding-left: 8%;
+    padding-right: 10%;
 }

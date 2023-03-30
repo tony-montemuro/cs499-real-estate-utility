@@ -11,6 +11,7 @@ import EstimatedClosingCard from "./components/EstimatedClosingCard";
 import InitialDocumentCard from "./components/InitialDocumentCard";
 import SalesContractCard from "./components/SalesContractCard";
 import RepairsRequestCard from "./components/RepairsRequestCard";
+import { Button } from "@mui/material";
 
 //Importing page specific CSS
 import classes from "./Forms.module.css";
@@ -45,8 +46,8 @@ function Forms() {
     }
 
     return (
-        <div>
-            <PageBase>
+        <div className={classes.content}>
+            
 
                 <div className={classes.header}>
                 <h1>Documents</h1>
@@ -63,11 +64,19 @@ function Forms() {
                             </Card>
                         </div>
                         <div className={classes.right}>
-                            <SideBarMenu ECC={chooseECC} SC={chooseSC} RR={chooseRR} />
+                        <SideBarMenu ECC={chooseECC} SC={chooseSC} RR={chooseRR} />
+
+                        <Button
+                            sx={{ width: "100%"}}
+                            variant="contained"
+                        >
+                            Download
+                        </Button>
+
                         </div>
                     </div>
                 </div>
-            </PageBase>
+            
         </div>
     );
 };
