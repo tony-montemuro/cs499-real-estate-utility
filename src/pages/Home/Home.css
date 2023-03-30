@@ -10,3 +10,7 @@
 .hotproperty {
     text-align: center;
 }
+.hot-property-listing-img {
+    display: flex;
+    justify-content: center;
+ }
