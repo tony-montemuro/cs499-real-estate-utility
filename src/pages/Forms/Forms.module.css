@@ -1,0 +1,27 @@
+.content {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.left {
+    flex: 9.5;
+    
+}
+
+.right {
+    flex: .5;
+   
+}
+
+.box {
+    border: 1px solid black;
+}
+
+.row {
+    display: flex;
+    height: 100%;
+}
+
+.header {
+    text-align: center;
+}

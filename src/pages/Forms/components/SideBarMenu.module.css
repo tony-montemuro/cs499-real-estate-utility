@@ -1,0 +1,66 @@
+.options{
+    width: 100px;
+    list-style-type: none; 
+    justify-content: space-evenly; 
+    padding: 0 20%;
+    padding-top: 10%;
+    padding-bottom: auto; 
+    margin-right: 10px auto;
+    border-radius: 6px;
+    display: flex; 
+    padding-right: 10%;
+}
+
+.options ul {
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+    display: fixed; 
+    align-items: baseline;
+}
+
+.options li {
+    margin-bottom: 10%; 
+    border-radius: 6px; 
+    text-align: center;
+    background-color: white; 
+    text-size-adjust: auto; 
+    width: 20vw; 
+    height: 5vw;
+}
+
+.row{
+    display: flex; 
+}
+
+.box{
+    border: 1px solid black; 
+}
+
+.bottom {
+    flex: 5; 
+}
+
+.left{
+    flex: 10; 
+}
+
+.icon {
+    padding-left: 40px;
+}
+
+.header{
+    
+    text-decoration: underline;
+    width: 16vw; 
+    margin-left: 10%; 
+    height: 8vw;
+    text-align: center; 
+    font-size: 3vw; 
+}
+
+.options a:hover,
+.options a:active,
+.options a.active {
+    color: white;
+}
