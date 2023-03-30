@@ -97,7 +97,7 @@ function ListOfShowingsCmp() {
 
                 <FixedSizeList className="list-display"
                     height={600}
-                    width={1022}
+                    width={1500}
                     itemCount={Math.ceil(showings.length / 2)}
                     itemSize = {175}
                     itemData={showings}>
