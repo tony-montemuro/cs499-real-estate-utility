@@ -50,7 +50,60 @@ const Read = () => {
             return [];
         };
     };
+    
+    const fetchFullListing = async (id) => {
+        try{
+            const { data: fullListing, error, status } = await supabase
+                .from("listing")
+                .select(`
+                    agent (
+                        agency (
+                            name,
+                            street,
+                            city,
+                            state,
+                            zip,
+                            phone_number
+                        ),
+                        name,
+                        email,
+                        phone_number
+                    ),
+                    listing_id,
+                    price,
+                    property (
+                        city,
+                        sqr_feet,
+                        state,
+                        street,
+                        zip,
+                        lot_size,
+                        dwelling_type,
+                        subdivision,
+                        school_district,
+                        shopping_areas
+                    )
+                `)
+                .eq("listing_id", id)
+                .maybeSingle();
+                
+            // error handling
+            if (error) {
+                throw error;
+            }
+            
+            // return data
+            console.log(fullListing);
+            return fullListing;
+                
+        } catch (error) {
+            console.log(error);
+            alert(error.message);
+            return {};
+        };
 
+    }
+            
     // FUNCTION 2: fetchImageByFilename - given a filename, fetch the image from the database
     // PRECONDITIONS (1 parameter):
     // 1.) fileName: a string representing a valid file in the database, must also be well formatted (include file extension)
@@ -101,23 +154,25 @@ const Read = () => {
                     )
                 `, { count: "exact" })
                 .range(lower, upper)
-                .order("showing_id")
+                .order("showing_id");
 
             // error handling
             if (error && status !== 406) {
                 throw error;
             }
 
-            return { abbreviatedShowings: abbreviatedShowings, count: count }
-
-        } catch (error) {
+            //return data
+            console.log(fullListing);
+            return abbreviatedShowings;
+        }
+        catch (error) {
             console.log(error);
-            alert(error.message)
-        };
+            alert(error.message);
+            return [];
+        }
+    };
 
-    }
-
-    return {fetchAbbreviatedListings, fetchAbbreviatedShowings, fetchImageByFilename};
+    return {fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchImageByFilename};
 };
 
 /* ===== EXPORTS ===== */
