@@ -16,6 +16,9 @@ function DetailedListing() {
   // states and functions from the PropertyListing js file
   const { listings, getCurrListing } = DetailedListingsLogic();
 
+  // helper functions
+  const { floatToUSD, formatFloat, getAddress } = FrontendHelper();
+
   /* ===== EFFECTS ===== */
   useEffect(() => {
     getCurrListing(page_id);
@@ -31,31 +34,32 @@ function DetailedListing() {
       { listings ?
         <>  
         {/*body of the listing */}
-        <div class="container">
-          <div class="left">
-            <p>Images</p>
-            <div className="rectangle"/>
+        <div className="container">
+          <div className="left">
+            <p>Image Placeholders</p>
+            <div className="image1"/>
             <div className="image2"/>
             <div className="image3"/>
+            <div className="image3"/>
+            <div className="image2"/>
           </div>
           <div class="right">
-            <p>Property Details</p>
-            <h2>Price &emsp; bed | bath | sq ft</h2>
-
-            <p>test {listings.listing_id} </p>
-            <p> { listings.listing_id} </p>
-            
-
-            <h2>Address</h2><br/>
+            <h2>Price: { floatToUSD(listings.price) } &emsp; bed | bath | { formatFloat(listings.property.sqr_feet) } sqft</h2>
+            <h2>{ getAddress(listings.property) }</h2>
             <hr class="insert-line"/>
-            <h2>Listing Agency: Phone #</h2>
-            <h2>&emsp; &emsp; Address</h2>
-            <h2>Listing Agent: Phone #</h2>
-            <h2>&emsp; &emsp; Email</h2><br/>
+            <h3>Listed By:</h3>
+            <p>{ listings.agent.agency.name }: { listings.agent.agency.phone_number }</p>
+            <p>&emsp; &emsp; { getAddress(listings.agent.agency) }</p>
+            <p>{ listings.agent.name }: { listings.agent.phone_number }</p>
+            <p>&emsp; &emsp; { listings.agent.email }</p>
             <hr class="insert-line"/>
-            <h2>Overview:</h2><br/>
+            <h3>Overview:</h3>
+            <p>Dwelling Type: { listings.property.dwelling_type }</p>
+            <p>Subdivision (if applicable): { listings.property.subdivision }</p>
+            <p>School District: { listings.property.school_district }</p>
+            <p>Shopping Areas: { listings.property.shopping_areas }</p>
             <hr class="insert-line"/>
-            <h2>Room Details:</h2>
+            <h3>Room Details:</h3>
           </div>
         </div>
         </>

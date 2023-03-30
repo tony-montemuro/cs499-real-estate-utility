@@ -60,9 +60,16 @@ const Read = () => {
                 .select(`
                     agent (
                         agency (
-                            name
+                            name,
+                            street,
+                            city,
+                            state,
+                            zip,
+                            phone_number
                         ),
-                        name
+                        name,
+                        email,
+                        phone_number
                     ),
                     listing_id,
                     price,
@@ -71,7 +78,12 @@ const Read = () => {
                         sqr_feet,
                         state,
                         street,
-                        zip
+                        zip,
+                        lot_size,
+                        dwelling_type,
+                        subdivision,
+                        school_district,
+                        shopping_areas
                     )
                 `)
                 .eq("listing_id", id)
@@ -92,7 +104,7 @@ const Read = () => {
             alert(error.message);
             return [];
         }
-    }
+    };
 
     return { fetchAbbreviatedListings , fetchFullListing};
 };

@@ -6,8 +6,9 @@
     text-align: right;
 }
 
-.rectangle {
+.image1 {
     display: inline-block;
+    margin-left: 5px;
     width: 505px;
     height: 250px;
     background: rgb(130, 224, 217);
@@ -15,6 +16,7 @@
 
 .image2 {
     display: inline-block;
+    margin-left: 5px;
     width: 250px;
     height: 250px;
     background: rgb(171, 125, 197);
@@ -39,15 +41,15 @@
 }
 
 .right {
-    height: 900px;
+    height: auto;
     width: auto;
     overflow-y: scroll;
 }
   
 .left {
     border-right: 1px solid black;
-    height: 900px;
-    width: 600px;
+    height: auto;
+    width: auto;
     overflow-y: scroll;
 }
 
