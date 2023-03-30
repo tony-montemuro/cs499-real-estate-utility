@@ -162,8 +162,7 @@ const Read = () => {
             }
 
             //return data
-            console.log(fullListing);
-            return abbreviatedShowings;
+            return { abbreviatedShowings: abbreviatedShowings, count: count };
         }
         catch (error) {
             console.log(error);
