@@ -1,17 +1,18 @@
 import './AbrvShowingInstance.css';
+import PropertyImage from "/app/src/ui/PropertyImage/PropertyImage.jsx";
 
 
-function AbrvShowingInstance({ address, time, agencyInfo }){
-
-    var imageSource = "https://dcv19h61vib2d.cloudfront.net/thumbs/scikit-learn-create-an-image-with-javascript-using-fetch-and-url-createobjecturl-H1GhM8w7B/scikit-learn-create-an-image-with-javascript-using-fetch-and-url-createobjecturl-H1GhM8w7B.jpg"
+function AbrvShowingInstance({ address, street, time, agencyInfo, image }){
 
     return( 
         <div className = "grid-container">
             <div className = "image-container">
-                <img className = "image" src = {{imageSource}} />
+                <PropertyImage filename={ image }/>
             </div>
             <div className = "address">
                 {address}
+                <br/>
+                {street}
             </div>
             <div className = "time">
                 {time}
