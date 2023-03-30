@@ -1,0 +1,56 @@
+.showing-selector {
+    display: flex;
+    flex-direction: row;
+    background-color: bisque;
+    width: 1022px;
+    height: 2vw;
+    color: black;
+    justify-content: center;
+    gap: .5vw;
+    align-items: center;
+}
+
+.showings-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1vh;
+    padding: 1vh 1vh 2vh;
+    height: 18vh;
+    width: auto;
+    justify-content: center;
+}
+
+.list-display {
+    background-color: darkslategray;
+}
+
+.showings-body {
+    flex: 0.75;
+}
+
+a:link {
+    text-decoration: none;
+    color: black;
+}
+
+
+a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+a:focus {
+    text-decoration: none;
+    color: black;
+}
+
+a:active {
+    text-decoration: none;
+    color: black;
+}
+

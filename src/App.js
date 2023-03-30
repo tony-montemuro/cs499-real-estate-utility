@@ -9,6 +9,7 @@ import Forms from "./pages/Forms/Forms.jsx";
 import Home from "./pages/Home/Home.jsx";
 import PropertyListing from "./pages/PropertyListing/PropertyListing.jsx";
 import ShowingsListing from "./pages/ShowingsListing/ShowingsListing.jsx";
+import {ImagesContext } from "./Contexts.js";
 
 function App() {
   /* ===== VARIABLES ===== */

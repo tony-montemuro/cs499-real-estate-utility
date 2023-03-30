@@ -13,7 +13,7 @@ function PropertyImage({ filename }) {
   useEffect(() => {
     fetchImage(filename);
     // eslint-disable-next-line
-  }, []);
+  }, [filename]);
 
   /* ===== PROPERTY IMAGE COMPONENT ===== */
   return <img id="property-image" src={ img } alt={ filename } />

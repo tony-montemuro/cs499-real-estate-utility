@@ -35,7 +35,7 @@ const PropertyImage = () => {
         // set img state
         setImg(url);
     };
-
+    
     return { img, fetchImage };
 };
 

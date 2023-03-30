@@ -76,7 +76,48 @@ const Read = () => {
         }
     };
 
-    return { fetchAbbreviatedListings, fetchImageByFilename };
+    const fetchAbbreviatedShowings = async (lower, upper) => {
+        try {
+            const { data:abbreviatedShowings, count, error, status} = await supabase
+                .from("showing")
+                .select(`
+                    showing_id,
+                    start_time,
+                    end_time,
+                    listing (
+                        property (
+                            street,
+                            city,
+                            small,
+                            state,
+                            zip
+                        )
+                    ),
+                    agent (
+                        name,
+                        agency(
+                            name
+                        )
+                    )
+                `, { count: "exact" })
+                .range(lower, upper)
+                .order("showing_id")
+
+            // error handling
+            if (error && status !== 406) {
+                throw error;
+            }
+
+            return { abbreviatedShowings: abbreviatedShowings, count: count }
+
+        } catch (error) {
+            console.log(error);
+            alert(error.message)
+        };
+
+    }
+
+    return {fetchAbbreviatedListings, fetchAbbreviatedShowings, fetchImageByFilename};
 };
 
 /* ===== EXPORTS ===== */
