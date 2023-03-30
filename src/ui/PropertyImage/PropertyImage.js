@@ -9,7 +9,6 @@ const PropertyImage = () => {
 
     /* ===== STATES ===== */
     const [img, setImg] = useState(undefined);
-    
 
     /* ===== FUNCTIONS ===== */
 
@@ -36,9 +35,8 @@ const PropertyImage = () => {
         // set img state
         setImg(url);
     };
-
-
-    return { img, fetchImage};
+    
+    return { img, fetchImage };
 };
 
 /* ===== EXPORTS ===== */

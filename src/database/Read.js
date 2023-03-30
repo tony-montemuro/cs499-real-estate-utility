@@ -118,9 +118,6 @@ const Read = () => {
     }
 
     return {fetchAbbreviatedListings, fetchAbbreviatedShowings, fetchImageByFilename};
-
-
-
 };
 
 /* ===== EXPORTS ===== */
