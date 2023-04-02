@@ -41,7 +41,6 @@ const Read = () => {
             }
 
             // return data
-            console.log(abbreviatedListings);
             return abbreviatedListings;
 
         } catch (error) {
@@ -104,7 +103,7 @@ const Read = () => {
 
     }
             
-    // FUNCTION 2: fetchImageByFilename - given a filename, fetch the image from the database
+    // FUNCTION 3: fetchImageByFilename - given a filename, fetch the image from the database
     // PRECONDITIONS (1 parameter):
     // 1.) fileName: a string representing a valid file in the database, must also be well formatted (include file extension)
     // POSTCONDITIONS (1 returns, 1 possible outcome):
@@ -171,7 +170,37 @@ const Read = () => {
         }
     };
 
-    return {fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchImageByFilename};
+    // FUNCTION 5 - fetchAgentById - given a user id, fetch an agent object from the database, and return it
+    // PRECONDITIONS (1 parameter):
+    // 1.) id - a string value, representing a uuid belonging to a unique agent user in the database
+    // POSTCONDITIONS (1 return, 2 possible outcomes):
+    // if the query is successful, return:
+    // 1.) agent - an object that contains information about the agent corresponding to the id parameter
+    // otherwise, the user is alerted of the error that has occured, and null is returned
+    const fetchAgentById = async (id) => {
+        try {
+            const { data: agent, error } = await supabase
+                .from("agent")
+                .select("agency, agent_id, name, user_id")
+                .eq("user_id", id)
+                .maybeSingle();
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+            // if there is no error, simply return the result of the query
+            return agent;
+
+        } catch (error) {
+            console.log(error);
+            alert(error.message);
+            return null;
+        }
+    };
+
+    return { fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchImageByFilename, fetchAgentById };
 };
 
 /* ===== EXPORTS ===== */
