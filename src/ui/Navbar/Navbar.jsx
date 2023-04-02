@@ -1,17 +1,21 @@
 import classes from "./Navbar.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PopUp from "../Login/Login.js";
 import logo from '../../assets/Logo_withText.png'; // Tell webpack this JS file uses this image
+import { AgentContext } from "../../Contexts";
+import Auth from "../../database/Auth.js"
 
 console.log(logo); // /logo.84287d09.png
 
 //import TitleStyle from "../pages/Forms/Components/Styles/TitleStyle";
 //import ButtonStyle from "../pages/Forms/Components/Styles/ButtonStyle";
 
-
 function REUNavbar(props){
 	const [loginbutton, setButtonLogin ] = useState(false);
+    const {agent} = useContext(AgentContext);
+
+    const { logOut } = Auth();
 
 	return (
 
@@ -33,9 +37,14 @@ function REUNavbar(props){
 							<Link to="/showings">Showings</Link>
 					</li>
 				</ul>
-				<div className="login">
-					Welcome, Guest! <button onClick={() => setButtonLogin(true)}>Log In</button>
-				</div>
+				{ agent ? 
+                	<login>
+						Welcome, {agent.name}! <button onClick={() => logOut()}>Log Out</button>
+					</login> :
+                	<login>
+						Welcome, Guest! <button onClick={() => setButtonLogin(true)}>Log In</button>
+					</login> 
+				}
 			</nav>
 			<PopUp trigger={loginbutton} setTrigger={setButtonLogin}></PopUp>
 		</header>
