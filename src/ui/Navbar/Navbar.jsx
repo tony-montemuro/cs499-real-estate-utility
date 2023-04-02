@@ -1,6 +1,8 @@
 import classes from "./Navbar.css";
 import { Link } from "react-router-dom";
-import logo from './assets/Logo_withText.png'; // Tell webpack this JS file uses this image
+import { useState } from "react";
+import PopUp from "../Login/Login.js";
+import logo from '../../assets/Logo_withText.png'; // Tell webpack this JS file uses this image
 
 console.log(logo); // /logo.84287d09.png
 
@@ -9,6 +11,8 @@ console.log(logo); // /logo.84287d09.png
 
 
 function REUNavbar(props){
+	const [loginbutton, setButtonLogin ] = useState(false);
+
 	return (
 
 		<header className="header">
@@ -30,10 +34,10 @@ function REUNavbar(props){
 					</li>
 				</ul>
 				<div className="login">
-					Welcome, Guest! <button><Link to="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Log In</Link></button>
+					Welcome, Guest! <button onClick={() => setButtonLogin(true)}>Log In</button>
 				</div>
 			</nav>
-
+			<PopUp trigger={loginbutton} setTrigger={setButtonLogin}></PopUp>
 		</header>
 	);
 }
