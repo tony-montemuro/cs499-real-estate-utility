@@ -58,6 +58,10 @@ function ListOfShowingsCmp() {
     var pageElems = 16;
     const {showings, pageNumber, getShowings, getShowingsInit, handlePageChange} = ListOfShowingsCmpLogic();
 
+    const listWidth = document.querySelector("#ShowingsListingContainingBox") ? 
+        document.querySelector("#ShowingsListingContainingBox").clientWidth : 50;
+    const listHeight = 470;
+
     useEffect(() => {
         getShowingsInit(pageElems);
     }, []);
@@ -96,10 +100,10 @@ function ListOfShowingsCmp() {
                 </div>
 
                 <FixedSizeList className="list-display"
-                    height={600}
-                    width={1500}
+                    height={listHeight}
+                    width={listWidth}
                     itemCount={Math.ceil(showings.length / 2)}
-                    itemSize = {175}
+                    itemSize = {(0.23 * window.innerHeight)}
                     itemData={showings}>
                     {Row}
 

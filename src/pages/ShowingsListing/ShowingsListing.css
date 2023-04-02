@@ -1,3 +1,5 @@
 .showings-body {
     display: flex;
+    columns: 50px;
+    gap: 5%;
 }

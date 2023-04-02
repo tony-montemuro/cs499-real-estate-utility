@@ -10,17 +10,25 @@
 
 .property-listing-filters-form {
     border: 1px solid black;
-    border-radius: 10px;
-    padding: 20px;
+    background-color: darkslategray;
+    color: white;
+    border-radius: 8%;
+    padding: 12%;
     width: fit-content;
     height: fit-content;
 }
 
 .property-listing-filters-form button {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5%;
+    margin-bottom: 10%;
 }
 
 .property-listings-range-inputs input[type="number"] {
     width: 35%;
+}
+
+.filter-header {
+    font-size: 260%;
+    text-align: left;
+    justify-content: center;
 }
