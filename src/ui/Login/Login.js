@@ -25,10 +25,10 @@ function PopUp(props) {
     				<input type="text" name="password" onChange={(e) => setPassword(e.target.value)}/>
   					</label>
   					<br></br>
-                    <button onClick={() => props.setTrigger(false)}> Log in </button>
+                    <button onClick={() => logIn(username,password)}> Log in </button>
   					<br></br>
 				</form>
-                <button className="close-btn" onClick={() => logIn(username,password)}>Close</button>
+                <button className="close-btn" onClick={() => props.setTrigger(false)}>Close</button>
             </div>
         </div>
     ) : "";
