@@ -33,9 +33,11 @@ const Auth = () => {
     // PRECONDITIONS (2 parameters):
     // 1.) email: a string that contains an email
     // 2.) password: a string that contains a password
-    // POSTCONDITIONS (2 possible outcomes):
-    // if log in is successful, the session will automatically be updated by the listener function defined in AppUtils.js
-    // if log in is unsuccessful, or the query fails, the user is alerted of the error
+    // POSTCONDITIONS (1 return, 2 possible outcomes):
+    // if log in is successful, the session will automatically be updated by the listener function defined in AppUtils.js, and a
+    // success string is returned
+    // if log in is unsuccessful, or the query fails, the user is alerted of the error, and the message field of the error object is
+    // returned (a string)
     const logIn = async (email, password) => {
         try {
             const { error } = await supabase.auth.signInWithPassword({
@@ -48,9 +50,13 @@ const Auth = () => {
                 throw error;
             }
 
+            // return a success message if log in went smoothly
+            return "Login successful!";
+
         } catch (error) {
             console.log(error);
             alert(error.message);
+            return error.message;
         }
     };
 
