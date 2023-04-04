@@ -11,7 +11,7 @@ function ShowSortComp() {
 
     return(
     <div className="property-listing-filters">
-        <h2>Filters</h2>
+        <div className="filter-header">Filters</div>
         <div className="property-listing-filters-form">
 
             <form onSubmit={ (applyFilters) }>

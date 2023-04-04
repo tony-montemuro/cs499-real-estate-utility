@@ -1,15 +1,17 @@
 .grid-container {
     display: grid;
     background-color: beige;
-    padding: 2.5vh 2.5vh 7vh;
-    height: 12vh;
+    padding: 3% 5% 15%;
+    height: 50%;
+    width: 100%;
     font-size: 8.125vh;
-    aspect-ratio: 5/1;
+    aspect-ratio: 7/1;
     align-items: center;
+    gap: 5%
 }
 
 .image-container {
-    width: 84%;
+    height: 110%;
     grid-column: 1;
     grid-row: 1/4;
     aspect-ratio: 1/1;
