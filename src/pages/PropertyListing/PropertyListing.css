@@ -37,6 +37,10 @@
     height: 112.5px;
 }
 
+.property-listing-empty-row {
+    text-align: center;
+}
+
 .property-listing-mls svg {
     cursor: pointer;
     display: block;
@@ -76,7 +80,7 @@
 }
 
 .property-listings-range-inputs input[type="number"] {
-    width: 35%;
+    width: 55%;
 }
 
 /* ===== FOOTER STYLING ===== */
