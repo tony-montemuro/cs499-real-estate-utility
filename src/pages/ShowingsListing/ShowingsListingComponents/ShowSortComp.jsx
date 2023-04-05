@@ -10,9 +10,9 @@ function ShowSortComp() {
     } = ShowSortCompLogic();
 
     return(
-    <div className="property-listing-filters">
+    <div className="showings-listing-filters">
         <div className="filter-header">Filters</div>
-        <div className="property-listing-filters-form">
+        <div className="showings-listing-filters-form">
 
             <form onSubmit={ (applyFilters) }>
 

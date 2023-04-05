@@ -1,16 +1,13 @@
 /* ===== IMPORTS ===== */
 import "./PropertyListing.css";
-import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import FrontendHelper from "../../util/FrontendHelper.js";
-import HomeIcon from '@mui/icons-material/Home';
-import PropertyImage from "../../ui/PropertyImage/PropertyImage.jsx";
+import FilterForm from "./ui/FilterForm";
+import ListingRow from "./ui/ListingRow";
 import PropertyListingLogic from "./PropertyListing.js";
-import RangeInputs from "./ui/RangeInputs";
 
 function PropertyListing() {
     /* ===== VARIABLES ===== */
-    const navigate = useNavigate();
+    const MLS_WIDTH = 7;
     const NUM_PAGE_RESULTS = 10;
 
     /* ===== STATES & FUNCTIONS ===== */
@@ -26,9 +23,6 @@ function PropertyListing() {
         filterListingsByPage, 
         handlePageChange 
     } = PropertyListingLogic();
-
-    // helper functions
-    const { floatToUSD, formatFloat, getAddress } = FrontendHelper();
 
     /* ===== EFFECTS ===== */
     useEffect(() => {
@@ -69,65 +63,32 @@ function PropertyListing() {
 
                                 { /* Table Body - Listing information, rendered for each listing object in the listing state. */ }
                                 <tbody>
-                                    { filterListingsByPage(NUM_PAGE_RESULTS).map(listing => {
-                                        return <tr key={ listing.listing_id }>
-                                            <td>
-                                                <HomeIcon onClick={ () => navigate(`${ listing.listing_id }`) } />
-                                            </td>
-                                            <td id="property-listing-img-td">
-                                                <div className="property-listing-img-container">
-                                                    <PropertyImage filename={ listing.property.small } />
-                                                </div>
-                                            </td>
-                                            <td>{ floatToUSD(listing.price) }</td>
-                                            <td>{ getAddress(listing.property) }</td>
-                                            <td>{ formatFloat(listing.property.sqr_feet) }</td>
-                                            <td>{ listing.agent.agency.name }</td>
-                                            <td>{ listing.agent.name }</td>
+
+                                    {/* If any listings exist, we can render a series of listing rows. */}
+                                    { listings.length > 0 ?
+                                        filterListingsByPage(NUM_PAGE_RESULTS).map(listing => {
+                                            return <ListingRow listing={ listing } key={ listing.listing_id } />;
+                                        })
+                                    :
+
+                                    // Otherwise, render a single row, stating that no properties could be found.
+                                        <tr>
+                                            <td className="property-listing-empty-row" colSpan={ MLS_WIDTH }><i>No properties exist within your filters!</i></td>
                                         </tr>
-                                    }) }
+                                    }
+
                                 </tbody>
 
                             </table>
                         </div>
 
                         { /* Multiple Listing Service Filter */ }
-                        <div className="property-listing-filters">
-                            <h2>Filters</h2>
-                            <div className="property-listing-filters-form">
-
-                                { /* Form used to set search filters */ }
-                                <form onSubmit={ applyFilters }>
-
-                                    { /* Price range */ }
-                                    <b><p>Price</p></b>
-                                    <RangeInputs type={ "price" } formState={ filterForm } updateFormState={ dispatchFilterForm } />
-
-                                    { /* Square footage range */ }
-                                    <b><p>Square Footage</p></b>
-                                    <RangeInputs type={ "sqrFeet" } formState={ filterForm } updateFormState={ dispatchFilterForm } />
-
-                                    { /* Zip code */ }
-                                    <b><p>Zip</p></b>
-                                    <div>
-                                        <label htmlFor="zip">Zip: </label>
-                                        <input 
-                                            id="zip" 
-                                            name="zip" 
-                                            type="text" 
-                                            pattern="[0-9]*" 
-                                            value={ filterForm.zip }
-                                            onChange={ (e) => dispatchFilterForm({ type: e.target.id, value: e.target.value }) }
-                                        />
-                                    </div>
-
-                                    { /* Form button */ }
-                                    <button>Filter</button>
-
-                                </form>
-
-                            </div>
-                        </div>
+                        <FilterForm 
+                            formState={ filterForm } 
+                            updateFormState={ dispatchFilterForm }
+                            applyFiltersFunc={ applyFilters }
+                            pageLength={ NUM_PAGE_RESULTS } 
+                        />
                     </div>
 
                     { /* Property Listing Footer - contains footer information for this page */ }
@@ -144,7 +105,7 @@ function PropertyListing() {
                         { /* Page number selector - allows user to select any page from 1 to pageNumber.max */ }
                         <div className="property-listing-page-select">
                             <label htmlFor="pageNumber">Page Number: </label>
-                            <select id="pageNumber" value={ pageNumber.current } onChange={ (e) => handlePageChange(parseInt(e.target.value)) }>
+                            <select disabled={ pageNumber.max < 2 } id="pageNumber" value={ pageNumber.current } onChange={ (e) => handlePageChange(parseInt(e.target.value)) }>
                             { Array.from({ length: pageNumber.max }, (_, i) => i + 1).map(num => (
                                 <option key={ num } value={ num }>
                                     { num }
@@ -155,7 +116,7 @@ function PropertyListing() {
 
                         { /* Button that moves forward 1 page */ }
                         <button 
-                            disabled={ pageNumber.current === pageNumber.max } 
+                            disabled={ pageNumber.current === pageNumber.max || pageNumber.max === 0 } 
                             onClick={ () => handlePageChange(pageNumber.current+1) }
                         >
                             Next Page
