@@ -70,7 +70,7 @@ function DetailedShowing() {
                         onChange={question2Handler}
                         answer1="Great!"
                         answer2="Okay..."
-                        answer3="Terrible."
+                        answer3="Terrible!"
                     />
                 </div>
 
