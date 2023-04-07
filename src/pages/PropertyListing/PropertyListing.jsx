@@ -1,16 +1,23 @@
 /* ===== IMPORTS ===== */
 import "./PropertyListing.css";
-import { useEffect } from "react";
+import { AgentContext } from "../../Contexts";
+import { useContext, useEffect, useState } from "react";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FilterForm from "./ui/FilterForm";
 import ListingRow from "./ui/ListingRow";
 import PropertyListingLogic from "./PropertyListing.js";
+import AddPropertyPopup from "./ui/AddPropertyPopup";
 
 function PropertyListing() {
     /* ===== VARIABLES ===== */
     const MLS_WIDTH = 7;
     const NUM_PAGE_RESULTS = 10;
 
+    /* ===== CONTEXTS ===== */
+    const { agent } = useContext(AgentContext);
+
     /* ===== STATES & FUNCTIONS ===== */
+    const [popup, setPopup] = useState(false);
 
     // states and functions from the PropertyListing js file
     const { 
@@ -46,6 +53,9 @@ function PropertyListing() {
 
                         { /* Multiple Listing Service */ }
                         <div className="property-listing-mls">
+                            { /* Add Property Listing Button - only renders if an agent is currently logged in */ }
+                            { agent && <button onClick={ () => setPopup(true) }><AddCircleOutlineIcon /> Add Property Listing</button> }
+
                             <table>
 
                                 { /* Table Header */ }
@@ -124,6 +134,7 @@ function PropertyListing() {
 
                     </div>
                     
+                    <AddPropertyPopup popup={ popup } setPopup={ setPopup } />
                 </>
 
             :
