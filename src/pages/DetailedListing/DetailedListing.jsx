@@ -1,8 +1,11 @@
 import "./DetailedListing.css";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import FrontendHelper from "../../util/FrontendHelper";
 import DetailedListingsLogic from "./DetailedListing.js";
+import EditListing from "./ui/EditPropertyPopup.jsx";
+import { AgentContext } from "../../Contexts";
+import PropertyImage from '../../ui/PropertyImage/PropertyImage.jsx';
 
 function DetailedListing() {
   //variables
@@ -10,6 +13,12 @@ function DetailedListing() {
   const path = location.pathname.split("/");
   console.log(path[2]);
   const page_id = path[2];
+  const [popup, setPopup] = useState(false);
+
+  var showing_link = "/showings/" + page_id;
+
+  /* ====== CONTEXTS ====== */
+  const { agent } = useContext(AgentContext);
 
   /* ===== STATES ===== */
 
@@ -26,9 +35,16 @@ function DetailedListing() {
 
   return (
     <>
-      <div className="detailed-listings-header">
-        <h1>Detailed Property Listing {path[2]}</h1>
+      <div>
+        <div className="detailed-listings-header">
+          <h1>Detailed Property Listing {path[2]}&emsp;&emsp;
+          { agent && <button onClick={ () => setPopup(true)} class="button-style">Edit Listing</button>}
+          
+          </h1>
+        </div>
       </div>
+      
+
 
       { /* Render the body of this component if listings is defined. Otherwise, render a loading component. */ }
       { listings ?
@@ -38,14 +54,21 @@ function DetailedListing() {
           <div className="left">
             <p>Image Placeholders</p>
             <div className="image1"/>
+            
+
+            
             <div className="image2"/>
             <div className="image3"/>
             <div className="image3"/>
             <div className="image2"/>
+            <div className="property-listing-img-container">
+              <PropertyImage filename={ listings.property.small } />
+            </div>
           </div>
           <div class="right">
             <h2>Price: { floatToUSD(listings.price) } &emsp; bed | bath | { formatFloat(listings.property.sqr_feet) } sqft</h2>
             <h2>{ getAddress(listings.property) }</h2>
+            <p>Interested?&emsp;<button class="button-style"><Link to = {showing_link}>Book A Listing!</Link></button></p>
             <hr class="insert-line"/>
             <h3>Listed By:</h3>
             <p>{ listings.agent.agency.name }: { listings.agent.agency.phone_number }</p>
@@ -57,7 +80,7 @@ function DetailedListing() {
             <p>Dwelling Type: { listings.property.dwelling_type }</p>
             <p>Subdivision (if applicable): { listings.property.subdivision }</p>
             <p>School District: { listings.property.school_district }</p>
-            <p>Shopping Areas: { listings.property.shopping_areas }</p>
+            <p>Shopping Areas: { listings.property.shopping_areas[0] }, { listings.property.shopping_areas[1] }, { listings.property.shopping_areas[2] }</p>
             <hr class="insert-line"/>
             <h3>Room Details:</h3>
           </div>
@@ -67,7 +90,8 @@ function DetailedListing() {
         // Loading component
         <p>Loading...</p>
       }
-      
+
+      <EditListing popup={ popup } setPopup={ setPopup } />
 
     </>
 

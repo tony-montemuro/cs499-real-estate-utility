@@ -42,14 +42,14 @@
 
 .right {
     height: auto;
-    width: auto;
+    width: 600px;
     overflow-y: scroll;
 }
   
 .left {
     border-right: 1px solid black;
     height: auto;
-    width: auto;
+    width: 900px;
     overflow-y: scroll;
 }
 
@@ -63,4 +63,58 @@
 .td {
     border: 1px solid black;
     padding: 10px;
+}
+
+.button-style {
+    background-color: rgba(151, 195, 220, 0.712);
+    border: 2px solid rgb(96, 97, 104);
+    color: black;
+    padding: 5px 5px;
+    display: inline-block;
+    border-radius: 8px;
+}
+
+.button-style:hover {
+    background-color: rgba(151, 195, 220, 0.712);
+    color: white;
+}
+
+#property-listing-img-td {
+    padding: 0px;
+}
+
+.property-listing-img-container {
+    width: 200px;
+    height: 112.5px;
+}
+
+.link-indicator {
+    color: rgb(55, 100, 224);
+    text-decoration: underline 2px rgb(55, 100, 224);
+}
+
+.edit-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.edit-popup-inner {
+    position: relative;
+    padding: 32px;
+    width: 100%;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    z-index: 1;
 }
