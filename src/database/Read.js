@@ -207,7 +207,12 @@ const Read = () => {
         try {
             const { data: agent, error } = await supabase
                 .from("agent")
-                .select("agency, agent_id, name, user_id")
+                .select(`
+                    agency (agency_id, name), 
+                    agent_id, 
+                    name, 
+                    user_id
+                `)
                 .eq("user_id", id)
                 .maybeSingle();
 
