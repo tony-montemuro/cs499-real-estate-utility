@@ -6,7 +6,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FilterForm from "./ui/FilterForm";
 import ListingRow from "./ui/ListingRow";
 import PropertyListingLogic from "./PropertyListing.js";
-import AddPropertyPopup from "./ui/AddPropertyPopup";
+import AddPropertyPopup from "./ui/AddPropertyPopup.jsx";
 
 function PropertyListing() {
     /* ===== VARIABLES ===== */
@@ -28,7 +28,7 @@ function PropertyListing() {
         dispatchFilterForm, 
         applyFilters,
         filterListingsByPage, 
-        handlePageChange 
+        handlePageChange
     } = PropertyListingLogic();
 
     /* ===== EFFECTS ===== */
@@ -53,6 +53,7 @@ function PropertyListing() {
 
                         { /* Multiple Listing Service */ }
                         <div className="property-listing-mls">
+
                             { /* Add Property Listing Button - only renders if an agent is currently logged in */ }
                             { agent && <button onClick={ () => setPopup(true) }><AddCircleOutlineIcon /> Add Property Listing</button> }
 
