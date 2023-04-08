@@ -1,21 +1,25 @@
 .abrv-show-instance {
     display: flex;
+    flex-direction: row-reverse;
     background-color: beige;
     height: 120%;
-    padding: 1.2vw;
+    padding: 3vh;
     font-size: 7.125vh;
     aspect-ratio: 5.5/2;
     align-items: center;
     gap: 1vw;
+    align-content: center;
 }
 
 .grid-container {
     display: grid;
+    width: 67%;
 }
 
 .image-container {
     height: 19vh;
-    width: 19vh;
+    aspect-ratio: 1/1;
+
     padding-right: 3%;
     padding-left: 3%;
     min-height: 0%;

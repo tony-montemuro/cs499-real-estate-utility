@@ -3,7 +3,6 @@ import "./ListOfShowingsCmp.css";
 import { FixedSizeList } from 'react-window';
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import ListOfShowingsCmpLogic from "./ListOfShowingsCmp.js"
 
 
 function Row({ data, index, style }){
@@ -14,6 +13,8 @@ function Row({ data, index, style }){
     if (index*2 + 1 < data.length) {
         var showingB = data[(index*2+1)]
     }
+
+    console.log(data)
 
     return(
         <div style={style}>
@@ -58,18 +59,20 @@ function Row({ data, index, style }){
 
 }
 
-function ListOfShowingsCmp() {
+function ListOfShowingsCmp({showings, pageNumber, getShowingsInit, handlePageChange}) {
 
     var pageElems = 16;
-    const {showings, pageNumber, getShowings, getShowingsInit, handlePageChange} = ListOfShowingsCmpLogic();
+    //const {showings, pageNumber, getShowings, getShowingsInit, handlePageChange} = ListOfShowingsCmpLogic();
 
     const listWidth = document.querySelector("#ShowingsListingContainingBox") ? 
         document.querySelector("#ShowingsListingContainingBox").clientWidth : 50;
     const listHeight = 470;
 
     useEffect(() => {
-        getShowingsInit(pageElems);
-    }, []);
+        if (!showings){
+        getShowingsInit(pageElems) 
+        }
+    }, [showings, pageNumber]);
 
     return (
 

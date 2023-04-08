@@ -1,12 +1,71 @@
-import { useState } from "react";
+/*
 import Read from "/app/src/database/Read";
+import { useReducer, useState } from "react";
 
 const ListOfShowingsCmp = () => {
     const [showings, setShowings] = useState(undefined);
     const [pageNumber, setPageNumber] = useState(undefined);
     const [pageLength, setPageLength] = useState(undefined);
 
-    const { fetchAbbreviatedShowings } = Read();
+    const { fetchAbbreviatedShowings, fetchAbbreviatedShowingsFiltered } = Read();
+
+    // Filter stuff below here
+
+    /* ===== VARIABLES ====== /
+    const initFilterForm = {
+        zip: "",
+        state: "",
+        city: "",
+    };
+
+    /* ===== filterForm FUNCTION ===== /
+
+    // FUNCTION 1: updateFilterFormState - function that will handle update the filterForm reducer
+    // PRECONDITIONS (2 parameters):
+    // 1.) state - the filterForm state. THIS PARAMETER IS IMPLICITY PASSED!
+    // 2.) action - an object with two parameters:
+        // a.) type - specifies how the state should be updated. it must be one of the 5 string values:
+        // "minPrice", "maxPrice", "minSqrFeet", "maxSqrFeet", "zip". otherwise, this function does nothing
+        // b.) value - contains the new value
+    // POSTCONDITIONS (5 possible outcomes):
+    // one of the five fields of the filterForm state will be updated. a switch state handles each case
+    const updateFilterFormState = (state, action) => {
+        switch (action.type) {
+            case "zip":
+                return { ...state, zip: action.value };
+            case "state":
+                return { ...state, state: action.value };
+            case "city":
+                return { ...state, city: action.value };
+
+        };
+    };
+
+    const [filterForm, dispatchFilterForm] = useReducer(updateFilterFormState, initFilterForm);
+    const [usedFilter, setFilters] = useState({zip: "", state: "", city: ""});
+
+    // FUNCTION 3: applyFilters function
+    // PRECONDITIONS (1 parameter):
+    // 1.) e: an event object generated when the form is submitted
+    const applyFilters = async (e) => {
+        // prevent page from reloading (default form submission behavior)
+        e.preventDefault();
+        
+        setFilters(filterForm);
+
+        // log filterForm object to console
+        console.log(filterForm);
+
+        const lower = pageLength.current * (pageNumber.current-1);
+        const upper = lower + pageLength.current - 1;
+
+        const {abbreviatedShowings, count} 
+            = await fetchAbbreviatedShowingsFiltered(lower, upper, usedFilter.zip, usedFilter.state, usedFilter.city);
+        setShowings(abbreviatedShowings);
+    };
+
+
+    // Page handling below
 
     const getShowings = async (num) => {
 
@@ -38,12 +97,25 @@ const ListOfShowingsCmp = () => {
         const lower = pageLength.current * (num-1);
         const upper = lower + pageLength.current - 1;
 
-        const {abbreviatedShowings, count} = await fetchAbbreviatedShowings(lower, upper);
+        const {abbreviatedShowings, count} 
+            = await fetchAbbreviatedShowingsFiltered(lower, upper, usedFilter.zip, usedFilter.state, usedFilter.city);
         setShowings(abbreviatedShowings);
     };
 
-    return {showings, pageNumber, getShowings, getShowingsInit, handlePageChange};
+    // return
+
+    return { 
+        filterForm, 
+        dispatchFilterForm, 
+        applyFilters,
+        showings, 
+        pageNumber, 
+        getShowings, 
+        getShowingsInit, 
+        handlePageChange};
 
 }
 
 export default ListOfShowingsCmp;
+
+*/
