@@ -137,6 +137,13 @@ const Read = () => {
                     start_time,
                     end_time,
                     listing (
+                        agent (
+                            agency (
+                                name
+                            ),
+                            name
+                        ),
+                        listing_id,
                         property (
                             street,
                             city,
@@ -147,7 +154,7 @@ const Read = () => {
                     ),
                     agent (
                         name,
-                        agency(
+                        agency (
                             name
                         )
                     )

@@ -24,9 +24,11 @@ function Row({ data, index, style }){
                     <AbrvShowingInstance 
                         address={showingA.listing.property.city + ' ' + showingA.listing.property.state}
                         street = {showingA.listing.property.street + ' ' + showingA.listing.property.zip} 
-                        time = {showingA.start_time + ' - ' + showingA.end_time} 
-                        agencyInfo = {showingA.agent ? showingA.agent.name + ', ' + showingA.agent.agency.name : "No agent"}
-                        image = {showingA.listing.property.small}>
+                        startTime = {showingA.start_time}
+                        endTime = {showingA.end_time} 
+                        listAgentInfo = {showingA.listing.agent.name + ', ' + showingA.listing.agent.agency.name}
+                        image = {showingA.listing.property.small}
+                        showAgentInfo= {showingA.agent ? showingA.agent.name + ', ' + showingA.agent.agency.name : null}>
                             {/*console.log(showingA.listing.property.small)*/}
                     </AbrvShowingInstance>
                 </Link>
@@ -36,9 +38,12 @@ function Row({ data, index, style }){
                     <AbrvShowingInstance 
                         address={showingB.listing.property.city + ' ' + showingB.listing.property.state}
                         street = {showingB.listing.property.street + ' ' + showingB.listing.property.zip} 
-                        time = {showingB.start_time + ' - ' + showingB.end_time} 
-                        agencyInfo = {showingB.agent ? showingB.agent.name + ', ' + showingB.agent.agency.name : "No agent"}
-                        image = {showingB.listing.property.small}>
+                        startTime = {showingB.start_time}
+                        endTime = {showingB.end_time} 
+                        listAgentInfo = {showingB.listing.agent.name + ', ' + showingB.listing.agent.agency.name} 
+                        image = {showingB.listing.property.small}
+                        showAgentInfo = {showingB.agent ? showingB.agent.name + ', ' + showingB.agent.agency.name : null}
+                        >
                             {/*console.log(showingB.listing.property.small)*/}
                     </AbrvShowingInstance>
                 </Link>
@@ -103,7 +108,7 @@ function ListOfShowingsCmp() {
                     height={listHeight}
                     width={listWidth}
                     itemCount={Math.ceil(showings.length / 2)}
-                    itemSize = {(0.23 * window.innerHeight)}
+                    itemSize = {(0.30 * window.innerHeight)}
                     itemData={showings}>
                     {Row}
 
