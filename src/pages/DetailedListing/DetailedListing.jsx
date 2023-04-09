@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import FrontendHelper from "../../util/FrontendHelper";
 import DetailedListingsLogic from "./DetailedListing.js";
+import NewShowingForm from "./NewShowingForm.jsx";
 
 function DetailedListing() {
   //variables
@@ -14,7 +15,7 @@ function DetailedListing() {
   /* ===== STATES ===== */
 
   // states and functions from the PropertyListing js file
-  const { listings, getCurrListing } = DetailedListingsLogic();
+  const { listings, getCurrListing, showForm, toggleForm } = DetailedListingsLogic();
 
   // helper functions
   const { floatToUSD, formatFloat, getAddress } = FrontendHelper();
@@ -34,6 +35,18 @@ function DetailedListing() {
       { listings ?
         <>  
         {/*body of the listing */}
+            {showForm ? 
+            <>
+              <button disabled={true} >
+              Create Showing
+              </button>
+              <NewShowingForm toggleForm={toggleForm} listing_id = {page_id}></NewShowingForm>
+            </>
+            :
+              <button onClick = {() => toggleForm(true)} >
+              Create Showing
+              </button>
+            }
         <div className="container">
           <div className="left">
             <p>Image Placeholders</p>
@@ -43,22 +56,22 @@ function DetailedListing() {
             <div className="image3"/>
             <div className="image2"/>
           </div>
-          <div class="right">
+          <div className="right">
             <h2>Price: { floatToUSD(listings.price) } &emsp; bed | bath | { formatFloat(listings.property.sqr_feet) } sqft</h2>
             <h2>{ getAddress(listings.property) }</h2>
-            <hr class="insert-line"/>
+            <hr className="insert-line"/>
             <h3>Listed By:</h3>
             <p>{ listings.agent.agency.name }: { listings.agent.agency.phone_number }</p>
             <p>&emsp; &emsp; { getAddress(listings.agent.agency) }</p>
             <p>{ listings.agent.name }: { listings.agent.phone_number }</p>
             <p>&emsp; &emsp; { listings.agent.email }</p>
-            <hr class="insert-line"/>
+            <hr className="insert-line"/>
             <h3>Overview:</h3>
             <p>Dwelling Type: { listings.property.dwelling_type }</p>
             <p>Subdivision (if applicable): { listings.property.subdivision }</p>
             <p>School District: { listings.property.school_district }</p>
             <p>Shopping Areas: { listings.property.shopping_areas }</p>
-            <hr class="insert-line"/>
+            <hr className="insert-line"/>
             <h3>Room Details:</h3>
           </div>
         </div>
@@ -68,7 +81,6 @@ function DetailedListing() {
         <p>Loading...</p>
       }
       
-
     </>
 
   );

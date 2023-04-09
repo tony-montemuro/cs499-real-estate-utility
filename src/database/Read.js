@@ -1,6 +1,7 @@
 /* ===== IMPORTS ===== */
 import { queryByLabelText } from "@testing-library/react";
 import { supabase } from "./SupabaseClient";
+import ReadFilterHelper from "./ReadFilterHelper.js";
 
 const Read = () => {
     /* ===== FUNCTIONS ===== */
@@ -163,6 +164,13 @@ const Read = () => {
                     start_time,
                     end_time,
                     listing (
+                        agent (
+                            agency (
+                                name
+                            ),
+                            name
+                        ),
+                        listing_id,
                         property (
                             street,
                             city,
@@ -173,7 +181,7 @@ const Read = () => {
                     ),
                     agent (
                         name,
-                        agency(
+                        agency (
                             name
                         )
                     )
@@ -188,6 +196,73 @@ const Read = () => {
 
             //return data
             return { abbreviatedShowings: abbreviatedShowings, count: count };
+        }
+        catch (error) {
+            console.log(error);
+            alert(error.message);
+            return [];
+        }
+    };
+
+    const { fetchAbbreviatedShowingsNone, fetchAbbreviatedShowingsFilterZIP, fetchAbbreviatedShowingsFilterState, 
+        fetchAbbreviatedShowingsFilterCity, fetchAbbreviatedShowingsFilterStateZIP, fetchAbbreviatedShowingsFilterCityZIP,
+        fetchAbbreviatedShowingsFilterCityState, fetchAbbreviatedShowingsFilterCityStateZIP} = ReadFilterHelper();
+
+    const fetchAbbreviatedShowingsFiltered = async (lower, upper, zip, state, city) => {
+
+        try {
+            if(city == null || city == "") {
+                if(state == null || state == "") {
+                    if (zip == null || zip ==""){ // All search fields are null, no filter
+                        
+                        return await fetchAbbreviatedShowingsNone(lower, upper);
+
+                    }
+                    else { // Filter just against ZIP code
+
+                        return await fetchAbbreviatedShowingsFilterZIP(lower, upper, zip);
+
+                    }
+                } //end of
+                else { // Filter against state and...
+                    if (zip == null || zip == ""){ // Filter just against state
+                        
+                        return await fetchAbbreviatedShowingsFilterState(lower, upper, state);
+
+                    }
+                    else { //Filter against state and ZIP code
+                            
+                        return await fetchAbbreviatedShowingsFilterStateZIP(lower, upper, zip, state);
+
+                    }
+                } //end of not city, but state and...
+            } //end of not city...
+            else { // Filter against city and..
+                if(state == null || state == "") { // not filter for state
+                    if (zip == null || zip == ""){ // filter only for city
+                        
+                        return await fetchAbbreviatedShowingsFilterCity(lower, upper, city);
+
+                    }
+                    else { // Filter just against ZIP code and city
+
+                        return await fetchAbbreviatedShowingsFilterCityZIP(lower, upper, zip, city);
+
+                    }
+                } //end of city and nont state...
+                else { // Filter against state and city and...
+                    if (zip == null || zip == ""){ // Filter just against state and city
+                        
+                        return await fetchAbbreviatedShowingsFilterCityState(lower, upper, state, city);
+
+                    }
+                    else { //Filter against city, state and ZIP code
+                        
+                        return await fetchAbbreviatedShowingsFilterCityStateZIP(lower, upper, zip, state, city);
+                            
+                    }
+                } //end of city and state...
+            } //end of city and...
         }
         catch (error) {
             console.log(error);
@@ -231,7 +306,7 @@ const Read = () => {
         }
     };
 
-    return { fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchImageByFilename, fetchAgentById };
+    return { fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchAbbreviatedShowingsFiltered, fetchImageByFilename, fetchAgentById };
 };
 
 /* ===== EXPORTS ===== */

@@ -5,11 +5,13 @@ import Read from "../../database/Read";
 const PropertyListings = () => {
     /* ===== STATES ===== */
     const [listings, setListings] = useState(undefined);
+    const [showForm, toggleForm] = useState(false)
 
     /* ===== FUNCTIONS ===== */
 
     // functions used to read from database
     const { fetchFullListing } = Read();
+
 
     const getCurrListing = async (id) => {
         // fetch current listing from the database, and update the listings state
@@ -17,7 +19,7 @@ const PropertyListings = () => {
         setListings(currentListing);
     };
 
-    return { listings, getCurrListing };
+    return { listings, getCurrListing, showForm, toggleForm };
 };
 
 /* ===== EXPORTS ===== */
