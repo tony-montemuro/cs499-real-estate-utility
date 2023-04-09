@@ -33,9 +33,12 @@ function REUNavbar(props){
 					<li>
 							<Link to="/listings">Listings</Link>
 					</li>
+					{ agent ? 
 					<li>
 							<Link to="/showings">Showings</Link>
 					</li>
+					 : 
+					 <></> }
 				</ul>
 				{ agent ? 
                 	<login>

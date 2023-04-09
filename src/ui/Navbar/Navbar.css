@@ -55,6 +55,10 @@
     
 }
 
+.header button {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 .login button {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
@@ -70,6 +74,16 @@
 }
   
 .login {
+    padding-left: 5vw;
+    padding-right: 1vw;
+    display: inline;
+    text-align: right; 
+    text-decoration: none;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: rgb(0, 0, 0); 
+    
+}
+.header login {
     padding-left: 5vw;
     padding-right: 1vw;
     display: inline;
