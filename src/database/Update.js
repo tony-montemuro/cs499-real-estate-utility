@@ -80,25 +80,44 @@ const Update = () => {
 
         hours = hours ? hours : 1;
 
+        console.log(day, time, hours, listing_number, agent_number)
+
         var time_start = new Date(day + "T" + time + ":00");
         var time_end = new Date();
         time_end.setTime(time_start.getTime() + (hours * 3600000));
 
         try {
+            if(agent_number){
             const { data: error, status} = await supabase
                 .from("showing")
                 .insert([{
-                    start_time: time_start,
-                    end_time: time_end,
+                    start_time: time_start.toISOString(),
+                    end_time: time_end.toISOString(),
                     listing: listing_number,
                     agent: agent_number
                 }])
+                // error handling
+                if (error && status !== 406) {
+                    throw error;
+                }
+            }
+
+            else {
+                const { data: error, status} = await supabase
+                .from("showing")
+                .insert([{
+                    start_time: time_start.toISOString(),
+                    end_time: time_end.toISOString(),
+                    listing: listing_number,
+                }])
+                // error handling
+                if (error && status !== 406) {
+                    throw error;
+                }
+            }
      
 
-            // error handling
-            if (error && status !== 406) {
-                throw error;
-            }
+
 
         }
         catch (error) {

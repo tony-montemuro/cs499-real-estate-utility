@@ -14,8 +14,6 @@ function Row({ data, index, style }){
         var showingB = data[(index*2+1)]
     }
 
-    console.log(data)
-
     return(
         <div style={style}>
             
