@@ -13,7 +13,7 @@ function BasicSelect(props) {
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value=""
+                    value={props.currentAnswer}
                     label="Answer"
                     variant="filled"
                     onChange={props.onChange}
@@ -28,5 +28,5 @@ function BasicSelect(props) {
     );
 }
 
-export default BasicSelect; 
+export default BasicSelect;
 
