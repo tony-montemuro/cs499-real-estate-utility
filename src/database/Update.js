@@ -88,14 +88,15 @@ const Update = () => {
 
         try {
             if(agent_number){
-            const { data: error, status} = await supabase
+            const { error, status } = await supabase
                 .from("showing")
                 .insert([{
                     start_time: time_start.toISOString(),
                     end_time: time_end.toISOString(),
                     listing: listing_number,
                     agent: agent_number
-                }])
+                }]);
+
                 // error handling
                 if (error && status !== 406) {
                     throw error;
@@ -103,7 +104,7 @@ const Update = () => {
             }
 
             else {
-                const { data: error, status} = await supabase
+                const { error, status } = await supabase
                 .from("showing")
                 .insert([{
                     start_time: time_start.toISOString(),
