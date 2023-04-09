@@ -309,11 +309,11 @@ const AddPropertyPopup = () => {
     // PRECONDITIONS (1 parameter):
     // 1.) setPopup: a state function which allows the popup state to be updated when called
     // POSTCONDITIONS (1 possible outcome):
-    // the property form is reset to default values by calling the dispatchPropertyForm() function with the special type
-    // all, which simply sets the entire form state back to the initial form values. then, the popup is closed by calling
-    // setPopup(false)
+    // all states are reset to default values. then, the popup is closed by calling setPopup(false)
     const closePopup = (setPopup) => {
         dispatchPropertyForm({ type: "all" });
+        setError(initError);
+        setSubmitted(null);
         setPopup(false);
     };
     
