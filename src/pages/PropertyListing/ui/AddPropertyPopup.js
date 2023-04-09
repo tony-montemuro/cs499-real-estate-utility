@@ -39,6 +39,19 @@ const AddPropertyPopup = () => {
         },
         rooms: []
     };
+    const initError = {
+        price: undefined,
+        street: undefined,
+        city: undefined,
+        state: undefined,
+        zip: undefined,
+        lot_size: undefined,
+        sqr_feet: undefined,
+        school_district: undefined,
+        arm: undefined,
+        disarm: undefined,
+        lockbox: undefined
+    };
 
     /* ===== REDUCER FUNCTIONS ===== */
 
@@ -51,7 +64,6 @@ const AddPropertyPopup = () => {
     // POSTCONDITIONS (1 possible outcome):
     // one of the many fields of the propertyForm is updated, with a switch statement handling special cases
     const updatePropertyFormState = (state, action) => {
-        console.log(state);
         switch (action.type) {
             case "all":
                 return { ...initPropertyForm };
@@ -95,6 +107,7 @@ const AddPropertyPopup = () => {
     };
 
     /* ===== STATES & REDUCERS ===== */
+    const [error, setError] = useState(initError);
     const [propertyForm, dispatchPropertyForm] = useReducer(updatePropertyFormState, initPropertyForm);
     const [submitted, setSubmitted] = useState(null);
 
@@ -191,13 +204,85 @@ const AddPropertyPopup = () => {
         dispatchPropertyForm({ type: "delete_shopping_area", index: index });
     };
 
-    // FUNCTION 9 - handleSubmit: function that is called when the agent hits the "Add Property" button
+    // FUNCTION 9 - validateRequiredField: function that validates whether or not a required field exists or not
+    // PRECONDITIONS (1 parameter):
+    // 1.) field: one of the string fields from the propertyForm that is required
+    // POSTCONDITIONS (2 possible outcomes):
+    // if field has any content, an undefined object is returned
+    // otherwise, an error message stating that the field is requried is returned
+    const validateRequiredField = (field) => {
+        return field.length === 0 ? "Required field." : undefined; 
+    };
+
+
+    // FUNCTION 10 - validateRequiredIntegerField: function that validates whether or not a field that has an integer format exists
+    // or not
+    // PRECONDITIONS (1 parameter):
+    // 1.) field: one of the string fields from the propertyForm that is required
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the field has any content, and is well-formatted, an undefined object is returned
+    // otherwise, an error message stating that the field is required (if missing), or that it's not formatted correctly (not an integer)
+    // is returned
+    const validateRequiredIntegerField = (field) => {
+        let error = validateRequiredField(field);
+        if (error === undefined) {
+            error = /^\d+$/.test(field) ? undefined : "Invalid format.";
+        }
+        return error;
+    };
+
+    // FUNCTION 11: cleanField: function that 'cleans' non-required fields, essentially just returning null if the field is not filled
+    // PRECONDITIONS (1 parameter):
+    // 1.) field: one of the string fields from the propertyForm that is required
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the field is empty, return a null object
+    // otherwise, just return the field as-is
+    const cleanField = (field) => {
+        return field.length === 0 ? null : field;
+    };
+
+    // FUNCTION 12 - handleSubmit: function that is called when the agent hits the "Add Property" button
+    // PRECONDITIONS (1 parameter):
+    // 1.) e: an event object that is generated when the agent attempts to submit the property form
+    // POSTCONDITIONS (3 possible outcomes):
+    // If form validation fails, the function returns early, and the user is informed of any form errors.
+    // If form validation succeeds, but queries fail, user is notified of the query error.
+    // Otherwise, this function validates the form, cleans non-required inputs, and inserts the property listing: property, rooms,
+    // and listing, to the database
     const handleSubmit = async (e) => {
+        // prevent default form behavior of reloading upon submission
         e.preventDefault();
+
+        // now, let's perform a series of validation tests on the form before submitting
+        const error = initError;
+        error.price = validateRequiredField(propertyForm.listing.price);
+        error.street = validateRequiredField(propertyForm.property.street);
+        error.city = validateRequiredField(propertyForm.property.city);
+        error.state = validateRequiredField(propertyForm.property.state);
+        error.zip = validateRequiredIntegerField(propertyForm.property.zip);
+        error.lot_size = validateRequiredIntegerField(propertyForm.property.lot_size);
+        error.sqr_feet = validateRequiredIntegerField(propertyForm.property.sqr_feet);
+        error.school_district = validateRequiredField(propertyForm.property.school_district);
+        error.arm = validateRequiredIntegerField(propertyForm.property.arm);
+        error.disarm = validateRequiredIntegerField(propertyForm.property.disarm);
+        error.lockbox = validateRequiredField(propertyForm.property.lock_box);
+
+        // if even just 1 test failed, return the function early, denying the submission attempt
+        setError(error);
+        if (Object.values(error).some(field => field !== undefined)) {
+            return;
+        }
+
+        // now, let's 'clean' non-required fields, which is just setting each to null if they were not filled
+        const property = { ...propertyForm.property };
+        property.subdivision = cleanField(property.subdivision);
+        property.passcode = cleanField(property.passcode);
+        property.alarm_notes = cleanField(property.alarm_notes);
+        property.other = cleanField(property.other);
         
         try {
             // first, insert the property, which will return the properties id
-            const propertyId = await insertProperty(propertyForm.property);
+            const propertyId = await insertProperty(property);
 
             // then, concurrenty insert all rooms, as well as the listing
             const promises = propertyForm.rooms.map(room => {
@@ -220,7 +305,7 @@ const AddPropertyPopup = () => {
         }
     };
 
-    // FUNCTION 10 - closePopup: function that is called when the agent hits the 'X' button at the top right of the popup
+    // FUNCTION 13 - closePopup: function that is called when the agent hits the 'X' button at the top right of the popup
     // PRECONDITIONS (1 parameter):
     // 1.) setPopup: a state function which allows the popup state to be updated when called
     // POSTCONDITIONS (1 possible outcome):
@@ -234,6 +319,7 @@ const AddPropertyPopup = () => {
     
     return { 
         dwellings, 
+        error,
         propertyForm, 
         roomTypes, 
         submitted,

@@ -5,6 +5,7 @@ import { useContext } from "react";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddPropertyPopupLogic from "./AddPropertyPopup.js";
 import CancelIcon from '@mui/icons-material/Cancel';
+import ErrorMessage from "./ErrorMessage";
 import FrontendHelper from "../../../util/FrontendHelper";
 import RoomInput from "./RoomInput.jsx";
 import ShoppingInput from "./ShoppingInput";
@@ -23,6 +24,7 @@ function AddPropertyPopup({ popup, setPopup }) {
   // states and functions fron the js file
   const { 
     dwellings, 
+    error,
     propertyForm, 
     roomTypes, 
     submitted,
@@ -80,6 +82,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.listing.price }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.price } />
                   </div>
 
                   { /* Address section: allows agent to enter the address of the property: street, city, state, zip code */ }
@@ -92,6 +95,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.property.address }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.street } />
                     <label htmlFor="city">City: </label>
                     <input 
                       id="city"
@@ -99,6 +103,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.property.city }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.city } />
                     <label htmlFor="state">State: </label>
                     <input
                       id="state"
@@ -106,6 +111,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.property.state }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.state } />
                     <label htmlFor="zip">ZIP Code: </label>
                     <input
                       id="zip"
@@ -113,6 +119,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.property.zip }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.zip } />
                   </div>
 
                   { /* Property Sizes section: Allows agent to enter information relating to the size of the property:
@@ -126,6 +133,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.property.lot_size }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.lot_size } />
                     <label htmlFor="sqr_feet">Net Square Footage: </label>
                     <input
                       id="sqr_feet"
@@ -133,6 +141,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.property.sqr_feet }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.sqr_feet } />
                     <label htmlFor="dwelling_type">Dwelling Type: </label>
                     <select id="dwelling_type" value={ propertyForm.property.dwelling_type } onChange={ handleChange }>
                       { dwellings.map(option => {
@@ -213,6 +222,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.property.school_district }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.school_district } />
                     <label htmlFor="shopping_areas">Shopping Areas: </label>
                     { propertyForm.property.shopping_areas.map((shoppingArea, index) => {
                       return <ShoppingInput 
@@ -241,6 +251,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.property.arm }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.arm } /> 
                     <label htmlFor="disarm">Disarm Code: </label>
                     <input
                       id="disarm"
@@ -248,6 +259,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.property.disarm }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.disarm } />
                     <label htmlFor="passcode">Passcode (optional): </label>
                     <input
                       id="passcode"
@@ -262,6 +274,7 @@ function AddPropertyPopup({ popup, setPopup }) {
                       value={ propertyForm.property.lock_box }
                       onChange={ handleChange }
                     />
+                    <ErrorMessage message={ error.lockbox } />
                     <label htmlFor="alarm_notes">Alarm Notes (optional): </label>
                     <textarea
                       id="alarm_notes"
