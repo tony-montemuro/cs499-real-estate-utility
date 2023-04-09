@@ -5,9 +5,10 @@ import Read from "../../database/Read";
 const PropertyListings = () => {
     /* ===== VARIABLES ====== */
     const initFilterForm = {
-        price: { min: "", max: "" },
-        sqrFeet: { min: "", max: "" },
-        zip: ""
+        price: { min: "100000", max: "10000000" },
+        sqrFeet: { min: "1000", max: "5000" },
+        zip: "",
+        error: { price: null, sqrFeet: null, zip: null }
     };
 
     /* ===== filterForm FUNCTION ===== */
@@ -16,11 +17,11 @@ const PropertyListings = () => {
     // PRECONDITIONS (2 parameters):
     // 1.) state - the filterForm state. THIS PARAMETER IS IMPLICITY PASSED!
     // 2.) action - an object with two parameters:
-        // a.) type - specifies how the state should be updated. it must be one of the 5 string values:
-        // "minPrice", "maxPrice", "minSqrFeet", "maxSqrFeet", "zip". otherwise, this function does nothing
+        // a.) type - specifies how the state should be updated. it must be one of the 6 string values:
+        // "minPrice", "maxPrice", "minSqrFeet", "maxSqrFeet", "zip", "error". otherwise, this function does nothing
         // b.) value - contains the new value
     // POSTCONDITIONS (5 possible outcomes):
-    // one of the five fields of the filterForm state will be updated. a switch state handles each case
+    // one of the six fields of the filterForm state will be updated. a switch state handles each case
     const updateFilterFormState = (state, action) => {
         switch (action.type) {
             case "min-price":
@@ -33,6 +34,8 @@ const PropertyListings = () => {
                 return { ...state, sqrFeet: { ...state.sqrFeet, max: action.value } };
             case "zip":
                 return { ...state, zip: action.value };
+            case "error":
+                return { ...state, error: action.value };
         };
     };
 
@@ -56,7 +59,7 @@ const PropertyListings = () => {
     // number of listings returned by the query.
     const getListings = async (pageLength) => {
         // fetch array of listings from the database, and update the listings state
-        const abbreviatedListings = await fetchAbbreviatedListings();
+        const abbreviatedListings = await fetchAbbreviatedListings(filterForm);
         setListings(abbreviatedListings);
 
         // compute the max number of pages based on the count of listings returned by the query, & update the
@@ -67,14 +70,41 @@ const PropertyListings = () => {
     };
 
     // FUNCTION 3: applyFilters function
-    // PRECONDITIONS (1 parameter):
+    // PRECONDITIONS (2 parameters):
     // 1.) e: an event object generated when the form is submitted
-    const applyFilters = (e) => {
+    // 2.) 
+    const applyFilters = (e, pageLength) => {
         // prevent page from reloading (default form submission behavior)
         e.preventDefault();
+        let error = { price: null, sqrFeet: null, zip: null };
+
+        // first, let's validate the price inputs
+        const maxPrice = filterForm.price.max, minPrice = filterForm.price.min;
+        if (minPrice > maxPrice) {
+            error.price = "The minimum price cannot be greater than the maximum price.";
+        }
+
+        // next, let's validate the square footage inputs
+        const maxSqrFeet = filterForm.sqrFeet.max, minSqrFeet = filterForm.sqrFeet.min;
+        if (minSqrFeet > maxSqrFeet) {
+            error.sqrFeet = "The mimimum square footage cannot be greater than the maximum square footage.";
+        }
+
+        // finally, validate the zip code
+        const zip = filterForm.zip;
+        if (zip.length !== 0 && zip.length !== 5) {
+            error.zip = "Not a valid zip code.";
+        }
+
+        // loop through the error object. if any fields are null, we want to update the error field in the filterForm, and
+        // return early (do NOT want to update listings state)
+        if (Object.values(error).some(val => val !== null)) {
+            dispatchFilterForm({ type: "error", value: error });
+            return;
+        }
         
-        // log filterForm object to console
-        console.log(filterForm);
+        // if we made it this far, simply make a call to getListings
+        getListings(pageLength);
     };
 
     // FUNCTION 4: filterListings - generate a filtered array of listings based on the page number and page length

@@ -1,7 +1,7 @@
 import classes from "./Navbar.css";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
-import PopUp from "../Login/Login.js";
+import PopUp from "../Login/Login.jsx";
 import logo from '../../assets/Logo_withText.png'; // Tell webpack this JS file uses this image
 import { AgentContext } from "../../Contexts";
 import Auth from "../../database/Auth.js"
@@ -33,9 +33,12 @@ function REUNavbar(props){
 					<li>
 							<Link to="/listings">Listings</Link>
 					</li>
+					{ agent ? 
 					<li>
 							<Link to="/showings">Showings</Link>
 					</li>
+					 : 
+					 <></> }
 				</ul>
 				{ agent ? 
                 	<login>

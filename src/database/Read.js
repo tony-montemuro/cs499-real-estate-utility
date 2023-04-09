@@ -1,4 +1,5 @@
 /* ===== IMPORTS ===== */
+import { queryByLabelText } from "@testing-library/react";
 import { supabase } from "./SupabaseClient";
 import ReadFilterHelper from "./ReadFilterHelper.js";
 
@@ -6,38 +7,63 @@ const Read = () => {
     /* ===== FUNCTIONS ===== */
     
     // FUNCTION 1: fetchAbbreviatedListings - fetch array of abbreviated listings from the database
-    // PRECONDITIONS (0 parameters):
-    // this will have parameters soon...
+    // PRECONDITIONS (1 parameter):
+    // 1.) filterObj: an object, which contains contraints on the query. each field corresponds to a filter:
+        // a.) price: limits the price between a `min` and `max` value. if min is "", allow any price to 0. if max is "", allow any
+        // price to 99,999,999.99
+        // b.) sqrFeet: limits the square footage between a `min` and `max` value. if min is "", allow any sqrtFeet to 0. if max is "",
+        // allow any sqrFeet to 100,000
+        // c.) zip: a zip code, which will restrict the query to only properties in the zip code. if null, allow any zip code.
     // POSTCONDITIONS (1 returns, 1 possible outcome):
     // await the call to fetch array of Abbreviated Listings objects from the database. if an error is detected, handle it. 
     // otherwise, we return:
     // 1.) abbreviatedListings: the array of abbreviatedListing objects (an empty array if we get an error)
-    const fetchAbbreviatedListings = async () => {
-        try {
-            const { data: abbreviatedListings, error, status } = await supabase
-                .from("listing")
-                .select(`
-                    agent (
-                        agency (
-                            name
-                        ),
+    const fetchAbbreviatedListings = async (filterObj) => {
+        // declare price query variables
+        const price = filterObj.price;
+        const maxPrice = price.max ? price.max : 99999999.00;
+        const minPrice = price.min ? price.min : 0;
+
+        // declare sqrFeet query variables
+        const sqrFeet = filterObj.sqrFeet;
+        const maxSqrFeet = sqrFeet.max ? sqrFeet.max : 100000;
+        const minSqrFeet = sqrFeet.min ? sqrFeet.min : 0;
+
+        // determine if query should include a filter for zip code based on the value of zip code
+        const zip = filterObj.zip;
+        let query = supabase
+            .from("listing")
+            .select(`
+                agent (
+                    agency (
                         name
                     ),
-                    listing_id,
-                    price,
-                    property (
-                        city,
-                        small,
-                        sqr_feet,
-                        state,
-                        street,
-                        zip
-                    )
-                `)
-                .order("listing_id");
+                    name
+                ),
+                listing_id,
+                price,
+                property!inner (
+                    city,
+                    small,
+                    sqr_feet,
+                    state,
+                    street,
+                    zip
+                )
+            `)
+            .order("listing_id")
+            .gte("price", minPrice)
+            .lte("price", maxPrice)
+            .gte("property.sqr_feet", minSqrFeet)
+            .lte("property.sqr_feet", maxSqrFeet);
+        query = zip.length > 0 ? query.eq("property.zip", zip) : query;
+
+        // attempt query
+        try {
+            const { data: abbreviatedListings, error } = await query;
 
             // error handling
-            if (error && status !== 406) {
+            if (error) {
                 throw error;
             }
 
@@ -256,7 +282,12 @@ const Read = () => {
         try {
             const { data: agent, error } = await supabase
                 .from("agent")
-                .select("agency, agent_id, name, user_id")
+                .select(`
+                    agency (agency_id, name), 
+                    agent_id, 
+                    name, 
+                    user_id
+                `)
                 .eq("user_id", id)
                 .maybeSingle();
 

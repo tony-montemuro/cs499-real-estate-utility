@@ -1,14 +1,9 @@
-.property-listing-filters {
+.showings-listing-filters {
     flex: 0.25;
     text-align:center;
 }
 
-.property-listings-range-inputs {
-    display: flex;
-    flex-direction: row;
-}
-
-.property-listing-filters-form {
+.showings-listing-filters-form {
     border: 1px solid black;
     background-color: darkslategray;
     color: white;
@@ -18,13 +13,9 @@
     height: fit-content;
 }
 
-.property-listing-filters-form button {
+.showings-listing-filters-form button {
     margin-top: 5%;
     margin-bottom: 10%;
-}
-
-.property-listings-range-inputs input[type="number"] {
-    width: 35%;
 }
 
 .filter-header {

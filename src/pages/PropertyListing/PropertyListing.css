@@ -16,6 +16,16 @@
     flex: 0.75;
 }
 
+.property-listing-mls button {
+    line-height: 2.25rem;
+    margin-bottom: 10px;
+}
+
+.property-listing-mls button svg {
+    float: left;
+    padding-right: 5px; /* or some other padding value */
+}
+
 .property-listing-mls table {
     border: 1px solid black;
     border-collapse: collapse;
@@ -35,6 +45,10 @@
     padding-left: 5px;
     padding-right: 10px;
     height: 112.5px;
+}
+
+.property-listing-empty-row {
+    text-align: center;
 }
 
 .property-listing-mls svg {
@@ -76,7 +90,7 @@
 }
 
 .property-listings-range-inputs input[type="number"] {
-    width: 35%;
+    width: 55%;
 }
 
 /* ===== FOOTER STYLING ===== */
