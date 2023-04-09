@@ -16,6 +16,16 @@
     flex: 0.75;
 }
 
+.property-listing-mls button {
+    line-height: 2.25rem;
+    margin-bottom: 10px;
+}
+
+.property-listing-mls button svg {
+    float: left;
+    padding-right: 5px; /* or some other padding value */
+}
+
 .property-listing-mls table {
     border: 1px solid black;
     border-collapse: collapse;
@@ -97,4 +107,67 @@
 .property-listing-page-select {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+/* ADD PROPERTY POPUP */
+
+.add-property-popup {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.add-property-popup h1 {
+    text-align: center;
+}
+
+.add-property-popup button {
+    margin: 0 auto;
+    display: block;
+    margin-top: 10px;
+}
+
+.add-property-popup-body {
+    display: flex;
+}
+
+.add-property-popup-half {
+    flex: 1;
+    margin: auto;
+}
+
+.add-property-popup-wrapper {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.add-property-popup-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-property-popup-input-group label {
+    margin-bottom: 3px;
+}
+
+.add-property-popup-input-group input {
+    width: 100%;
+}
+
+.add-property-popup-input-group textarea {
+    width: 100%;
+}
+
+.add-property-popup-input-group input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    margin: 0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+}
+
+.add-property-popup-input-group select {
+    width: 100%;
 }
