@@ -1,22 +1,27 @@
+.abrv-show-instance {
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: beige;
+    height: 120%;
+    padding: 3vh;
+    font-size: 7.125vh;
+    aspect-ratio: 5.5/2;
+    align-items: center;
+    gap: 1vw;
+    align-content: center;
+}
+
 .grid-container {
     display: grid;
-    background-color: beige;
-    padding: 3% 5% 15%;
-    height: 50%;
-    width: 100%;
-    font-size: 8.125vh;
-    aspect-ratio: 7/1;
-    align-items: center;
-    gap: 5%
+    width: 67%;
 }
 
 .image-container {
-    height: 110%;
-    grid-column: 1;
-    grid-row: 1/4;
+    height: 19vh;
     aspect-ratio: 1/1;
-    padding-right: 6%;
-    padding-top: 18%;
+
+    padding-right: 3%;
+    padding-left: 3%;
     min-height: 0%;
     min-width: 0%;
 }
@@ -31,18 +36,18 @@
 
 .time {
     font-size: 30%;
-    grid-column: 2;
+    grid-column: 1;
     grid-row:  2;
 }
 
 .address {
     font-size: 40%;
-    grid-column: 2;
+    grid-column: 1;
     grid-row:  1;
 }
 
 .agency-info {
     font-size: 28%;
-    grid-column: 2;
-    grid-row:  4;
+    grid-column: 1;
+    grid-row:  3;
 }

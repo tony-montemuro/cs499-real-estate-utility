@@ -6,6 +6,7 @@ import DetailedListingsLogic from "./DetailedListing.js";
 import EditListing from "./ui/EditPropertyPopup.jsx";
 import { AgentContext } from "../../Contexts";
 import PropertyImage from '../../ui/PropertyImage/PropertyImage.jsx';
+import NewShowingForm from "./NewShowingForm.jsx";
 
 function DetailedListing() {
   //variables
@@ -23,7 +24,7 @@ function DetailedListing() {
   /* ===== STATES ===== */
 
   // states and functions from the PropertyListing js file
-  const { listings, getCurrListing } = DetailedListingsLogic();
+  const { listings, getCurrListing, showForm, toggleForm } = DetailedListingsLogic();
 
   // helper functions
   const { floatToUSD, formatFloat, getAddress } = FrontendHelper();
@@ -50,6 +51,18 @@ function DetailedListing() {
       { listings ?
         <>  
         {/*body of the listing */}
+            {showForm ? 
+            <>
+              <button disabled={true} >
+              Create Showing
+              </button>
+              <NewShowingForm toggleForm={toggleForm} listing_id = {page_id}></NewShowingForm>
+            </>
+            :
+              <button onClick = {() => toggleForm(true)} >
+              Create Showing
+              </button>
+            }
         <div className="container">
           <div className="left">
             <p>Image Placeholders</p>
@@ -65,23 +78,24 @@ function DetailedListing() {
               <PropertyImage filename={ listings.property.small } />
             </div>
           </div>
-          <div class="right">
+          <div className="right">
             <h2>Price: { floatToUSD(listings.price) } &emsp; bed | bath | { formatFloat(listings.property.sqr_feet) } sqft</h2>
             <h2>{ getAddress(listings.property) }</h2>
             <p>Interested?&emsp;<button class="button-style"><Link to = {showing_link}>Book A Listing!</Link></button></p>
             <hr class="insert-line"/>
+            <hr className="insert-line"/>
             <h3>Listed By:</h3>
             <p>{ listings.agent.agency.name }: { listings.agent.agency.phone_number }</p>
             <p>&emsp; &emsp; { getAddress(listings.agent.agency) }</p>
             <p>{ listings.agent.name }: { listings.agent.phone_number }</p>
             <p>&emsp; &emsp; { listings.agent.email }</p>
-            <hr class="insert-line"/>
+            <hr className="insert-line"/>
             <h3>Overview:</h3>
             <p>Dwelling Type: { listings.property.dwelling_type }</p>
             <p>Subdivision (if applicable): { listings.property.subdivision }</p>
             <p>School District: { listings.property.school_district }</p>
-            <p>Shopping Areas: { listings.property.shopping_areas[0] }, { listings.property.shopping_areas[1] }, { listings.property.shopping_areas[2] }</p>
-            <hr class="insert-line"/>
+            <p>Shopping Areas: { listings.property.shopping_areas }</p>
+            <hr className="insert-line"/>
             <h3>Room Details:</h3>
           </div>
         </div>
@@ -93,6 +107,7 @@ function DetailedListing() {
 
       <EditListing popup={ popup } setPopup={ setPopup } />
 
+      
     </>
 
   );

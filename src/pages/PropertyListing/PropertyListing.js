@@ -79,13 +79,13 @@ const PropertyListings = () => {
         let error = { price: null, sqrFeet: null, zip: null };
 
         // first, let's validate the price inputs
-        const maxPrice = filterForm.price.max, minPrice = filterForm.price.min;
+        const maxPrice = parseInt(filterForm.price.max), minPrice = parseInt(filterForm.price.min);
         if (minPrice > maxPrice) {
             error.price = "The minimum price cannot be greater than the maximum price.";
         }
 
         // next, let's validate the square footage inputs
-        const maxSqrFeet = filterForm.sqrFeet.max, minSqrFeet = filterForm.sqrFeet.min;
+        const maxSqrFeet = parseInt(filterForm.sqrFeet.max), minSqrFeet = parseInt(filterForm.sqrFeet.min);
         if (minSqrFeet > maxSqrFeet) {
             error.sqrFeet = "The mimimum square footage cannot be greater than the maximum square footage.";
         }
