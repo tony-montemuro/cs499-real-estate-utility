@@ -1,5 +1,5 @@
 import "./DetailedListing.css";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link  } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import FrontendHelper from "../../util/FrontendHelper";
 import DetailedListingsLogic from "./DetailedListing.js";
@@ -65,18 +65,27 @@ function DetailedListing() {
             }
         <div className="container">
           <div className="left">
-            <p>Image Placeholders</p>
-            <div className="image1"/>
-            
-
-            
-            <div className="image2"/>
-            <div className="image3"/>
-            <div className="image3"/>
-            <div className="image2"/>
-            <div className="property-listing-img-container">
-              <PropertyImage filename={ listings.property.small } />
+            <p></p>
+            <div className="image1">
+                <PropertyImage filename={ listings.property.small } />
             </div>
+            <br></br>
+            <div className="image2">
+                <PropertyImage filename={ listings.property.large_1 } />
+            </div>
+            <div className="image2">
+                <PropertyImage filename={ listings.property.large_2 } />
+            </div>
+            <div className="image2">
+                <PropertyImage filename={ listings.property.large_3 } />
+            </div>
+            <div className="image2">
+                <PropertyImage filename={ listings.property.large_4 } />
+            </div>
+            <div className="image2">
+                <PropertyImage filename={ listings.property.large_5 } />
+            </div>
+              
           </div>
           <div className="right">
             <h2>Price: { floatToUSD(listings.price) } &emsp; bed | bath | { formatFloat(listings.property.sqr_feet) } sqft</h2>
@@ -94,9 +103,11 @@ function DetailedListing() {
             <p>Dwelling Type: { listings.property.dwelling_type }</p>
             <p>Subdivision (if applicable): { listings.property.subdivision }</p>
             <p>School District: { listings.property.school_district }</p>
-            <p>Shopping Areas: { listings.property.shopping_areas }</p>
+            <p>Shopping Areas: { listings.property.shopping_areas.toString() }</p>
+            <p>Lot Size: { formatFloat(listings.property.lot_size) } sqft</p>
             <hr className="insert-line"/>
             <h3>Room Details:</h3>
+            <p></p>
           </div>
         </div>
         </>

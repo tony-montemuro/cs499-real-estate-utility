@@ -107,7 +107,20 @@ const Read = () => {
                         dwelling_type,
                         subdivision,
                         school_district,
-                        shopping_areas
+                        shopping_areas,
+                        arm,
+                        disarm,
+                        passcode,
+                        alarm_notes,
+                        occupied,
+                        lock_box,
+                        other,
+                        small,
+                        large_1,
+                        large_2,
+                        large_3,
+                        large_4,
+                        large_5
                     )
                 `)
                 .eq("listing_id", id)

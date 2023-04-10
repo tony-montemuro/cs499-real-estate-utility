@@ -9,16 +9,16 @@
 .image1 {
     display: inline-block;
     margin-left: 5px;
-    width: 505px;
-    height: 250px;
+    width: 610px;
+    height: 300px;
     background: rgb(130, 224, 217);
 }
 
 .image2 {
     display: inline-block;
     margin-left: 5px;
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     background: rgb(171, 125, 197);
 }
 
