@@ -1,6 +1,6 @@
 import { FormControl } from "@mui/material";
 import { InputLabel } from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import { MenuItem } from "@mui/material";
 import classes from "../DetailedShowing.module.css";
 

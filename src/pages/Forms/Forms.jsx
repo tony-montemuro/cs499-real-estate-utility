@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 //Importing global user interface components 
-import PageBase from "../../ui/PageBase/PageBase";
+// import PageBase from "../../ui/PageBase/PageBase";
 
 
 //Importing page specific components

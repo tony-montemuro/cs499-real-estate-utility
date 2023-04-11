@@ -23,6 +23,7 @@ function DetailedListing() {
   /* ===== EFFECTS ===== */
   useEffect(() => {
     getCurrListing(page_id);
+    // eslint-disable-next-line
   }, []);
 
   return (

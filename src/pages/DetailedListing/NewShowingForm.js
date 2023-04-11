@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useReducer } from "react";
 import Update from "/app/src/database/Update.js";
 
 
@@ -24,6 +24,8 @@ const NewShowingForm = () => {
                 return { ...state, length: action.value };
             case "showingAgent":
                 return { ...state, showingAgent: action.value };
+            default:
+                return null;
         };
     };
 

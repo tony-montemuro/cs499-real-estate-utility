@@ -1,4 +1,3 @@
-import AbrvShowingInstance from "./ShowingsListingComponents/AbrvShowingInstance.jsx";
 import ListOfShowingsCmp from "./ShowingsListingComponents/ListOfShowingsCmp.jsx";
 import ShowSortComp from "./ShowingsListingComponents/ShowSortComp.jsx";
 import "./ShowingsListing.css";
@@ -14,7 +13,6 @@ function ShowingsListing() {
         applyFilters,
         showings, 
         pageNumber, 
-        getShowings, 
         getShowingsInit, 
         handlePageChange} = ShowingsListingLogic();
 

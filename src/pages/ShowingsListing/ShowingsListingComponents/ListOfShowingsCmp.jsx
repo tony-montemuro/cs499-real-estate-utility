@@ -70,6 +70,7 @@ function ListOfShowingsCmp({showings, pageNumber, getShowingsInit, handlePageCha
         if (!showings){
         getShowingsInit(pageElems) 
         }
+        // eslint-disable-next-line
     }, [showings, pageNumber]);
 
     return (

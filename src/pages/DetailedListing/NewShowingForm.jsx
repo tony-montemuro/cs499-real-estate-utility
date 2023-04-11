@@ -1,10 +1,6 @@
 import "./DetailedListing.css";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import FrontendHelper from "../../util/FrontendHelper";
 import NewShowingFormLogic from "./NewShowingForm.js";
 import "./NewShowingForm.css"
-import DetailedListingsLogic from "./DetailedListing.js";
 
 
 function NewShowingForm({toggleForm, listing_id}) {

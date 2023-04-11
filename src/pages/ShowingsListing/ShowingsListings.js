@@ -36,6 +36,8 @@ const ListOfShowingsCmp = () => {
                 return { ...state, state: action.value };
             case "city":
                 return { ...state, city: action.value };
+            default:
+                return null;
 
         };
     };
@@ -77,7 +79,7 @@ const ListOfShowingsCmp = () => {
         console.log(lower);
         console.log(upper);
 
-        const {abbreviatedShowings, count} = await fetchAbbreviatedShowings(lower, upper);
+        const {abbreviatedShowings} = await fetchAbbreviatedShowings(lower, upper);
         setShowings(abbreviatedShowings);
 
     };
@@ -99,7 +101,7 @@ const ListOfShowingsCmp = () => {
         const lower = pageLength.current * (num-1);
         const upper = lower + pageLength.current - 1;
 
-        const {abbreviatedShowings, count} 
+        const {abbreviatedShowings} 
             = await fetchAbbreviatedShowingsFiltered(lower, upper, usedFilter.zip, usedFilter.state, usedFilter.city);
         setShowings(abbreviatedShowings);
     };

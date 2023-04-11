@@ -5,7 +5,7 @@ import Form from "./components/Form"
 import { useState } from "react";
 import { useRef } from "react";
 import BottomHalf from "./components/BottomHalf";
-import PageBase from "../../ui/PageBase/PageBase";
+// import PageBase from "../../ui/PageBase/PageBase";
 import BasicSelect from "./components/BasicSelect";
 
 function DetailedShowing() {
