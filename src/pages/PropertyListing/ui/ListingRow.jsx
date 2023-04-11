@@ -1,13 +1,19 @@
 /* ===== IMPORTS ===== */
 import "../PropertyListing.css";
-import { useNavigate } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
+import { AgentContext } from "../../../Contexts";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import ClearIcon from "@mui/icons-material/Clear";
+import HomeIcon from "@mui/icons-material/Home";
 import FrontendHelper from "../../../util/FrontendHelper";
 import PropertyImage from '../../../ui/PropertyImage/PropertyImage.jsx';
 
-function ListingRow({ listing }) {
+function ListingRow({ listing, setDeletePopup }) {
   /* ===== VARIABLES ===== */
   const navigate = useNavigate();
+
+  /* ===== CONTEXTS ===== */
+  const { agent } = useContext(AgentContext);
 
   /* ===== FUNCTIONS ====== */
 
@@ -36,6 +42,11 @@ function ListingRow({ listing }) {
       <td>{ formatFloat(listing.property.sqr_feet) }</td>
       <td>{ listing.agent.agency.name }</td>
       <td>{ listing.agent.name }</td>
+
+      { /* Delete column - renders only if an agent is signed in. Normal users will not have access to this button. */ }
+      { agent && <td className="property-listing-delete">
+        <button onClick={ () => setDeletePopup({ listingId: listing.listing_id, propertyId: listing.property.property_id }) }><ClearIcon /></button>
+      </td> }
       
     </tr>
   );

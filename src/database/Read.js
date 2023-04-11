@@ -44,6 +44,7 @@ const Read = () => {
                 price,
                 property!inner (
                     city,
+                    property_id,
                     small,
                     sqr_feet,
                     state,

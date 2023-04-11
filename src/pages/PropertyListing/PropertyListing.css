@@ -47,6 +47,23 @@
     height: 112.5px;
 }
 
+.property-listing-delete {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.property-listing-delete button {
+    display: inline-block;
+    background: none;
+    border: none;
+    vertical-align: middle;
+}
+
+.property-listing-delete svg {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 .property-listing-empty-row {
     text-align: center;
 }
