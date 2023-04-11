@@ -1,6 +1,6 @@
 import "./DetailedListing.css";
 import { useLocation, Link  } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { Fragment, useEffect, useState, useContext } from "react";
 import FrontendHelper from "../../util/FrontendHelper";
 import DetailedListingsLogic from "./DetailedListing.js";
 import EditListing from "./ui/EditPropertyPopup.jsx";
@@ -27,7 +27,7 @@ function DetailedListing() {
   const { listings, getCurrListing, showForm, toggleForm } = DetailedListingsLogic();
 
   // helper functions
-  const { floatToUSD, formatFloat, getAddress } = FrontendHelper();
+  const { floatToUSD, formatFloat, getAddress, snakeToTitle } = FrontendHelper();
 
   /* ===== EFFECTS ===== */
   useEffect(() => {
@@ -88,7 +88,11 @@ function DetailedListing() {
               
           </div>
           <div className="right">
-            <h2>Price: { floatToUSD(listings.price) } &emsp; bed | bath | { formatFloat(listings.property.sqr_feet) } sqft</h2>
+            <h2>
+              Price: { floatToUSD(listings.price) } &emsp; 
+              { listings.property.room.filter(item => item.room_type === "bedroom").length } bed |
+              { ` ${ listings.property.room.filter(item => item.room_type === "bathroom").length }` } bathroom |
+              { ` ${ formatFloat(listings.property.sqr_feet) }` } sqft</h2>
             <h2>{ getAddress(listings.property) }</h2>
             <p>Interested?&emsp;<button class="button-style"><Link to = {showing_link}>Book A Listing!</Link></button></p>
             <hr class="insert-line"/>
@@ -100,14 +104,29 @@ function DetailedListing() {
             <p>&emsp; &emsp; { listings.agent.email }</p>
             <hr className="insert-line"/>
             <h3>Overview:</h3>
-            <p>Dwelling Type: { listings.property.dwelling_type }</p>
-            <p>Subdivision (if applicable): { listings.property.subdivision }</p>
+            <p>Dwelling Type: { snakeToTitle(listings.property.dwelling_type) }</p>
+            { listings.property.subdivision && <p>Subdivision: { listings.property.subdivision }</p> }
             <p>School District: { listings.property.school_district }</p>
-            <p>Shopping Areas: { listings.property.shopping_areas.toString() }</p>
+            <p>Shopping Areas:  
+              { listings.property.shopping_areas.map((area, index) => {
+                return (
+                  <Fragment key={ index }>
+                    { ` ${area}` }
+                    { index < listings.property.shopping_areas.length-1 && "," }
+                  </Fragment>
+                )
+              })}
+            </p>
             <p>Lot Size: { formatFloat(listings.property.lot_size) } sqft</p>
             <hr className="insert-line"/>
             <h3>Room Details:</h3>
-            <p></p>
+            { listings.property.other &&
+              <>
+                <hr className="insert-line"/>
+                <h3>Additional Information:</h3>
+                <p>{ listings.property.other }</p>
+              </>
+            }
           </div>
         </div>
         </>

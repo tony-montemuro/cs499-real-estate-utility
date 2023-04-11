@@ -120,7 +120,11 @@ const Read = () => {
                         large_2,
                         large_3,
                         large_4,
-                        large_5
+                        large_5,
+                        room (
+                            room_type,
+                            description
+                        )
                     )
                 `)
                 .eq("listing_id", id)

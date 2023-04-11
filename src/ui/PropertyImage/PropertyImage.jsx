@@ -11,7 +11,9 @@ function PropertyImage({ filename }) {
 
   // code that is executed upon component load
   useEffect(() => {
-    fetchImage(filename);
+    if (filename) {
+      fetchImage(filename);
+    }
     // eslint-disable-next-line
   }, [filename]);
 
