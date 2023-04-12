@@ -7,6 +7,7 @@ import EditListing from "./ui/EditPropertyPopup.jsx";
 import { AgentContext } from "../../Contexts";
 import PropertyImage from '../../ui/PropertyImage/PropertyImage.jsx';
 import NewShowingForm from "./NewShowingForm.jsx";
+import DefaultImage from "./ui/No_Image.jpg"
 
 function DetailedListing() {
   //variables
@@ -79,6 +80,7 @@ function DetailedListing() {
             <div className="image2">
                 <PropertyImage filename={ listings.property.large_3 } />
             </div>
+            <br></br>
             <div className="image2">
                 <PropertyImage filename={ listings.property.large_4 } />
             </div>
