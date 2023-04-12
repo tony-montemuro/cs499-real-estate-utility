@@ -1,18 +1,19 @@
 import "./DetailedListing.css";
 import { useLocation, Link  } from "react-router-dom";
-import { Fragment, useEffect, useState, useContext } from "react";
+import { Fragment, useEffect, useRef, useState, useContext } from "react";
 import FrontendHelper from "../../util/FrontendHelper";
 import DetailedListingsLogic from "./DetailedListing.js";
 import EditListing from "./ui/EditPropertyPopup.jsx";
 import { AgentContext } from "../../Contexts";
 import PropertyImage from '../../ui/PropertyImage/PropertyImage.jsx';
 import NewShowingForm from "./NewShowingForm.jsx";
+import UploadIcon from "@mui/icons-material/Upload";
 
 function DetailedListing() {
   //variables
   const location = useLocation();
   const path = location.pathname.split("/");
-  console.log(path[2]);
+  const imageNames = ["large_1", "large_2", "large_3", "large_4", "large_5"];
   const page_id = path[2];
   const [popup, setPopup] = useState(false);
 
@@ -21,10 +22,16 @@ function DetailedListing() {
   /* ====== CONTEXTS ====== */
   const { agent } = useContext(AgentContext);
 
+  /* ===== REFS ===== */
+  const photoRef = useRef(null);
+  const thumbnailRef = useRef(null);
+
   /* ===== STATES ===== */
+  const [imageUploaded, setImageUploaded] = useState(false);
+  const [thumbnailUploaded, setThumbnailUploaded] = useState(false);
 
   // states and functions from the PropertyListing js file
-  const { listings, getCurrListing, showForm, toggleForm } = DetailedListingsLogic();
+  const { listings, getCurrListing, showForm, toggleForm, uploadPhoto, uploadThumbnail } = DetailedListingsLogic();
 
   // helper functions
   const { floatToUSD, formatFloat, getAddress, snakeToTitle } = FrontendHelper();
@@ -85,7 +92,48 @@ function DetailedListing() {
             <div className="image2">
                 <PropertyImage filename={ listings.property.large_5 } />
             </div>
+            <div className="detailed-listing-photo-upload">
               
+            </div>
+            <h2>Upload Property Images</h2>
+            <div className="detailed-listing-image">
+              <div className="detailed-listing-thumbnail-upload">
+                <h3><UploadIcon />Upload thumbnail</h3>
+                <label htmlFor="property-thumbnail-upload"></label>
+                <input
+                  type="file"
+                  id="property-thumbnail-upload"
+                  accept=".jpg,.jpeg,.png"
+                  ref={ thumbnailRef }
+                  onChange={ () => setThumbnailUploaded(thumbnailRef.current.files.length > 0) }
+                />
+                <button
+                  disabled={ !thumbnailUploaded }
+                  onClick={ (e) => uploadThumbnail(e, thumbnailRef) }
+                  >Upload
+                </button>
+              </div>
+              <div className="detailed-listing-image-upload">
+                { imageNames.some(item => listings.property[item] === null) &&
+                  <>
+                    <h3><UploadIcon />Upload photo</h3>
+                    <label htmlFor="property-image-upload"></label>
+                    <input
+                      type="file"
+                      id="property-image-upload"
+                      accept=".jpg,.jpeg,.png"
+                      ref={ photoRef }
+                      onChange={ () => setImageUploaded(photoRef.current.files.length > 0) }
+                    />
+                    <button 
+                      disabled={ !imageUploaded } 
+                      onClick={ (e) => uploadPhoto(e, photoRef) }
+                      >Upload
+                    </button>
+                  </>
+                }
+              </div>
+            </div>
           </div>
           <div className="right">
             <h2>

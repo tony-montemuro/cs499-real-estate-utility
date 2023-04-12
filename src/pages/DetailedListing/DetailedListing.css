@@ -30,6 +30,18 @@
     background: rgb(216, 117, 117);
 }
 
+.detailed-listing-image {
+    display: flex;
+}
+
+.detailed-listing-thumbnail-upload {
+    flex: 1;
+}
+
+.detailed-listing-image-upload {
+    flex: 1;
+}
+
 .container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

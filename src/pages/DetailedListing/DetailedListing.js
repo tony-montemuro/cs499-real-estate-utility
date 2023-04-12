@@ -19,7 +19,17 @@ const PropertyListings = () => {
         setListings(currentListing);
     };
 
-    return { listings, getCurrListing, showForm, toggleForm };
+    // FUNCTION 2: uploadPhoto
+    const uploadPhoto = (e, photoRef) => {
+        console.log(photoRef);
+    };
+
+    // FUNCTION 3: uploadThumbnail
+    const uploadThumbnail = (e, thumbnailRef) => {
+        console.log(thumbnailRef);
+    };
+
+    return { listings, getCurrListing, showForm, toggleForm, uploadPhoto, uploadThumbnail };
 };
 
 /* ===== EXPORTS ===== */
