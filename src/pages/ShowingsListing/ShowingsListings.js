@@ -37,7 +37,7 @@ const ListOfShowingsCmp = () => {
             case "city":
                 return { ...state, city: action.value };
             default:
-                return null;
+                return state;
 
         };
     };

@@ -25,7 +25,7 @@ const NewShowingForm = () => {
             case "showingAgent":
                 return { ...state, showingAgent: action.value };
             default:
-                return null;
+                return state;
         };
     };
 

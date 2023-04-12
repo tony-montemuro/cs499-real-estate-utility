@@ -37,7 +37,7 @@ const PropertyListings = () => {
             case "error":
                 return { ...state, error: action.value };
             default:
-                return null;
+                return state;
         };
     };
 
