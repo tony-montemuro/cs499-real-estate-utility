@@ -31,7 +31,7 @@ function DetailedListing() {
   const [thumbnailUploaded, setThumbnailUploaded] = useState(false);
 
   // states and functions from the PropertyListing js file
-  const { listings, getCurrListing, showForm, toggleForm, uploadPhoto, uploadThumbnail } = DetailedListingsLogic();
+  const { listings, getCurrListing, showForm, error, uploaded, toggleForm, uploadPhoto, uploadThumbnail } = DetailedListingsLogic();
 
   // helper functions
   const { floatToUSD, formatFloat, getAddress, snakeToTitle } = FrontendHelper();
@@ -95,10 +95,14 @@ function DetailedListing() {
             <div className="detailed-listing-photo-upload">
               
             </div>
+
+            { /* Property Image Uploader */ }
             <h2>Upload Property Images</h2>
             <div className="detailed-listing-image">
+
+              { /* Update thumbnail */ }
               <div className="detailed-listing-thumbnail-upload">
-                <h3><UploadIcon />Upload thumbnail</h3>
+                <h3><UploadIcon />Update thumbnail</h3>
                 <label htmlFor="property-thumbnail-upload"></label>
                 <input
                   type="file"
@@ -112,7 +116,16 @@ function DetailedListing() {
                   onClick={ (e) => uploadThumbnail(e, thumbnailRef) }
                   >Upload
                 </button>
+
+                { /* If the thumbnail fails to validate, render the error message here. */ }
+                { error.thumbnail && <p>Error: { error.thumbnail }</p> }
+
+                { /* If the thumbnail successfully updates, render a success message here. */ }
+                { uploaded.thumbnail && <p>{ uploaded.thumbnail }</p> }
+
               </div>
+
+              { /* Upload large photo */ }
               <div className="detailed-listing-image-upload">
                 { imageNames.some(item => listings.property[item] === null) &&
                   <>
@@ -127,9 +140,15 @@ function DetailedListing() {
                     />
                     <button 
                       disabled={ !imageUploaded } 
-                      onClick={ (e) => uploadPhoto(e, photoRef) }
+                      onClick={ (e) => uploadPhoto(e, photoRef, imageNames) }
                       >Upload
                     </button>
+
+                    { /* If the photo fails to validate, render the error message here. */ }
+                    { error.photo && <p>Error: { error.photo }</p> }
+
+                    { /* If the photo successfully updates, render a success message here. */ }
+                    { uploaded.photo && <p>{ uploaded.photo }</p> }
                   </>
                 }
               </div>

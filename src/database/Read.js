@@ -98,6 +98,7 @@ const Read = () => {
                     listing_id,
                     price,
                     property (
+                        property_id,
                         city,
                         sqr_feet,
                         state,
