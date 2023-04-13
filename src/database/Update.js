@@ -128,7 +128,57 @@ const Update = () => {
         }
     };
 
-    return { insertProperty, insertListing, insertRoom, CreateShowings };
+    // FUNCTION 5: uploadPhoto - given a fileName and file object, upload an image to database storage
+    // PRECONDITIONS (2 parameters):
+    // 1.) fileName: a well-formatted string that gives the name of the file to upload; comes from file input
+    // 2.) file: a file object that was grabbed from a file input
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the upload is successful, the function will simply return
+    // otherwise, this function throws an error object, which will be handled by the caller function
+    const uploadFile = async (fileName, file) => {
+        try {
+            const { error } = await supabase.storage
+                .from("property-images")
+                .upload(fileName, file);
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+        } catch (error) {
+            // handle error in caller function
+            throw error;
+        }
+    };
+
+    // FUNCTION 6: updateThumbnail - given a fileName, propertyId, and field, update one of the image fields for a property
+    // PRECONDITIONS (3 parameters):
+    // 1.) fileName: a well-formatted string that gives the name of the file to upload; comes from file input
+    // 2.) propertyId: an integer corresponding to the unique id of a property assigned by the database
+    // 3.) field: a string, with one of the six possible values: small, large_1, large_2, large_3, large_4, large_5
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the update query is successful, the function will simply return
+    // otherwise, this function throws an error object, which will be handled by the caller function
+    const updatePhotoName = async (fileName, propertyId, field) => {
+        try {
+            const { error } = await supabase
+                .from("property")
+                .update({ [field]: fileName })
+                .eq("property_id", propertyId);
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+        } catch (error) {
+            // handle error in caller function
+            throw error;
+        }
+    };
+
+    return { insertProperty, insertListing, insertRoom, CreateShowings, uploadFile, updatePhotoName };
 };
 
 /* ===== EXPORTS ===== */
