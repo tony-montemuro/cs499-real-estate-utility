@@ -128,7 +128,50 @@ const Update = () => {
         }
     };
 
-    return { insertProperty, insertListing, insertRoom, CreateShowings };
+    const editProperty = async(property, id) => {
+        try {
+            const { data: error } = await supabase
+                .from("listing")
+                .update(
+                    {listing_id: property.listing_id},
+                    {price: property.price}
+                )
+                .eq("listing_id", id)
+                
+                .from("property")
+                .update(
+                    {city: property.property.city},
+                    {sqr_feet: property.property.sqr_feet},
+                    {state: property.property.state},
+                    {street: property.property.street},
+                    {zip: property.property.zip},
+                    {lot_size: property.property.lot_size},
+                    {dwelling_type: property.property.dwelling_type},
+                    {subdivision: property.property.subdivision},
+                    {school_district: property.property.school_district},
+                    {shopping_areas: property.property.shopping_areas},
+                    {arm: property.property.arm},
+                    {disarm: property.property.disarm},
+                    {passcode: property.property.passcode},
+                    {alarm_notes: property.property.alarm_notes},
+                    {occupied: property.property.occupied},
+                    {lock_box: property.property.lock_box},
+                    {other: property.property.other}
+                )
+                .eq("listing_id", id)
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+        } catch (error) {
+            // error is handled by caller function
+            throw error;
+        };
+    };
+
+    return { insertProperty, insertListing, insertRoom, CreateShowings, editProperty };
 };
 
 /* ===== EXPORTS ===== */

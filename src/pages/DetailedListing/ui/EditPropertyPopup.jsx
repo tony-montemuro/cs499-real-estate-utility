@@ -1,12 +1,14 @@
 /* ===== IMPORTS ===== */
-import "../DetailedListing.css";
+import "./EditPropertyPopup.css";
 import { AgentContext } from "../../../Contexts";
 import { useContext } from "react";
 import DetailedListingsLogic from "../DetailedListing.js";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import CancelIcon from '@mui/icons-material/Cancel';
+import Update from "../../../database/Update";
 
-function AddPropertyPopup({ popup, setPopup }) {
+function EditPropertyPopup({ popup, setPopup }) {
   /* ===== VARIABLES ===== */
      const dwellings = ["single", "family", "multi_family", "duplex", "apartment", "condo", "town_house", "mobile"];
     const TEXT_AREA_ROWS = "4";
@@ -29,74 +31,74 @@ function AddPropertyPopup({ popup, setPopup }) {
 
   /* ===== ADD PROPERTY POPUP ===== */
   return popup &&
-    <div className="popup">
-      <div className="popup-inner">
-        <div className="add-property-popup">
+    <div className="edit-property-popup">
+      <div className="edit-property-popup-inner">
+        <div className="edit-property-popup-container">
           { /* Button to close the popup */ }
-          <button className="close-btn" onClick={ () => setPopup(false) }>Close</button>
+          <button className="close-btn" onClick={ () => setPopup(false) }><CancelIcon /></button>
 
-          <div className="add-property-popup-header">
+          <div className="edit-property-popup-header">
             <h1>Edit Property</h1>
           </div>
           <form>
-            <div className="add-property-popup-body">
-              <div className="add-property-popup-half">
-                <div className="add-property-popup-wrapper">
+            <div className="edit-property-popup-body">
+              <div className="edit-property-popup-section">
+                <div className="edit-property-popup-wrapper">
                   <h2>Agency Details</h2>
-                  <div className="add-proeprty-popup-input-group">
+                  <div className="edit-proeprty-popup-input-group">
                     <p>Agency: <b>{ listings.agent.agency.name }</b></p>
                     <p>Listing Agent: <b>{ listings.agent.name }</b></p>
                   </div>
                   <h2>Price</h2>
-                  <div className="add-property-popup-input">
-                    <label htmlFor="price">Price: </label>
-                    $<input
+                  <div className="edit-property-popup-input">
+                    <label htmlFor="price">Price ($): </label>
+                    <input
                       id="price"
                       type="number"
                       step="0.01"
-                      value={listings.price}
+                      defaultValue={listings.price}
                     />
                   </div>
                   <h2>Address</h2>
-                  <div className="add-property-popup-input-group">
+                  <div className="edit-property-popup-input-group">
                     <label htmlFor="street">Street: </label>
                     <input
                       id="street"
                       type="text"
-                      value={listings.property.street}
+                      defaultValue={listings.property.street}
                     />
                     <label htmlFor="city">City: </label>
                     <input 
                       id="city"
                       type="text"
-                      value={listings.property.city}
+                      defaultValue={listings.property.city}
                     />
                     <label htmlFor="state">State: </label>
                     <input
                       id="state"
                       type="text"
-                      value={listings.property.state}
+                      defaultValue={listings.property.state}
                     />
                     <label htmlFor="zip">ZIP Code: </label>
                     <input
                       id="zip"
                       type="text"
-                      value={listings.property.zip}
+                      defaultValue={listings.property.zip}
                     />
                   </div>
                   <h2>Property Sizes</h2>
-                  <div className="add-property-popup-input-group">
+                  <div className="edit-property-popup-input-group">
                     <label htmlFor="lot_size">Lot Size (Square Feet): </label>
                     <input
                       id="lot_size"
                       type="number"
-                      value={listings.property.lot_size}
+                      defaultValue={listings.property.lot_size}
                     />
                     <label htmlFor="sqr_feet">Net Square Footage: </label>
                     <input
                       id="sqr_feet"
                       type="number"
-                      value={listings.property.sqr_feet}
+                      defaultValue={listings.property.sqr_feet}
                     />
                     <label htmlFor="dwelling_type">Dwelling Type: </label>
                     <select name="dwelling_type" id="dwelling_type">
@@ -109,81 +111,81 @@ function AddPropertyPopup({ popup, setPopup }) {
                   </div>
                 </div>
               </div>
-              <div className="add-property-popup-half">
-                <div className="add-property-popup-wrapper">
+              <div className="edit-property-popup-section">
+                <div className="edit-property-popup-wrapper">
                   <h2>Location Details</h2>
-                  <div className="add-property-popup-input-group">
+                  <div className="edit-property-popup-input-group">
                     <label htmlFor="subdivision">Subdivision: </label>
                     <input 
                       id="subdivision"
                       type="text"
-                      value={listings.property.subdivision}
+                      defaultValue={listings.property.subdivision}
                     />
                     <label htmlFor="school_district">School District: </label>
                     <input
                       id="school_district"
                       type="text"
-                      value={listings.property.school_district}
+                      defaultValue={listings.property.school_district}
                     />
                     <label htmlFor="shopping_areas">Shopping Areas: </label>
                     <input
                       id="shopping_areas"
                       type="text"
-                      value={listings.property.shopping_areas}
+                      defaultValue={listings.property.shopping_areas}
                     />
                   </div>
                   <h2>Security Details</h2>
-                  <div className="add-property-popup-input-group">
+                  <div className="edit-property-popup-input-group">
                     <label htmlFor="arm">Arm Code: </label>
                     <input
                       id="arm"
                       type="text"
-                      value={listings.property.arm}
+                      defaultValue={listings.property.arm}
                     />
                     <label htmlFor="disarm">Disarm Code: </label>
                     <input
                       id="disarm"
                       type="text"
-                      value={listings.property.disarm}
+                      defaultValue={listings.property.disarm}
                     />
                     <label htmlFor="passcode">Passcode: </label>
                     <input
                       id="passcode"
                       type="number"
-                      value={listings.property.passcode}
+                      defaultValue={listings.property.passcode}
                     />
                     <label htmlFor="lockbox">Lockbox: </label>
                     <input
                       id="lockbox"
                       type="number"
-                      value={listings.property.lock_box}
+                      defaultValue={listings.property.lock_box}
                     />
                     <label htmlFor="alarm_notes">Alarm Notes: </label>
                     <textarea
                       id="alarm_notes"
                       rows={ TEXT_AREA_ROWS }
-                      value={listings.property.alarm_notes}
+                      defaultValue={listings.property.alarm_notes}
                     />
                     <label htmlFor="occupied">Occupied?</label>
                     <input
                       id="occupied" 
                       type="checkbox" 
-                      value={listings.property.occupied}
+                      defaultValue={listings.property.occupied}
                     />
                   </div>
                   <h2>Additional Details</h2>
-                  <div className="add-property-popup-input-group">
+                  <div className="edit-property-popup-input-group">
                     <label htmlFor="other">Additional Details: </label>
                     <textarea
                       id="other"
                       rows={ TEXT_AREA_ROWS }
-                      value={listings.property.other}
+                      defaultValue={listings.property.other}
                     />
                   </div>
                 </div>
               </div>
             </div>
-            <button>Edit Property</button>
+            <button id="edit-property-popup-submit">Edit Property</button>
           </form>
         </div>
       </div>
@@ -191,4 +193,4 @@ function AddPropertyPopup({ popup, setPopup }) {
 };
 
 /* ===== EXPORTS ===== */
-export default AddPropertyPopup;
+export default EditPropertyPopup;

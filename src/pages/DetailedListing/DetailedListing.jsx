@@ -40,30 +40,19 @@ function DetailedListing() {
       <div>
         <div className="detailed-listings-header">
           <h1>Detailed Property Listing {path[2]}&emsp;&emsp;
+          {/* Button conditionally shown to edit the listing */}
           { agent && <button onClick={ () => setPopup(true)} class="button-style">Edit Listing</button>}
-          
+          &emsp;
+          {/* Button conditionally shown to add a showing for the listing */}
+          { agent && <button onClick={ () => toggleForm(true)} class="button-style">Create Showing</button>}
           </h1>
         </div>
       </div>
       
-
-
       { /* Render the body of this component if listings is defined. Otherwise, render a loading component. */ }
       { listings ?
         <>  
         {/*body of the listing */}
-            {showForm ? 
-            <>
-              <button disabled={true} >
-              Create Showing
-              </button>
-              <NewShowingForm toggleForm={toggleForm} listing_id = {page_id}></NewShowingForm>
-            </>
-            :
-              <button onClick = {() => toggleForm(true)} >
-              Create Showing
-              </button>
-            }
         <div className="container">
           <div className="left">
             <p></p>
