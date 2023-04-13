@@ -1,0 +1,56 @@
+/* ===== POPUP STYLING ===== */
+.delete-property-popup {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-property-popup-inner {
+    background: white;
+    width: 95%;
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+}
+
+.delete-property-popup-inner .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+/* ===== CONTENT STYLING ===== */
+
+.delete-property-popup-inner h1 {
+    text-align: center;
+}
+
+.delete-property-popup-inner p {
+    text-align: center;
+}
+
+.delete-property-popup-checkbox {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.delete-property-popup-buttons {
+    text-align: center;
+}
+
+.delete-property-popup-buttons button {
+    margin: 5px;
+}
