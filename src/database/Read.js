@@ -290,6 +290,49 @@ const Read = () => {
         }
     };
 
+    const fetchFullShowing = async (id) => {
+        try {
+            const { data:showing, error} = await supabase
+                .from("showing")
+                .select(`
+                    customer_interest,
+                    agent_experience,
+                    customer_price_rating,
+                    agent_price_rating,
+                    notes,
+                    listing (
+                        property (
+                            occupied,
+                            lock_box
+                        )
+                    ),
+                    agent (
+                        name,
+                        email,
+                        phone_number
+                    ),
+                    buyer
+                )
+                `)
+                .eq("showing_id", id)
+                .maybeSingle();
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+            //return data
+            console.log(showing);
+            return { showing };
+        }
+        catch (error) {
+            console.log(error);
+            alert(error.message);
+            return [];
+        }
+    }
+
     // FUNCTION 5 - fetchAgentById - given a user id, fetch an agent object from the database, and return it
     // PRECONDITIONS (1 parameter):
     // 1.) id - a string value, representing a uuid belonging to a unique agent user in the database
@@ -325,7 +368,8 @@ const Read = () => {
         }
     };
 
-    return { fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchAbbreviatedShowingsFiltered, fetchImageByFilename, fetchAgentById };
+    return { fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchAbbreviatedShowingsFiltered, 
+        fetchImageByFilename, fetchFullShowing, fetchAgentById };
 };
 
 /* ===== EXPORTS ===== */
