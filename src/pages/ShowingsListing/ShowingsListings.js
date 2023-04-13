@@ -62,7 +62,8 @@ const ListOfShowingsCmp = () => {
             = await fetchAbbreviatedShowingsFiltered(lower, upper, filterForm.zip, filterForm.state, filterForm.city);
         setShowings(abbreviatedShowings);
 
-        const maxPageNumber = Math.ceil(count / pageLength.current);
+        var maxPageNumber = Math.ceil(count / pageLength.current);
+        maxPageNumber = (maxPageNumber <1 ? 1 : maxPageNumber);
         setPageNumber({ current: 1, max: maxPageNumber });
     };
 

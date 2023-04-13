@@ -2,7 +2,7 @@ import './AbrvShowingInstance.css';
 import PropertyImage from "/app/src/ui/PropertyImage/PropertyImage.jsx";
 
 
-function AbrvShowingInstance({ address, street, startTime, endTime, listAgentInfo, image, showAgentInfo }){
+function AbrvShowingInstance({ address, street, startTime, endTime, listAgentInfo, image, showAgentInfo, listing_id }){
 
     return( 
         <div className = "abrv-show-instance">
@@ -16,6 +16,8 @@ function AbrvShowingInstance({ address, street, startTime, endTime, listAgentInf
                     {street}
                 </div>
                 <div className = "time">
+                    MLS#: {listing_id}
+                    <br/>
                     Starting Time:<br/>{startTime}
                     <br/>Ending Time:<br/>{endTime}
                 </div>

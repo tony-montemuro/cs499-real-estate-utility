@@ -76,7 +76,7 @@ const Update = () => {
         };
     };
     
-    const CreateShowings = async (day, time, hours, listing_number, agent_number) => {
+    const CreateShowings = async (day, time, hours, listing_number, agent_number, buyer) => {
 
         hours = hours ? hours : 1;
 
@@ -94,7 +94,8 @@ const Update = () => {
                     start_time: time_start.toISOString(),
                     end_time: time_end.toISOString(),
                     listing: listing_number,
-                    agent: agent_number
+                    agent: agent_number,
+                    buyer: buyer
                 }]);
 
                 // error handling
@@ -110,6 +111,7 @@ const Update = () => {
                     start_time: time_start.toISOString(),
                     end_time: time_end.toISOString(),
                     listing: listing_number,
+                    buyer: buyer
                 }])
                 // error handling
                 if (error && status !== 406) {
@@ -128,7 +130,33 @@ const Update = () => {
         }
     };
 
-    return { insertProperty, insertListing, insertRoom, CreateShowings };
+    const UpdateShowingSurvey = async (showingID, customer_interest, agent_experience, customer_price_rating, agent_price_rating, notes) => {
+        try{
+            console.log(showingID, customer_interest, agent_experience, notes);
+            const { error } = await supabase
+            .from("showing")
+            .update({
+                customer_interest: customer_interest,
+                agent_experience: agent_experience,
+                customer_price_rating: customer_price_rating,
+                agent_price_rating: agent_price_rating,
+                notes: notes
+            })
+            .eq("showing_id", showingID);
+
+            if (error) {
+                throw error;
+            }
+        }
+        catch(error) {
+            console.log(error);
+            console.log("huh");
+            alert(error.message);
+        }
+    }
+
+    return { insertProperty, insertListing, insertRoom, CreateShowings, UpdateShowingSurvey };
+
 };
 
 /* ===== EXPORTS ===== */

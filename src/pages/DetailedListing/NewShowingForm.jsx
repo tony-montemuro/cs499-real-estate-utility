@@ -71,6 +71,18 @@ function NewShowingForm({toggleForm, listing_id}) {
                 value={ showingForm.showingAgent }
                 onChange={ (e) => dispatchShowingForm({ type: e.target.id, value: e.target.value }) }
             />
+
+            <h2>Buyer Name (optional):</h2>
+
+            <label htmlFor="Showing Agent ID (optional)"></label>
+            <input 
+                id="buyer" 
+                name="buyer" 
+                type="text" 
+                value={ showingForm.buyer }
+                onChange={ (e) => dispatchShowingForm({ type: e.target.id, value: e.target.value }) }
+            />
+
             <br/>
             <button>Submit</button>
 

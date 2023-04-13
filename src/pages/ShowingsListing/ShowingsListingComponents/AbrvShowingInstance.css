@@ -2,10 +2,10 @@
     display: flex;
     flex-direction: row-reverse;
     background-color: beige;
-    height: 120%;
+    height: 135%;
     padding: 3vh;
     font-size: 7.125vh;
-    aspect-ratio: 5.5/2;
+    aspect-ratio: 4.8/2;
     align-items: center;
     gap: 1vw;
     align-content: center;
