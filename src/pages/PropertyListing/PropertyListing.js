@@ -72,7 +72,11 @@ const PropertyListings = () => {
     // FUNCTION 3: applyFilters function
     // PRECONDITIONS (2 parameters):
     // 1.) e: an event object generated when the form is submitted
-    // 2.) 
+    // 2.) pageLength: the number of listings to render on a page
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the filter form fails to validate, then the function will update the error state, which will alert the user
+    // of any formatting mistakes they made, and returns the function early
+    // if the filter form validates, then getListings(pageLength) is called, which requeries the listings with updated filters
     const applyFilters = (e, pageLength) => {
         // prevent page from reloading (default form submission behavior)
         e.preventDefault();

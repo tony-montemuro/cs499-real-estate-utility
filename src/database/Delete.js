@@ -1,0 +1,61 @@
+/* ===== IMPORTS ===== */
+import { supabase } from "./SupabaseClient";
+
+const Delete = () => {
+    /* ===== FUNCTIONS ===== */
+
+    // FUNCTION 1: deleteListingById - given a listing id, delete a listing row from the listing table
+    // PRECONDITIONS (1 parameter):
+    // 1.) listingId: an integer corresponding to the unique id of a listing in the database
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the query is successful, the listing, as well as any showings that reference this listing (!), will be
+    // deleted from the database
+    // if unsuccessful, the agent is notified of the error
+    const deleteListingById = async (listingId) => {
+        try {
+            const { error } = await supabase
+                .from("listing")
+                .delete()
+                .eq("listing_id", listingId);
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+        } catch (error) {
+            console.log(error);
+            alert(error.message);
+        };
+    };
+
+    // FUNCTION 2: deletePropertyById - given a property id, delete a property row from the property table
+    // PRECONDITIONS (1 parameter):
+    // 1.) propertyId: an integer corresponding to the unique id of a property in the database
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the query is successful, the property, as well as any rooms, listings, and showings that reference this
+    // properety (!!!), will be deleted from the database
+    // if unsuccessful, the agent is notified of the error
+    const deletePropertyById = async (propertyId) => {
+        try {
+            const { error } = await supabase
+                .from("property")
+                .delete()
+                .eq("property_id", propertyId);
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+        } catch (error) {
+            console.log(error);
+            alert(error.message);
+        };
+    };
+
+    return { deleteListingById, deletePropertyById };
+};
+
+/* ===== EXPORTS ===== */
+export default Delete;
