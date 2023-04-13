@@ -152,7 +152,7 @@ const Update = () => {
         }
     };
 
-     // FUNCTION 5: updateThumbnail - given a fileName, propertyId, and field, update one of the image fields for a property
+    // FUNCTION 6: updateThumbnail - given a fileName, propertyId, and field, update one of the image fields for a property
     // PRECONDITIONS (3 parameters):
     // 1.) fileName: a well-formatted string that gives the name of the file to upload; comes from file input
     // 2.) propertyId: an integer corresponding to the unique id of a property assigned by the database

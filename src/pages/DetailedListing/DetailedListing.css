@@ -34,6 +34,11 @@
     display: flex;
 }
 
+.detailed-listing-image h3 {
+    display: flex;
+    align-items: center;
+}
+
 .detailed-listing-thumbnail-upload {
     flex: 1;
 }

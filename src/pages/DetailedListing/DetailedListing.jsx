@@ -1,3 +1,4 @@
+/* ===== IMPORTS ===== */
 import "./DetailedListing.css";
 import { useLocation, Link  } from "react-router-dom";
 import { Fragment, useEffect, useRef, useState, useContext } from "react";
@@ -10,10 +11,9 @@ import NewShowingForm from "./NewShowingForm.jsx";
 import UploadIcon from "@mui/icons-material/Upload";
 
 function DetailedListing() {
-  //variables
+  /* ===== VARIABLES ===== */
   const location = useLocation();
   const path = location.pathname.split("/");
-  const imageNames = ["large_1", "large_2", "large_3", "large_4", "large_5"];
   const page_id = path[2];
   const [popup, setPopup] = useState(false);
 
@@ -31,7 +31,17 @@ function DetailedListing() {
   const [thumbnailUploaded, setThumbnailUploaded] = useState(false);
 
   // states and functions from the PropertyListing js file
-  const { listings, getCurrListing, showForm, error, uploaded, toggleForm, uploadPhoto, uploadThumbnail } = DetailedListingsLogic();
+  const { 
+    listings, 
+    getCurrListing, 
+    showForm, 
+    error, 
+    uploaded, 
+    toggleForm, 
+    getNumRemaining,
+    uploadPhoto, 
+    uploadThumbnail  
+  } = DetailedListingsLogic();
 
   // helper functions
   const { floatToUSD, formatFloat, getAddress, snakeToTitle } = FrontendHelper();
@@ -41,6 +51,7 @@ function DetailedListing() {
     getCurrListing(page_id);
   }, []);
 
+  /* ===== DETAILED LISTING COMPONENT ==== */
   return (
     <>
       <div>
@@ -127,9 +138,12 @@ function DetailedListing() {
 
               { /* Upload large photo */ }
               <div className="detailed-listing-image-upload">
-                { imageNames.some(item => listings.property[item] === null) &&
+
+                { /* Only render this uploader if the property has image fields that are null */ }
+                { getNumRemaining() > 0 &&
+
                   <>
-                    <h3><UploadIcon />Upload photo</h3>
+                    <h3><UploadIcon />Upload photo ({ getNumRemaining() } remaning)</h3>
                     <label htmlFor="property-image-upload"></label>
                     <input
                       type="file"
@@ -140,7 +154,7 @@ function DetailedListing() {
                     />
                     <button 
                       disabled={ !imageUploaded } 
-                      onClick={ (e) => uploadPhoto(e, photoRef, imageNames) }
+                      onClick={ (e) => uploadPhoto(e, photoRef) }
                       >Upload
                     </button>
 
@@ -149,8 +163,11 @@ function DetailedListing() {
 
                     { /* If the photo successfully updates, render a success message here. */ }
                     { uploaded.photo && <p>{ uploaded.photo }</p> }
+
                   </>
+
                 }
+
               </div>
             </div>
           </div>
@@ -210,4 +227,5 @@ function DetailedListing() {
   );
 };
 
+/* ===== EXPORTS ===== */
 export default DetailedListing;
