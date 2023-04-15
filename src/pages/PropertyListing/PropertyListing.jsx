@@ -1,6 +1,10 @@
 /* ===== IMPORTS ===== */
 import "./PropertyListing.css";
-import { useEffect } from "react";
+import { AgentContext } from "../../Contexts";
+import { useContext, useEffect, useState } from "react";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddPropertyPopup from "./ui/AddPropertyPopup.jsx";
+import DeletePropertyPopup from "./ui/DeletePropertyPopup.jsx";
 import FilterForm from "./ui/FilterForm";
 import ListingRow from "./ui/ListingRow";
 import PropertyListingLogic from "./PropertyListing.js";
@@ -10,7 +14,12 @@ function PropertyListing() {
     const MLS_WIDTH = 7;
     const NUM_PAGE_RESULTS = 10;
 
+    /* ===== CONTEXTS ===== */
+    const { agent } = useContext(AgentContext);
+
     /* ===== STATES & FUNCTIONS ===== */
+    const [addPopup, setAddPopup] = useState(false);
+    const [deletePopup, setDeletePopup] = useState(false);
 
     // states and functions from the PropertyListing js file
     const { 
@@ -21,7 +30,7 @@ function PropertyListing() {
         dispatchFilterForm, 
         applyFilters,
         filterListingsByPage, 
-        handlePageChange 
+        handlePageChange
     } = PropertyListingLogic();
 
     /* ===== EFFECTS ===== */
@@ -46,6 +55,10 @@ function PropertyListing() {
 
                         { /* Multiple Listing Service */ }
                         <div className="property-listing-mls">
+
+                            { /* Add Property Listing Button - only renders if an agent is currently logged in */ }
+                            { agent && <button onClick={ () => setAddPopup(true) }><AddCircleOutlineIcon /> Add Property Listing</button> }
+
                             <table>
 
                                 { /* Table Header */ }
@@ -58,6 +71,10 @@ function PropertyListing() {
                                         <th>Square Footage</th>
                                         <th>Listing Agency</th>
                                         <th>Listing Agent</th>
+
+                                        { /* Delete column header - only renders if an agent is logged in. */ }
+                                        { agent && <th>Delete Property</th> }
+                                        
                                     </tr>
                                 </thead>
 
@@ -67,7 +84,7 @@ function PropertyListing() {
                                     {/* If any listings exist, we can render a series of listing rows. */}
                                     { listings.length > 0 ?
                                         filterListingsByPage(NUM_PAGE_RESULTS).map(listing => {
-                                            return <ListingRow listing={ listing } key={ listing.listing_id } />;
+                                            return <ListingRow listing={ listing } setDeletePopup={ setDeletePopup } key={ listing.listing_id } />;
                                         })
                                     :
 
@@ -124,6 +141,8 @@ function PropertyListing() {
 
                     </div>
                     
+                    <AddPropertyPopup popup={ addPopup } setPopup={ setAddPopup } />
+                    <DeletePropertyPopup popup={ deletePopup } setPopup={ setDeletePopup } />
                 </>
 
             :

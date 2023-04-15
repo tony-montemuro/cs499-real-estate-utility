@@ -16,6 +16,16 @@
     flex: 0.75;
 }
 
+.property-listing-mls button {
+    line-height: 2.25rem;
+    margin-bottom: 10px;
+}
+
+.property-listing-mls button svg {
+    float: left;
+    padding-right: 5px; /* or some other padding value */
+}
+
 .property-listing-mls table {
     border: 1px solid black;
     border-collapse: collapse;
@@ -35,6 +45,23 @@
     padding-left: 5px;
     padding-right: 10px;
     height: 112.5px;
+}
+
+.property-listing-delete {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.property-listing-delete button {
+    display: inline-block;
+    background: none;
+    border: none;
+    vertical-align: middle;
+}
+
+.property-listing-delete svg {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .property-listing-empty-row {

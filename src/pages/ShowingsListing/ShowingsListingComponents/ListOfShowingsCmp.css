@@ -13,8 +13,8 @@
 .showings-row {
     display: flex;
     flex-direction: row;
-    gap: 6%;
-    padding: 1vw 5% 5vw 1%;
+    gap: 4%;
+    padding: 1vw 5% 15vh 5%;
     height: 18vh;
     width: auto;
     justify-content: center;

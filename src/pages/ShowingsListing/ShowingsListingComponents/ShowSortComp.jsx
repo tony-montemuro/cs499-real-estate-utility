@@ -1,13 +1,6 @@
-import ShowSortCompLogic from "./ShowSortComp";
 import "./ShowSortComp.css"
 
-function ShowSortComp() {
-
-    const { 
-        filterForm, 
-        dispatchFilterForm, 
-        applyFilters
-    } = ShowSortCompLogic();
+function ShowSortComp({filterForm, dispatchFilterForm, applyFilters}) {
 
     return(
     <div className="showings-listing-filters">
@@ -51,32 +44,6 @@ function ShowSortComp() {
                         type="text" 
                         pattern="[a-zA-Z]*" 
                         value={ filterForm.city }
-                        onChange={ (e) => dispatchFilterForm({ type: e.target.id, value: e.target.value }) }
-                    />
-                </div>
-                
-                <b><p>Start Time</p></b>
-                <div>
-                    <label htmlFor="time"></label>
-                    <input 
-                        id="time" 
-                        name="time" 
-                        type="text" 
-                        pattern="[a-zA-Z]*" 
-                        value={ filterForm.time }
-                        onChange={ (e) => dispatchFilterForm({ type: e.target.id, value: e.target.value }) }
-                    />
-                </div>
-
-                <b><p>Agency</p></b>
-                <div>
-                    <label htmlFor="agency"></label>
-                    <input 
-                        id="agency" 
-                        name="agency" 
-                        type="text" 
-                        pattern="[a-zA-Z]*" 
-                        value={ filterForm.agency }
                         onChange={ (e) => dispatchFilterForm({ type: e.target.id, value: e.target.value }) }
                     />
                 </div>

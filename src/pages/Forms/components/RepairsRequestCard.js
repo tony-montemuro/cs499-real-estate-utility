@@ -1,5 +1,7 @@
+import mr_file from "/app/src/pages/Forms/assets/mr.PNG";
+
 function RepairsRequestCard() {
-    return <div> Repairs Request</div>;
+    return <img src={mr_file} alt="Estimated closing template" />;
 }
 
 export default RepairsRequestCard;

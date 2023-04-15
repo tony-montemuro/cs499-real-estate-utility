@@ -72,20 +72,24 @@ const PropertyListings = () => {
     // FUNCTION 3: applyFilters function
     // PRECONDITIONS (2 parameters):
     // 1.) e: an event object generated when the form is submitted
-    // 2.) 
+    // 2.) pageLength: the number of listings to render on a page
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the filter form fails to validate, then the function will update the error state, which will alert the user
+    // of any formatting mistakes they made, and returns the function early
+    // if the filter form validates, then getListings(pageLength) is called, which requeries the listings with updated filters
     const applyFilters = (e, pageLength) => {
         // prevent page from reloading (default form submission behavior)
         e.preventDefault();
         let error = { price: null, sqrFeet: null, zip: null };
 
         // first, let's validate the price inputs
-        const maxPrice = filterForm.price.max, minPrice = filterForm.price.min;
+        const maxPrice = parseInt(filterForm.price.max), minPrice = parseInt(filterForm.price.min);
         if (minPrice > maxPrice) {
             error.price = "The minimum price cannot be greater than the maximum price.";
         }
 
         // next, let's validate the square footage inputs
-        const maxSqrFeet = filterForm.sqrFeet.max, minSqrFeet = filterForm.sqrFeet.min;
+        const maxSqrFeet = parseInt(filterForm.sqrFeet.max), minSqrFeet = parseInt(filterForm.sqrFeet.min);
         if (minSqrFeet > maxSqrFeet) {
             error.sqrFeet = "The mimimum square footage cannot be greater than the maximum square footage.";
         }

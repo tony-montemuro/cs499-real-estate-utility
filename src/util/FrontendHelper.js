@@ -31,7 +31,16 @@ const FrontendHelper = () => {
         return `${ property.street }, ${ property.city }, ${ property.state } ${ property.zip }`;
     };
 
-    return { floatToUSD, formatFloat, getAddress };
+    // FUNCTION 4: snakeToTitle - takes a string in snake case, and converts it to title case
+    // PRECONDITIONS (1 parameter):
+    // 1.) snake - a string, that is formatted in snake case
+    // POSTCONDITIONS (1 possible outcome):
+    // a single string is returned, which is the title case version of the snake parameter
+    const snakeToTitle = (snake) => {
+        return snake.replace(/^[-_]*(.)/, (_, c) => c.toUpperCase()).replace (/[-_]+(.)/g, (_, c) => ' ' + c.toUpperCase());
+    }
+
+    return { floatToUSD, formatFloat, getAddress, snakeToTitle };
 };
 
 /* ===== EXPORTS ===== */

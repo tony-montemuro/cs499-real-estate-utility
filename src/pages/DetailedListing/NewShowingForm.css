@@ -1,0 +1,30 @@
+.new-showing-form{
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    border-color: greenyellow;
+    background-color: peru;
+    border-width: 1vh;
+    border-radius: 50px;
+    font-size: 2vh;
+    width: fit-content;
+    padding: 3vh 1vw;
+    justify-content:space-evenly;
+    justify-items:center;
+}
+
+.new-showing-form-box{
+
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    
+    width: fit-content;
+    padding: 3vh 1vw;
+
+    background-color: lightblue;
+
+    position: fixed;
+    bottom: 0px;
+
+}

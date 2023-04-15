@@ -1,6 +1,7 @@
 /* ===== IMPORTS ===== */
 import { queryByLabelText } from "@testing-library/react";
 import { supabase } from "./SupabaseClient";
+import ReadFilterHelper from "./ReadFilterHelper.js";
 
 const Read = () => {
     /* ===== FUNCTIONS ===== */
@@ -43,6 +44,7 @@ const Read = () => {
                 price,
                 property!inner (
                     city,
+                    property_id,
                     small,
                     sqr_feet,
                     state,
@@ -97,6 +99,7 @@ const Read = () => {
                     listing_id,
                     price,
                     property (
+                        property_id,
                         city,
                         sqr_feet,
                         state,
@@ -106,7 +109,24 @@ const Read = () => {
                         dwelling_type,
                         subdivision,
                         school_district,
-                        shopping_areas
+                        shopping_areas,
+                        arm,
+                        disarm,
+                        passcode,
+                        alarm_notes,
+                        occupied,
+                        lock_box,
+                        other,
+                        small,
+                        large_1,
+                        large_2,
+                        large_3,
+                        large_4,
+                        large_5,
+                        room (
+                            room_type,
+                            description
+                        )
                     )
                 `)
                 .eq("listing_id", id)
@@ -163,6 +183,13 @@ const Read = () => {
                     start_time,
                     end_time,
                     listing (
+                        agent (
+                            agency (
+                                name
+                            ),
+                            name
+                        ),
+                        listing_id,
                         property (
                             street,
                             city,
@@ -173,7 +200,7 @@ const Read = () => {
                     ),
                     agent (
                         name,
-                        agency(
+                        agency (
                             name
                         )
                     )
@@ -196,6 +223,116 @@ const Read = () => {
         }
     };
 
+    const { fetchAbbreviatedShowingsNone, fetchAbbreviatedShowingsFilterZIP, fetchAbbreviatedShowingsFilterState, 
+        fetchAbbreviatedShowingsFilterCity, fetchAbbreviatedShowingsFilterStateZIP, fetchAbbreviatedShowingsFilterCityZIP,
+        fetchAbbreviatedShowingsFilterCityState, fetchAbbreviatedShowingsFilterCityStateZIP} = ReadFilterHelper();
+
+    const fetchAbbreviatedShowingsFiltered = async (lower, upper, zip, state, city) => {
+
+        try {
+            if(city == null || city == "") {
+                if(state == null || state == "") {
+                    if (zip == null || zip ==""){ // All search fields are null, no filter
+                        
+                        return await fetchAbbreviatedShowingsNone(lower, upper);
+
+                    }
+                    else { // Filter just against ZIP code
+
+                        return await fetchAbbreviatedShowingsFilterZIP(lower, upper, zip);
+
+                    }
+                } //end of
+                else { // Filter against state and...
+                    if (zip == null || zip == ""){ // Filter just against state
+                        
+                        return await fetchAbbreviatedShowingsFilterState(lower, upper, state);
+
+                    }
+                    else { //Filter against state and ZIP code
+                            
+                        return await fetchAbbreviatedShowingsFilterStateZIP(lower, upper, zip, state);
+
+                    }
+                } //end of not city, but state and...
+            } //end of not city...
+            else { // Filter against city and..
+                if(state == null || state == "") { // not filter for state
+                    if (zip == null || zip == ""){ // filter only for city
+                        
+                        return await fetchAbbreviatedShowingsFilterCity(lower, upper, city);
+
+                    }
+                    else { // Filter just against ZIP code and city
+
+                        return await fetchAbbreviatedShowingsFilterCityZIP(lower, upper, zip, city);
+
+                    }
+                } //end of city and nont state...
+                else { // Filter against state and city and...
+                    if (zip == null || zip == ""){ // Filter just against state and city
+                        
+                        return await fetchAbbreviatedShowingsFilterCityState(lower, upper, state, city);
+
+                    }
+                    else { //Filter against city, state and ZIP code
+                        
+                        return await fetchAbbreviatedShowingsFilterCityStateZIP(lower, upper, zip, state, city);
+                            
+                    }
+                } //end of city and state...
+            } //end of city and...
+        }
+        catch (error) {
+            console.log(error);
+            alert(error.message);
+            return [];
+        }
+    };
+
+    const fetchFullShowing = async (id) => {
+        try {
+            const { data:showing, error} = await supabase
+                .from("showing")
+                .select(`
+                    customer_interest,
+                    agent_experience,
+                    customer_price_rating,
+                    agent_price_rating,
+                    notes,
+                    listing (
+                        property (
+                            occupied,
+                            lock_box
+                        )
+                    ),
+                    agent (
+                        name,
+                        email,
+                        phone_number
+                    ),
+                    buyer
+                )
+                `)
+                .eq("showing_id", id)
+                .maybeSingle();
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+            //return data
+            console.log(showing);
+            return { showing };
+        }
+        catch (error) {
+            console.log(error);
+            alert(error.message);
+            return [];
+        }
+    }
+
     // FUNCTION 5 - fetchAgentById - given a user id, fetch an agent object from the database, and return it
     // PRECONDITIONS (1 parameter):
     // 1.) id - a string value, representing a uuid belonging to a unique agent user in the database
@@ -207,7 +344,12 @@ const Read = () => {
         try {
             const { data: agent, error } = await supabase
                 .from("agent")
-                .select("agency, agent_id, name, user_id")
+                .select(`
+                    agency (agency_id, name), 
+                    agent_id, 
+                    name, 
+                    user_id
+                `)
                 .eq("user_id", id)
                 .maybeSingle();
 
@@ -226,7 +368,8 @@ const Read = () => {
         }
     };
 
-    return { fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchImageByFilename, fetchAgentById };
+    return { fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchAbbreviatedShowingsFiltered, 
+        fetchImageByFilename, fetchFullShowing, fetchAgentById };
 };
 
 /* ===== EXPORTS ===== */
