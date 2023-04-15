@@ -1,16 +1,32 @@
 /* for styling */
 .container {
     justify-content: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     display: flex;
 }
+
 .introduction {
     text-align: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 20px 12px rgba(0, 0, 0, 0.2); 
+    margin: 10px;
 }
+
 .hotproperty {
     text-align: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 20px 12px rgba(0, 0, 0, 0.2); 
+    margin: 10px;
 }
+
+.hotproperty a {
+    text-decoration: underline;
+}
+
 .hot-property-listing-img {
     display: flex;
     justify-content: center;
- }
+}

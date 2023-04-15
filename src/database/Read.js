@@ -36,6 +36,7 @@ const Read = () => {
             .select(`
                 agent (
                     agency (
+                        agency_id,
                         name
                     ),
                     name
@@ -85,6 +86,7 @@ const Read = () => {
                 .select(`
                     agent (
                         agency (
+                            agency_id,
                             name,
                             street,
                             city,
