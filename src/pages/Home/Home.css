@@ -11,6 +11,7 @@
     padding: 10px;
     box-shadow: 0 20px 12px rgba(0, 0, 0, 0.2); 
     margin: 10px;
+    background-color: rgb(163, 206, 224);
 }
 
 .hotproperty {
@@ -20,6 +21,7 @@
     padding: 10px;
     box-shadow: 0 20px 12px rgba(0, 0, 0, 0.2); 
     margin: 10px;
+    background-color: rgb(163, 206, 224);
 }
 
 .hotproperty a {
