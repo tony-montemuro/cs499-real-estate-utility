@@ -86,3 +86,13 @@
     color: rgb(55, 100, 224);
     text-decoration: underline 2px rgb(55, 100, 224);
 }
+
+.detailed-listings-room {
+    width: 190px;
+    min-height: 190px;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}

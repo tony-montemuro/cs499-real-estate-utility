@@ -8,6 +8,7 @@ import { AgentContext } from "../../Contexts";
 import PropertyImage from '../../ui/PropertyImage/PropertyImage.jsx';
 import NewShowingForm from "./NewShowingForm.jsx";
 import DefaultImage from "./ui/No_Image.jpg"
+import Room from "./ui/Room";
 
 function DetailedListing() {
   //variables
@@ -119,6 +120,9 @@ function DetailedListing() {
             <p>Lot Size: { formatFloat(listings.property.lot_size) } sqft</p>
             <hr className="insert-line"/>
             <h3>Room Details:</h3>
+            { listings.property.room.map((room, index) => {
+              return <Room room={ room } index={ index } />
+            })}
             { listings.property.other &&
               <>
                 <hr className="insert-line"/>
