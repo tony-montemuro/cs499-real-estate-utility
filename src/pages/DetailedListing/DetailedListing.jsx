@@ -58,7 +58,24 @@ function DetailedListing() {
         <div className="detailed-listings-header">
           <h1>Detailed Property Listing {path[2]}&emsp;&emsp;
           { agent && <button onClick={ () => setPopup(true)} class="button-style">Edit Listing</button>}
-          
+          { agent ? 
+            <>
+            {showForm ? 
+              <>
+                <button disabled={true} class="button-style" >
+                Create Showing
+                </button>
+                <NewShowingForm toggleForm={toggleForm} listing_id = {page_id}></NewShowingForm>
+              </>
+              : 
+                <button class="button-style" onClick = {() => toggleForm(true)} >
+                Create Showing
+                </button>
+              }
+            </>
+            :
+            <></>
+          }
           </h1>
         </div>
       </div>
@@ -69,18 +86,6 @@ function DetailedListing() {
       { listings ?
         <>  
         {/*body of the listing */}
-            {showForm ? 
-            <>
-              <button disabled={true} >
-              Create Showing
-              </button>
-              <NewShowingForm toggleForm={toggleForm} listing_id = {page_id}></NewShowingForm>
-            </>
-            :
-              <button onClick = {() => toggleForm(true)} >
-              Create Showing
-              </button>
-            }
         <div className="container">
           <div className="left">
             <p></p>

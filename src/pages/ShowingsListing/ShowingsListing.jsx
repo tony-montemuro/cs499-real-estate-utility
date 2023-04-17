@@ -26,7 +26,7 @@ function ShowingsListing() {
         <>  
             {agent ? 
             <>
-            <h1>Showings</h1>
+            <div className="showings-header"><h1>Showings</h1></div>
             <div className = "showings-body">
                 <Box id="ShowingsListingContainingBox" overflow="hidden" width="75%">
                     <ListOfShowingsCmp showings={showings} pageNumber={pageNumber} 
