@@ -112,6 +112,7 @@
     padding: 10px;
     border: 1px solid black;
     border-radius: 5px;
+}
 
 .edit-popup {
     position: fixed;
@@ -139,12 +140,12 @@
     z-index: 1;
 }
 
-.button:disabled, button[disabled] {
+.detailed-listings-header button[disabled] {
     background-color: black;
     color: aliceblue;
 }
 
-button[disabled]:hover {
+.detailed-listings-header button[disabled]:hover {
     background-color: black;
     color: aliceblue;
 }

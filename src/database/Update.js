@@ -132,7 +132,7 @@ const Update = () => {
 
     const editListing = async (newListing) => {
         try {
-            const { data: error } = await supabase
+            const { error } = await supabase
                 .from("listing")
                 .update(newListing)
                 .eq("listing_id", newListing.listing_id);
