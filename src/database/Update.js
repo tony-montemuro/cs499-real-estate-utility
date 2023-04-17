@@ -130,6 +130,42 @@ const Update = () => {
         }
     };
 
+    const editListing = async (newListing) => {
+        try {
+            const { data: error } = await supabase
+                .from("listing")
+                .update(newListing)
+                .eq("listing_id", newListing.listing_id);
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+        } catch (error) {
+            // handle error in caller function
+            throw error;
+        };
+    };
+
+    const editProperty = async (newProperty) => {
+        try {
+            const { error } = await supabase         
+                .from("property")
+                .update(newProperty)
+                .eq("property_id", newProperty.property_id);
+                
+              // error handling
+            if (error) {
+                throw error;
+            }
+
+        } catch (error) {
+            // handle error in caller function
+            throw error;
+        }
+    };
+
     const UpdateShowingSurvey = async (showingID, customer_interest, agent_experience, customer_price_rating, agent_price_rating, notes) => {
         try{
             console.log(showingID, customer_interest, agent_experience, notes);
@@ -154,7 +190,7 @@ const Update = () => {
         }
     }
 
-    // FUNCTION 6: uploadPhoto - given a fileName and file object, upload an image to database storage
+    // FUNCTION 6: uploadFile - given a fileName and file object, upload an image to database storage
     // PRECONDITIONS (2 parameters):
     // 1.) fileName: a well-formatted string that gives the name of the file to upload; comes from file input
     // 2.) file: a file object that was grabbed from a file input
@@ -167,18 +203,18 @@ const Update = () => {
                 .from("property-images")
                 .upload(fileName, file);
 
-            // error handling
+             // error handling
             if (error) {
                 throw error;
             }
-
-        } catch (error) {
-            // handle error in caller function
+            
+         } catch (error) {
+            // error is handled by caller function
             throw error;
-        }
+        };
     };
 
-    // FUNCTION 7: updateThumbnail - given a fileName, propertyId, and field, update one of the image fields for a property
+    // FUNCTION 7: updatePhotoName - given a fileName, propertyId, and field, update one of the image fields for a property
     // PRECONDITIONS (3 parameters):
     // 1.) fileName: a well-formatted string that gives the name of the file to upload; comes from file input
     // 2.) propertyId: an integer corresponding to the unique id of a property assigned by the database
@@ -215,9 +251,9 @@ const Update = () => {
         }
 
 
-    }
+    };
 
-    return { insertProperty, insertListing, insertRoom, CreateShowings, uploadFile, updatePhotoName, UpdateShowingSurvey, UpdatePageHits };
+    return { insertProperty, insertListing, insertRoom, CreateShowings, editListing, editProperty, UpdateShowingSurvey, uploadFile, updatePhotoName, UpdatePageHits };
 };
 
 /* ===== EXPORTS ===== */

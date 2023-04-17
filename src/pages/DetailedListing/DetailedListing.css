@@ -19,15 +19,9 @@
     margin-left: 5px;
     width: 200px;
     height: 200px;
-    background: rgb(171, 125, 197);
-}
-
-.image3 {
-    display: inline-block;
-    margin-left: 5px;
-    width: 250px;
-    height: 250px;
-    background: rgb(216, 117, 117);
+    background-image: url("./ui/No_Image.jpg");
+    align-content: center;
+    object-fit: fill;
 }
 
 .detailed-listing-image {
@@ -110,6 +104,15 @@
     text-decoration: underline 2px rgb(55, 100, 224);
 }
 
+.detailed-listings-room {
+    width: 190px;
+    min-height: 190px;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+
 .edit-popup {
     position: fixed;
     top: 0;
@@ -136,8 +139,7 @@
     z-index: 1;
 }
 
-.button:disabled,
-button[disabled] {
+.button:disabled, button[disabled] {
     background-color: black;
     color: aliceblue;
 }

@@ -1,5 +1,4 @@
 /* ===== IMPORTS ===== */
-import { queryByLabelText } from "@testing-library/react";
 import { supabase } from "./SupabaseClient";
 import ReadFilterHelper from "./ReadFilterHelper.js";
 
@@ -85,6 +84,7 @@ const Read = () => {
                 .select(`
                     agent (
                         agency (
+                            agency_id,
                             name,
                             street,
                             city,
@@ -124,8 +124,8 @@ const Read = () => {
                         large_4,
                         large_5,
                         room (
-                            room_type,
-                            description
+                            description,
+                            room_type
                         )
                     )
                 `)
@@ -137,7 +137,7 @@ const Read = () => {
                 throw error;
             }
             
-            // return data
+            // sort rooms by id, and return data
             console.log(fullListing);
             return fullListing;
                 
@@ -368,8 +368,36 @@ const Read = () => {
         }
     };
 
+    // FUNCTION 6 - fetchAgentsByAgency - given an agency id, fetch information on all agents belonging to that agency
+    // PRECONDITIONS (1 parameter):
+    // 1.) agencyId: an integer representing the id of an agency
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the query is successful, the data (array of agent objects) is returned
+    // otherwise, the agent is informed that there was an error, and an empty array is returned
+    const fetchAgentsByAgency = async (agencyId) => {
+        try {
+            const { data: agents, error } = await supabase
+                .from("agent")
+                .select("agent_id, name")
+                .eq("agency", agencyId);
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+            // otherwise, simply return data
+            return agents;
+
+        } catch (error) {
+            console.log(error);
+            alert(error.message);
+            return [];
+        };
+    };
+
     return { fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchAbbreviatedShowingsFiltered, 
-        fetchImageByFilename, fetchFullShowing, fetchAgentById };
+        fetchImageByFilename, fetchFullShowing, fetchAgentById, fetchAgentsByAgency };
 };
 
 /* ===== EXPORTS ===== */

@@ -8,6 +8,8 @@ import EditListing from "./ui/EditPropertyPopup.jsx";
 import { AgentContext } from "../../Contexts";
 import PropertyImage from '../../ui/PropertyImage/PropertyImage.jsx';
 import NewShowingForm from "./NewShowingForm.jsx";
+import DefaultImage from "./ui/No_Image.jpg"
+import Room from "./ui/Room";
 import UploadIcon from "@mui/icons-material/Upload";
 
 function DetailedListing() {
@@ -34,6 +36,7 @@ function DetailedListing() {
   const { 
     listings, 
     getCurrListing, 
+    generateCopyListing,
     showForm, 
     error, 
     uploaded, 
@@ -48,45 +51,57 @@ function DetailedListing() {
   const { floatToUSD, formatFloat, getAddress, snakeToTitle } = FrontendHelper();
 
   /* ===== EFFECTS ===== */
+  
+  // code that updates the page hit count each time the component mounts
   useEffect(() => {
-    getCurrListing(page_id);
     setPageHits(page_id);
   }, []);
+  
+  useEffect(() => {
+    // get the current listing when component mounts, and each time popup is closed
+    if (!popup) {
+      getCurrListing(page_id);
+    }
+    getCurrListing(page_id);
+  }, [popup]);
 
   /* ===== DETAILED LISTING COMPONENT ==== */
   return (
     <>
-      <div>
-        <div className="detailed-listings-header">
-          <h1>Detailed Property Listing {path[2]}&emsp;&emsp;
-          { agent && <button onClick={ () => setPopup(true)} class="button-style">Edit Listing</button>}
-          { agent ? 
-            <>
-            {showForm ? 
-              <>
-                <button disabled={true} class="button-style" >
-                Create Showing
-                </button>
-                <NewShowingForm toggleForm={toggleForm} listing_id = {page_id}></NewShowingForm>
-              </>
-              : 
-                <button class="button-style" onClick = {() => toggleForm(true)} >
-                Create Showing
-                </button>
-              }
-            </>
-            :
-            <></>
-          }
-          </h1>
-        </div>
-      </div>
-      
-
-
-      { /* Render the body of this component if listings is defined. Otherwise, render a loading component. */ }
       { listings ?
-        <>  
+        <> 
+         { /* Listing header */ }
+        <div>
+          <div className="detailed-listings-header">
+            <h1>Detailed Property Listing {path[2]}&emsp;&emsp;
+            {/* Button conditionally shown to edit the listing */}
+            { agent && agent.agency.agency_id === listings.agent.agency.agency_id && 
+              <button onClick={ () => setPopup(true)} class="button-style">Edit Listing</button>
+            }
+            &emsp;
+            {/* Button conditionally shown to add a showing for the listing */}
+             { agent ? 
+                <>
+                {showForm ? 
+                  <>
+                    <button disabled={true} class="button-style" >
+                    Create Showing
+                    </button>
+                    <NewShowingForm toggleForm={toggleForm} listing_id = {page_id}></NewShowingForm>
+                  </>
+                  : 
+                    <button class="button-style" onClick = {() => toggleForm(true)} >
+                    Create Showing
+                    </button>
+                  }
+                </>
+                :
+                <></>
+              }
+            </h1>
+          </div>
+        </div>
+
         {/*body of the listing */}
         <div className="container">
           <div className="left">
@@ -104,6 +119,7 @@ function DetailedListing() {
             <div className="image2">
                 <PropertyImage filename={ listings.property.large_3 } />
             </div>
+            <br></br>
             <div className="image2">
                 <PropertyImage filename={ listings.property.large_4 } />
             </div>
@@ -185,8 +201,8 @@ function DetailedListing() {
               { ` ${ listings.property.room.filter(item => item.room_type === "bathroom").length }` } bathroom |
               { ` ${ formatFloat(listings.property.sqr_feet) }` } sqft</h2>
             <h2>{ getAddress(listings.property) }</h2>
-            <p>Interested?&emsp;<button class="button-style"><Link to = {showing_link}>Book A Listing!</Link></button></p>
-            <hr class="insert-line"/>
+            <p>Interested?&emsp;<button className="button-style"><Link to = {showing_link}>Book A Listing!</Link></button></p>
+            <hr className="insert-line"/>
             <hr className="insert-line"/>
             <h3>Listed By:</h3>
             <p>{ listings.agent.agency.name }: { listings.agent.agency.phone_number }</p>
@@ -211,6 +227,9 @@ function DetailedListing() {
             <p>Lot Size: { formatFloat(listings.property.lot_size) } sqft</p>
             <hr className="insert-line"/>
             <h3>Room Details:</h3>
+            { listings.property.room.map((room, index) => {
+              return <Room room={ room } index={ index } />
+            })}
             { listings.property.other &&
               <>
                 <hr className="insert-line"/>
@@ -220,14 +239,12 @@ function DetailedListing() {
             }
           </div>
         </div>
+        <EditListing popup={ popup } setPopup={ setPopup } formData={ generateCopyListing() } />
         </>
       : 
         // Loading component
         <p>Loading...</p>
       }
-
-      <EditListing popup={ popup } setPopup={ setPopup } />
-
       
     </>
 
