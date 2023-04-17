@@ -85,8 +85,8 @@ function DetailedListing() {
               { ` ${ listings.property.room.filter(item => item.room_type === "bathroom").length }` } bathroom |
               { ` ${ formatFloat(listings.property.sqr_feet) }` } sqft</h2>
             <h2>{ getAddress(listings.property) }</h2>
-            <p>Interested?&emsp;<button class="button-style"><Link to = {showing_link}>Book A Listing!</Link></button></p>
-            <hr class="insert-line"/>
+            <p>Interested?&emsp;<button className="button-style"><Link to = {showing_link}>Book A Listing!</Link></button></p>
+            <hr className="insert-line"/>
             <hr className="insert-line"/>
             <h3>Listed By:</h3>
             <p>{ listings.agent.agency.name }: { listings.agent.agency.phone_number }</p>
