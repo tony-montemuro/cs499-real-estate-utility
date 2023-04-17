@@ -1,29 +1,14 @@
+import { useReducer, useState } from "react";
+import Delete from "../../../database/Delete";
 import Update from "../../../database/Update";
-import { useContext, useReducer, useState, useEffect } from "react";
-import { AgentContext } from "../../../Contexts";
-import { useLocation  } from "react-router-dom";
-import DetailedListingsLogic from "../DetailedListing.js";
+import Read from "../../../database/Read";
 
 const EditListing = () => {
+    /* ===== VARIABLES ===== */
 	const dwellings = ["single", "family", "multi_family", "duplex", "apartment", "condo", "town_house", "mobile"];
 	const roomTypes = ["bedroom", "bathroom", "great_room", "den", "office", "kitchen", "dining_room", "nursery", "laundry_room", "sunroom", "attic", "basement"];
-	const { editListing, editProperty, editRooms } = Update();
     const initRoom = { room_type: roomTypes[0], description: "" };
     const initShoppingArea = "";
-
-	const location = useLocation();
-	const path = location.pathname.split("/");
-	const page_id = path[2];
-
-	// agent state from agent context
-	const { agent } = useContext(AgentContext); 
-
-	const { getCurrListing, listings } = DetailedListingsLogic();
-
-	/* ===== EFFECTS ===== */
-	useEffect(() => {
-		getCurrListing(page_id);
-	}, []);
 
     const initPropertyForm = {
         listing: {
@@ -50,6 +35,7 @@ const EditListing = () => {
         },
         rooms: []
     };
+
 	const initError = {
         price: undefined,
         street: undefined,
@@ -61,10 +47,10 @@ const EditListing = () => {
         school_district: undefined,
         arm: undefined,
         disarm: undefined,
-        lockbox: undefined
+        lock_box: undefined
     };
 
-
+    /* ===== REDUCER FUNCTION ===== */
 
     // FUNCTION 1: updatePropertyFormState - function that handles updates to the propertyForm reducer
     // PRECONDITIONS (2 parameters):
@@ -75,11 +61,16 @@ const EditListing = () => {
     // POSTCONDITIONS (1 possible outcome):
     // one of the many fields of the propertyForm is updated, with a switch statement handling special cases
     const updatePropertyFormState = (state, action) => {
+        console.log(state);
         switch (action.type) {
             case "all":
                 return { ...initPropertyForm };
+            case "set":
+                return action.value;
             case "price":
                 return { ...state, listing: { ...state.listing, price: action.value } };
+            case "agent":
+                return { ...state, listing: { ...state.listing, agent: action.value } };
             case "room_type":
                 return { 
                     ...state,
@@ -121,69 +112,22 @@ const EditListing = () => {
 	const [error, setError] = useState(initError);
 	const [propertyForm, dispatchPropertyForm] = useReducer(updatePropertyFormState, initPropertyForm);
 	const [submitted, setSubmitted] = useState(null);
+    const [agents, setAgents] = useState(null);
 
-    const setDefaultsForm = (e) => {
-		if (propertyForm.listing.price === null) {
-			propertyForm.listing.price = listings.price;
-		}
-		if (propertyForm.property.street === null) {
-			propertyForm.property.street = listings.property.street;
-		}
-		if (propertyForm.property.city === null){
-			propertyForm.property.city = listings.property.city;
-		}
-		if (propertyForm.property.state === null){
-			propertyForm.property.state = listings.property.state;
-		}
-		if (propertyForm.property.zip === null){
-			propertyForm.property.zip = listings.property.zip;
-		}
-		if (propertyForm.property.lot_size === null){
-			propertyForm.property.lot_size = listings.property.lot_size;
-		}
-		if (propertyForm.property.sqr_feet === null){
-			propertyForm.property.sqr_feet = listings.property.sqr_feet;
-		}
-		if (propertyForm.property.subdivision === null){
-			propertyForm.property.subdivision = listings.property.subdivision;
-		}
-		if (propertyForm.property.school_district=== null){
-			propertyForm.property.school_district = listings.property.school_district;
-		}
-		if (propertyForm.property.shopping_areas === null){
-			propertyForm.property.shopping_areas = listings.property.shopping_areas;
-		}
-		if (propertyForm.property.arm === null){
-			propertyForm.property.arm = listings.property.arm;
-		}
-		if (propertyForm.property.disarm === null){
-			propertyForm.property.disarm = listings.property.disarm;
-		}
-		if (propertyForm.property.passcode === null){
-			propertyForm.property.passcode = listings.property.passcode;
-		}
-		
-		if (propertyForm.property.alarm_notes === null){
-			propertyForm.property.alarm_notes = listings.property.alarm_notes;
-		}
-		
-		if (propertyForm.property.occupied === null){
-			propertyForm.property.occupied = listings.property.occupied;
-		}
-		
-		if (propertyForm.property.lock_box === null){
-			propertyForm.property.lock_box = listings.property.lock_box;
-		}
-		
-		if (propertyForm.property.other === null){
-			propertyForm.property.other = listings.property.other;
-		}
-		
-    }
+    /* ===== FUNCTIONS ===== */
 
-	const setNewValues =  async (id, property) => {
-		editListing(id, property);
-		editProperty(id, property);
+    // database functions
+    const { fetchAgentsByAgency } = Read();
+    const { insertRoom, editListing, editProperty } = Update();
+    const { deleteRoomsById } = Delete();
+
+    const setPropertyForm = (formData) => {
+        dispatchPropertyForm({ type: "set", value: formData });
+    };
+
+    const getAgents = async (agencyId) => {
+        const agents = await fetchAgentsByAgency(agencyId);
+        setAgents(agents);
     };
 
 	const handleChange = (e) => {
@@ -268,16 +212,12 @@ const EditListing = () => {
     const handleSubmit = async (e) => {
         // prevent default form behavior of reloading upon submission
         e.preventDefault();
-		console.log("entered handle submit");
-		{ setDefaultsForm() }
+
         // now, let's perform a series of validation tests on the form before submitting
         const error = initError;
         error.price = validateRequiredField(propertyForm.listing.price);
-		console.log(error.price);
         error.street = validateRequiredField(propertyForm.property.street);
-		console.log(error.street);
         error.city = validateRequiredField(propertyForm.property.city);
-		console.log(error.city);
         error.state = validateRequiredField(propertyForm.property.state);
         error.zip = validateRequiredIntegerField(propertyForm.property.zip);
         error.lot_size = validateRequiredIntegerField(propertyForm.property.lot_size);
@@ -285,7 +225,7 @@ const EditListing = () => {
         error.school_district = validateRequiredField(propertyForm.property.school_district);
         error.arm = validateRequiredIntegerField(propertyForm.property.arm);
         error.disarm = validateRequiredIntegerField(propertyForm.property.disarm);
-        error.lockbox = validateRequiredField(propertyForm.property.lock_box);
+        error.lock_box = validateRequiredField(propertyForm.property.lock_box);
 
         // if even just 1 test failed, return the function early, denying the submission attempt
         setError(error);
@@ -303,21 +243,25 @@ const EditListing = () => {
         property.other = cleanField(property.other);
         
         try {
-			console.log("starting try");
             // first, insert the property, which will return the properties id
-            const promises = editProperty(property, page_id);
-
-			console.log("promise 1");
-            promises.push(editListing({ 
+            const propertyId = property.property_id;
+            const promises = [editListing({ 
                 ...propertyForm.listing, 
-                property: page_id,
-                agent: agent.agent_id
-            }));
-			console.log("awaiting promise");
+                property: propertyId
+            })];
+            promises.push(editProperty(property));
+            promises.push(deleteRoomsById(propertyId));
             await Promise.all(promises);
+            
+            // if all goes smoothly, next we need to re-insert all rooms
+            const roomPromises = propertyForm.rooms.map((room) => {
+                room.property = propertyId;
+                insertRoom(room);
+            });
+            await Promise.all(roomPromises);
 
-            // if all goes smoothly, let the agent know their property was successfully inserted
-            setSubmitted("Property has successfully been added to the REU Properties system!");
+            // if all queries are successful, update the submitted state
+            setSubmitted("Listing has successfully been updated in the REU Properties system!");
             
         } catch (error) {
             alert(error.message);
@@ -332,7 +276,24 @@ const EditListing = () => {
         setPopup(false);
     };
 
-    return { setNewValues, handleChange, handleRoomChange, addRoom, removeRoom, handleShoppingAreaChange, addShoppingArea, removeShoppingArea, validateRequiredField, validateRequiredIntegerField, cleanField, handleSubmit, closePopup, submitted, propertyForm, setDefaultsForm, error };
+    return { 
+        roomTypes, 
+        submitted,
+        propertyForm,
+        error,
+        agents,
+        setPropertyForm,
+        getAgents,
+        handleChange, 
+        handleRoomChange, 
+        addRoom, 
+        removeRoom, 
+        handleShoppingAreaChange, 
+        addShoppingArea, 
+        removeShoppingArea, 
+        handleSubmit, 
+        closePopup
+    };
 };
 
 export default EditListing;

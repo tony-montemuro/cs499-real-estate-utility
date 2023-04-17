@@ -54,7 +54,31 @@ const Delete = () => {
         };
     };
 
-    return { deleteListingById, deletePropertyById };
+    // FUNCTION 3: deleteRoomsById - given a property id, delete all rooms associated with that property
+    // PRECONDITIONS (1 parameter):
+    // 1.) propertyId: an integer corresponding to the unique id of a property in the database
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the query is successful, this function will simply return
+    // otherwise, this function throws an error, which will be handled by the caller function
+    const deleteRoomsById = async (propertyId) => {
+        try {
+            const { error } = await supabase
+                .from("room")
+                .delete()
+                .eq("property", propertyId);
+
+            // error handling
+            if (error) {
+                return error;
+            }
+
+        } catch (error) {
+            // error is handled by caller function
+            throw error;
+        };
+    };
+
+    return { deleteListingById, deletePropertyById, deleteRoomsById };
 };
 
 /* ===== EXPORTS ===== */

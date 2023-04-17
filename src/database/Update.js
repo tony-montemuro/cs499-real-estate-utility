@@ -128,49 +128,29 @@ const Update = () => {
         }
     };
 
-    const editListing = async(newProperty, id) => {
+    const editListing = async (newListing) => {
         try {
             const { data: error } = await supabase
                 .from("listing")
-                .update(
-                    {listing_id: newProperty.listing_id},
-                    {price: newProperty.price}
-                )
-                .eq("property_id", id)
+                .update(newListing)
+                .eq("listing_id", newListing.listing_id);
 
-            //error handling
+            // error handling
             if (error) {
                 throw error;
             }
+
         } catch (error) {
             throw error;
         };
     };
 
-    const editProperty = async(newProperty, id) => {
+    const editProperty = async (newProperty) => {
         try {
-            const { data: error } = await supabase         
+            const { error } = await supabase         
                 .from("property")
-                .update(
-                    {city: newProperty.property.city},
-                    {sqr_feet: newProperty.property.sqr_feet},
-                    {state: newProperty.property.state},
-                    {street: newProperty.property.street},
-                    {zip: newProperty.property.zip},
-                    {lot_size: newProperty.property.lot_size},
-                    {dwelling_type: newProperty.property.dwelling_type},
-                    {subdivision: newProperty.property.subdivision},
-                    {school_district: newProperty.property.school_district},
-                    {shopping_areas: newProperty.property.shopping_areas},
-                    {arm: newProperty.property.arm},
-                    {disarm: newProperty.property.disarm},
-                    {passcode: newProperty.property.passcode},
-                    {alarm_notes: newProperty.property.alarm_notes},
-                    {occupied: newProperty.property.occupied},
-                    {lock_box: newProperty.property.lock_box},
-                    {other: newProperty.property.other}
-                )
-                .eq("property_id", id)
+                .update(newProperty)
+                .eq("property_id", newProperty.property_id);
 
             // error handling
             if (error) {
@@ -183,22 +163,23 @@ const Update = () => {
         };
     };
 
-    const editRooms = async(newProperty, id) => {
+    const editRooms = async (newRoom) => {
         try {
             const { data: error } = await supabase
                 .from("room")
-                .update(
-                    
-                )
-                .eq("property", id)
+                .update(newRoom)
+                .eq("room_id", newRoom.room_id);
+
+            // error handling
             if (error) {
                 throw error;
             }
+
         } catch (error) {
             // error is handled by caller function
             throw error;
         }
-    }
+    };
 
     return { insertProperty, insertListing, insertRoom, CreateShowings, editListing, editProperty, editRooms };
 };

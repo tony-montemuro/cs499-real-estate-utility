@@ -7,8 +7,8 @@ import AddPropertyPopupLogic from "./AddPropertyPopup.js";
 import CancelIcon from '@mui/icons-material/Cancel';
 import ErrorMessage from "./ErrorMessage";
 import FrontendHelper from "../../../util/FrontendHelper";
-import RoomInput from "./RoomInput.jsx";
-import ShoppingInput from "./ShoppingInput";
+import RoomInput from "../../../ui/RoomInput/RoomInput.jsx";
+import ShoppingInput from "../../../ui/ShoppingInput/ShoppingInput";
 
 function AddPropertyPopup({ popup, setPopup }) {
   /* ===== VARIABLES ===== */

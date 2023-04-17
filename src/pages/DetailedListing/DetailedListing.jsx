@@ -25,33 +25,41 @@ function DetailedListing() {
   /* ===== STATES ===== */
 
   // states and functions from the PropertyListing js file
-  const { listings, getCurrListing, showForm, toggleForm } = DetailedListingsLogic();
+  const { listings, getCurrListing, generateCopyListing, showForm, toggleForm } = DetailedListingsLogic();
 
   // helper functions
   const { floatToUSD, formatFloat, getAddress, snakeToTitle } = FrontendHelper();
 
   /* ===== EFFECTS ===== */
   useEffect(() => {
-    getCurrListing(page_id);
-  }, []);
+    // get the current listing when component mounts, and each time popup is closed
+    if (!popup) {
+      getCurrListing(page_id);
+    }
+  }, [popup]);
 
   return (
     <>
-      <div>
-        <div className="detailed-listings-header">
-          <h1>Detailed Property Listing {path[2]}&emsp;&emsp;
-          {/* Button conditionally shown to edit the listing */}
-          { agent && <button onClick={ () => setPopup(true)} class="button-style">Edit Listing</button>}
-          &emsp;
-          {/* Button conditionally shown to add a showing for the listing */}
-          { agent && <button onClick={ () => toggleForm(true)} class="button-style">Create Showing</button>}
-          </h1>
-        </div>
-      </div>
+      
       
       { /* Render the body of this component if listings is defined. Otherwise, render a loading component. */ }
       { listings ?
-        <>  
+        <> 
+         { /* Listing header */ }
+        <div>
+          <div className="detailed-listings-header">
+            <h1>Detailed Property Listing {path[2]}&emsp;&emsp;
+            {/* Button conditionally shown to edit the listing */}
+            { agent && agent.agency.agency_id === listings.agent.agency.agency_id && 
+              <button onClick={ () => setPopup(true)} class="button-style">Edit Listing</button>
+            }
+            &emsp;
+            {/* Button conditionally shown to add a showing for the listing */}
+            { agent && <button onClick={ () => toggleForm(true)} class="button-style">Create Showing</button>}
+            </h1>
+          </div>
+        </div>
+
         {/*body of the listing */}
         <div className="container">
           <div className="left">
@@ -120,14 +128,12 @@ function DetailedListing() {
             }
           </div>
         </div>
+        <EditListing popup={ popup } setPopup={ setPopup } formData={ generateCopyListing() } />
         </>
       : 
         // Loading component
         <p>Loading...</p>
       }
-
-      <EditListing popup={ popup } setPopup={ setPopup } />
-
       
     </>
 
