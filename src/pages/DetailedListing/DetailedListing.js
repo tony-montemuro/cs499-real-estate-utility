@@ -36,7 +36,7 @@ const PropertyListings = () => {
         delete property.room;
         // we want to replace all null fields with empty strings for the form
         for (const [key, value] of Object.entries(property)) {
-            if (value === null) {
+            if (value === null && !largeArr.concat(["small"]).includes(key)) {
                 property[key] = "";
             }
         }
