@@ -57,7 +57,7 @@ function Forms() {
             
 
                 <div className={classes.header}>
-                <h1>Documents</h1>
+                <h1>Forms</h1>
             </div>
 
                 <div className={classes.content}>

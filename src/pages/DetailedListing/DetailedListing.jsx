@@ -184,7 +184,6 @@ function DetailedListing() {
 
                 { /* If the photo successfully updates, render a success message here. */ }
                 { uploaded.photo && <p>{ uploaded.photo }</p> }
-
               </>
 
             }

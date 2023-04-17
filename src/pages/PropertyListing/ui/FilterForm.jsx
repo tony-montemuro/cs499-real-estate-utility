@@ -6,7 +6,7 @@ function FilterForm({ formState, updateFormState, applyFiltersFunc, pageLength }
   /* ===== FILTER FORM STATE ===== */
   return (
     <div className="property-listing-filters">
-      <h2>Filters</h2>
+      <h2>Search Filters</h2>
       <div className="property-listing-filters-form">
 
         { /* Form used to set search filters */ }
@@ -15,12 +15,12 @@ function FilterForm({ formState, updateFormState, applyFiltersFunc, pageLength }
           { /* Price range */ }
           <b><p>Price</p></b>
           <RangeInputs type={ "price" } formState={ formState } updateFormState={ updateFormState } />
-          { formState.error.price && <p>Error: { formState.error.price }</p> }
+          { formState.error.price && <p className="property-listing-error">Error: { formState.error.price }</p> }
 
           { /* Square footage range */ }
           <b><p>Square Footage</p></b>
           <RangeInputs type={ "sqrFeet" } formState={ formState } updateFormState={ updateFormState } />
-          { formState.error.sqrFeet && <p>Error: { formState.error.sqrFeet }</p> }
+          { formState.error.sqrFeet && <p className="property-listing-error">Error: { formState.error.sqrFeet }</p> }
 
           { /* Zip code */ }
           <b><p>Zip</p></b>
@@ -35,7 +35,7 @@ function FilterForm({ formState, updateFormState, applyFiltersFunc, pageLength }
               onChange={ (e) => updateFormState({ type: e.target.id, value: e.target.value }) }
             />
           </div>
-          { formState.error.zip && <p>Error: { formState.error.zip }</p> }
+          { formState.error.zip && <p className="property-listing-error">Error: { formState.error.zip }</p> }
 
           { /* Form button */ }
           <button>Filter</button>

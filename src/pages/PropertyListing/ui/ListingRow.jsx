@@ -45,7 +45,12 @@ function ListingRow({ listing, setDeletePopup }) {
 
       { /* Delete column - renders only if an agent is signed in. Normal users will not have access to this button. */ }
       { agent && <td className="property-listing-delete">
-        <button onClick={ () => setDeletePopup({ listingId: listing.listing_id, propertyId: listing.property.property_id }) }><ClearIcon /></button>
+        <button 
+          onClick={ () => setDeletePopup({ listingId: listing.listing_id, propertyId: listing.property.property_id }) }
+          disabled={ listing.agent.agency.agency_id !== agent.agency.agency_id }
+        >
+          <ClearIcon />
+        </button>
       </td> }
       
     </tr>

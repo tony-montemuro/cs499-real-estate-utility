@@ -86,12 +86,16 @@ const PropertyListings = () => {
         const maxPrice = parseInt(filterForm.price.max), minPrice = parseInt(filterForm.price.min);
         if (minPrice > maxPrice) {
             error.price = "The minimum price cannot be greater than the maximum price.";
+        } else if (minPrice < 0 || maxPrice < 0) {
+            error.price = "Prices must be non-negative."
         }
 
         // next, let's validate the square footage inputs
         const maxSqrFeet = parseInt(filterForm.sqrFeet.max), minSqrFeet = parseInt(filterForm.sqrFeet.min);
         if (minSqrFeet > maxSqrFeet) {
             error.sqrFeet = "The mimimum square footage cannot be greater than the maximum square footage.";
+        } else if (minSqrFeet < 0 || maxSqrFeet < 0) {
+            error.sqrFeet = "Square footage must be non-negative.";
         }
 
         // finally, validate the zip code
@@ -100,10 +104,10 @@ const PropertyListings = () => {
             error.zip = "Not a valid zip code.";
         }
 
-        // loop through the error object. if any fields are null, we want to update the error field in the filterForm, and
-        // return early (do NOT want to update listings state)
+        // update the error field in the filter form. loop through the error object. if any fields are null, we return early 
+        // (do NOT want to update listings state)
+        dispatchFilterForm({ type: "error", value: error });
         if (Object.values(error).some(val => val !== null)) {
-            dispatchFilterForm({ type: "error", value: error });
             return;
         }
         
