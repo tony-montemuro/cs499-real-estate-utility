@@ -40,7 +40,8 @@ function DetailedListing() {
     toggleForm, 
     getNumRemaining,
     uploadPhoto, 
-    uploadThumbnail  
+    uploadThumbnail,
+    setPageHits
   } = DetailedListingsLogic();
 
   // helper functions
@@ -49,6 +50,7 @@ function DetailedListing() {
   /* ===== EFFECTS ===== */
   useEffect(() => {
     getCurrListing(page_id);
+    setPageHits(page_id);
   }, []);
 
   /* ===== DETAILED LISTING COMPONENT ==== */

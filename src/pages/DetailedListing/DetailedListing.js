@@ -8,6 +8,7 @@ const PropertyListings = () => {
     const largeArr = ["large_1", "large_2", "large_3", "large_4", "large_5"];
 
     /* ===== STATES ===== */
+    const [hasUpdatedHits, updateHits] = useState(false);
     const [listings, setListings] = useState(undefined);
     const [showForm, toggleForm] = useState(false);
     const [error, setError] = useState({ thumbnail: undefined, photo: undefined });
@@ -17,13 +18,22 @@ const PropertyListings = () => {
 
     // database functions
     const { fetchFullListing } = Read();
-    const { uploadFile, updatePhotoName } = Update();
+    const { uploadFile, updatePhotoName, UpdatePageHits } = Update();
 
     const getCurrListing = async (id) => {
         // fetch current listing from the database, and update the listings state
+
         const currentListing = await fetchFullListing(id);
         setListings(currentListing);
     };
+
+    const setPageHits = async (id) => {
+        if(!hasUpdatedHits)
+        { 
+            await UpdatePageHits(id); 
+            updateHits(true); 
+        }
+    }
 
     // FUNCTION 2: getNumRemaining - function that counts the number of image (large) fields that are null for a property
     // PRECONDITIONS (1 requirement):
@@ -166,7 +176,8 @@ const PropertyListings = () => {
         toggleForm, 
         getNumRemaining,
         uploadPhoto, 
-        uploadThumbnail 
+        uploadThumbnail,
+        setPageHits
     };   
 };
 

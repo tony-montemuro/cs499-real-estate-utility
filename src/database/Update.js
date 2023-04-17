@@ -150,7 +150,6 @@ const Update = () => {
         }
         catch(error) {
             console.log(error);
-            console.log("huh");
             alert(error.message);
         }
     }
@@ -205,7 +204,20 @@ const Update = () => {
         }
     };
 
-    return { insertProperty, insertListing, insertRoom, CreateShowings, uploadFile, updatePhotoName, UpdateShowingSurvey };
+    const UpdatePageHits = async (listing_id) => {
+        try {
+            const{error} = await supabase.rpc('increment_hit_count', {id_of_listing: listing_id});
+
+            if (error) {throw error;}
+        } catch(error) {
+            console.log(error);
+            alert(error.message);
+        }
+
+
+    }
+
+    return { insertProperty, insertListing, insertRoom, CreateShowings, uploadFile, updatePhotoName, UpdateShowingSurvey, UpdatePageHits };
 };
 
 /* ===== EXPORTS ===== */
