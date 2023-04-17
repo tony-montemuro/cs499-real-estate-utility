@@ -1,6 +1,6 @@
 /* ===== IMPORTS ===== */
 import DeleteIcon from '@mui/icons-material/Delete';
-import FrontendHelper from "../../../util/FrontendHelper";
+import FrontendHelper from "../../util/FrontendHelper";
 
 function RoomInput({ room, roomTypes, handleChange, handleDelete }) {
   /* ===== FUNCTIONS ===== */
