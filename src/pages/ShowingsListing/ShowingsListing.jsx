@@ -7,6 +7,7 @@ import ShowingsListingLogic from "./ShowingsListings.js";
 import { AgentContext } from "../../Contexts";
 import {useContext} from "react";
 import Auth from "../../database/Auth.js";
+import "./ShowingsListing.css"
 
 
 function ShowingsListing() {
