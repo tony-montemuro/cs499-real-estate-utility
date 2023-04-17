@@ -3,6 +3,9 @@ import { useState } from "react";
 //Importing global user interface components 
 import PageBase from "../../ui/PageBase/PageBase";
 
+import ect_file from "./assets/estimate_closing_template.pdf";
+import mr_file from "./assets/maintenance_request.pdf";
+import pa_file from "./assets/purchase_agreement.pdf";
 
 //Importing page specific components
 import Card from "./components/Card";
@@ -23,12 +26,14 @@ function Forms() {
     const [EstimatedClosing, setEstimatedClosing] = useState(false);
     const [SalesContract, setSalesContract] = useState(false);
     const [RepairsRequest, setRepairsRequest] = useState(false);
+    const [DownloadPath, setDownload] = useState(undefined);
 
     function chooseECC() {
         setSalesContract(false);
         setInitialDocument(false);
         setRepairsRequest(false);
         setEstimatedClosing(true);
+        setDownload(ect_file);
     }
 
     function chooseSC() {
@@ -36,6 +41,7 @@ function Forms() {
         setInitialDocument(false);
         setRepairsRequest(false);
         setEstimatedClosing(false);
+        setDownload(pa_file);
     }
 
     function chooseRR() {
@@ -43,6 +49,7 @@ function Forms() {
         setInitialDocument(false);
         setRepairsRequest(true);
         setEstimatedClosing(false);
+        setDownload(mr_file);
     }
 
     return (
@@ -69,6 +76,10 @@ function Forms() {
                         <Button
                             sx={{ width: "100%"}}
                             variant="contained"
+                            onClick = {() => {
+                                window.open(DownloadPath);
+                            }}
+                            disabled = {DownloadPath == undefined}
                         >
                             Download
                         </Button>

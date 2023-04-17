@@ -12,6 +12,7 @@ const NewShowingForm = () => {
         startTime: "00:00",
         length: "0",
         showingAgent: "",
+        buyer: "",
     };
 
     const updateShowingFormState = (state, action) => {
@@ -24,6 +25,8 @@ const NewShowingForm = () => {
                 return { ...state, length: action.value };
             case "showingAgent":
                 return { ...state, showingAgent: action.value };
+            case "buyer":
+                return {...state, buyer: action.value};
         };
     };
 
@@ -32,7 +35,7 @@ const NewShowingForm = () => {
     const submitShowingForm = (e, listing_id) => {
         // prevent page from reloading (default form submission behavior)
         e.preventDefault();
-        CreateShowings(showingForm.date, showingForm.startTime, showingForm.length, listing_id, showingForm.showingAgent);
+        CreateShowings(showingForm.date, showingForm.startTime, showingForm.length, listing_id, showingForm.showingAgent, showingForm.buyer);
         
     };
 

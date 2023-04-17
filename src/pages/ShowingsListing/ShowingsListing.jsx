@@ -4,10 +4,15 @@ import ShowSortComp from "./ShowingsListingComponents/ShowSortComp.jsx";
 import "./ShowingsListing.css";
 import Box from '@mui/material/Box';
 import ShowingsListingLogic from "./ShowingsListings.js";
-
+import { AgentContext } from "../../Contexts";
+import {useContext} from "react";
+import Auth from "../../database/Auth.js";
+import "./ShowingsListing.css"
 
 
 function ShowingsListing() {
+
+    const {agent} = useContext(AgentContext);
 
     const { filterForm, 
         dispatchFilterForm, 
@@ -20,7 +25,9 @@ function ShowingsListing() {
 
     return (
         <>  
-            <h1>Showings</h1>
+            {agent ? 
+            <>
+            <div className="showings-header"><h1>Showings</h1></div>
             <div className = "showings-body">
                 <Box id="ShowingsListingContainingBox" overflow="hidden" width="75%">
                     <ListOfShowingsCmp showings={showings} pageNumber={pageNumber} 
@@ -28,7 +35,10 @@ function ShowingsListing() {
                 </Box>
                 <ShowSortComp filterForm={filterForm} dispatchFilterForm={dispatchFilterForm} applyFilters={applyFilters} />
             </div>
-
+            </>
+            :
+            <h1>Invalid Credentials</h1>
+            }
         </>
     )
 };

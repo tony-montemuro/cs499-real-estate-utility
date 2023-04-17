@@ -27,7 +27,9 @@ function Row({ data, index, style }){
                         endTime = {showingA.end_time} 
                         listAgentInfo = {showingA.listing.agent.name + ', ' + showingA.listing.agent.agency.name}
                         image = {showingA.listing.property.small}
-                        showAgentInfo= {showingA.agent ? showingA.agent.name + ', ' + showingA.agent.agency.name : null}>
+                        showAgentInfo= {showingA.agent ? showingA.agent.name + ', ' + showingA.agent.agency.name : null}
+                        listing_id={showingA.listing.listing_id}
+                        >
                             {/*console.log(showingA.listing.property.small)*/}
                     </AbrvShowingInstance>
                 </Link>
@@ -42,6 +44,7 @@ function Row({ data, index, style }){
                         listAgentInfo = {showingB.listing.agent.name + ', ' + showingB.listing.agent.agency.name} 
                         image = {showingB.listing.property.small}
                         showAgentInfo = {showingB.agent ? showingB.agent.name + ', ' + showingB.agent.agency.name : null}
+                        listing_id={showingB.listing.listing_id}
                         >
                             {/*console.log(showingB.listing.property.small)*/}
                     </AbrvShowingInstance>
@@ -109,7 +112,7 @@ function ListOfShowingsCmp({showings, pageNumber, getShowingsInit, handlePageCha
                     height={listHeight}
                     width={listWidth}
                     itemCount={Math.ceil(showings.length / 2)}
-                    itemSize = {(0.30 * window.innerHeight)}
+                    itemSize = {(0.34 * window.innerHeight)}
                     itemData={showings}>
                     {Row}
 

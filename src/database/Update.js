@@ -76,7 +76,7 @@ const Update = () => {
         };
     };
     
-    const CreateShowings = async (day, time, hours, listing_number, agent_number) => {
+    const CreateShowings = async (day, time, hours, listing_number, agent_number, buyer) => {
 
         hours = hours ? hours : 1;
 
@@ -94,7 +94,8 @@ const Update = () => {
                     start_time: time_start.toISOString(),
                     end_time: time_end.toISOString(),
                     listing: listing_number,
-                    agent: agent_number
+                    agent: agent_number,
+                    buyer: buyer
                 }]);
 
                 // error handling
@@ -110,6 +111,7 @@ const Update = () => {
                     start_time: time_start.toISOString(),
                     end_time: time_end.toISOString(),
                     listing: listing_number,
+                    buyer: buyer
                 }])
                 // error handling
                 if (error && status !== 406) {
@@ -141,6 +143,7 @@ const Update = () => {
             }
 
         } catch (error) {
+            // handle error in caller function
             throw error;
         };
     };
@@ -151,24 +154,80 @@ const Update = () => {
                 .from("property")
                 .update(newProperty)
                 .eq("property_id", newProperty.property_id);
-
-            // error handling
+                
+              // error handling
             if (error) {
                 throw error;
             }
 
         } catch (error) {
+            // handle error in caller function
+            throw error;
+        }
+    };
+
+    const UpdateShowingSurvey = async (showingID, customer_interest, agent_experience, customer_price_rating, agent_price_rating, notes) => {
+        try{
+            console.log(showingID, customer_interest, agent_experience, notes);
+            const { error } = await supabase
+            .from("showing")
+            .update({
+                customer_interest: customer_interest,
+                agent_experience: agent_experience,
+                customer_price_rating: customer_price_rating,
+                agent_price_rating: agent_price_rating,
+                notes: notes
+            })
+            .eq("showing_id", showingID);
+
+            if (error) {
+                throw error;
+            }
+        }
+        catch(error) {
+            console.log(error);
+            alert(error.message);
+        }
+    }
+
+    // FUNCTION 6: uploadFile - given a fileName and file object, upload an image to database storage
+    // PRECONDITIONS (2 parameters):
+    // 1.) fileName: a well-formatted string that gives the name of the file to upload; comes from file input
+    // 2.) file: a file object that was grabbed from a file input
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the upload is successful, the function will simply return
+    // otherwise, this function throws an error object, which will be handled by the caller function
+    const uploadFile = async (fileName, file) => {
+        try {
+            const { error } = await supabase.storage
+                .from("property-images")
+                .upload(fileName, file);
+
+             // error handling
+            if (error) {
+                throw error;
+            }
+            
+         } catch (error) {
             // error is handled by caller function
             throw error;
         };
     };
 
-    const editRooms = async (newRoom) => {
+    // FUNCTION 7: updatePhotoName - given a fileName, propertyId, and field, update one of the image fields for a property
+    // PRECONDITIONS (3 parameters):
+    // 1.) fileName: a well-formatted string that gives the name of the file to upload; comes from file input
+    // 2.) propertyId: an integer corresponding to the unique id of a property assigned by the database
+    // 3.) field: a string, with one of the six possible values: small, large_1, large_2, large_3, large_4, large_5
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the update query is successful, the function will simply return
+    // otherwise, this function throws an error object, which will be handled by the caller function
+    const updatePhotoName = async (fileName, propertyId, field) => {
         try {
-            const { data: error } = await supabase
-                .from("room")
-                .update(newRoom)
-                .eq("room_id", newRoom.room_id);
+            const { error } = await supabase
+                .from("property")
+                .update({ [field]: fileName })
+                .eq("property_id", propertyId);
 
             // error handling
             if (error) {
@@ -176,12 +235,25 @@ const Update = () => {
             }
 
         } catch (error) {
-            // error is handled by caller function
+            // handle error in caller function
             throw error;
         }
     };
 
-    return { insertProperty, insertListing, insertRoom, CreateShowings, editListing, editProperty, editRooms };
+    const UpdatePageHits = async (listing_id) => {
+        try {
+            const{error} = await supabase.rpc('increment_hit_count', {id_of_listing: listing_id});
+
+            if (error) {throw error;}
+        } catch(error) {
+            console.log(error);
+            alert(error.message);
+        }
+
+
+    };
+
+    return { insertProperty, insertListing, insertRoom, CreateShowings, editListing, editProperty, UpdateShowingSurvey, uploadFile, updatePhotoName, UpdatePageHits };
 };
 
 /* ===== EXPORTS ===== */
