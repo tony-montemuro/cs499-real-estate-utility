@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/react-gh-pages/static/css/main.35fcd9a9.css",
+    "main.js": "/react-gh-pages/static/js/main.bb67a144.js",
+    "static/media/purchase_agreement.pdf": "/react-gh-pages/static/media/purchase_agreement.998fc2c953871680b585.pdf",
+    "static/media/Logo_withText.png": "/react-gh-pages/static/media/Logo_withText.413c15fbbabdf1cd085f.png",
+    "static/media/estimate_closing_template.pdf": "/react-gh-pages/static/media/estimate_closing_template.127aaeae1c7f62a32dd8.pdf",
+    "static/media/ect.PNG": "/react-gh-pages/static/media/ect.48e7a1e9e924cf25fa3f.PNG",
+    "static/media/pa.PNG": "/react-gh-pages/static/media/pa.ba5c4c077b28374d7ce7.PNG",
+    "static/media/maintenance_request.pdf": "/react-gh-pages/static/media/maintenance_request.21b3da5b5b0c30c53578.pdf",
+    "static/media/mr.PNG": "/react-gh-pages/static/media/mr.0873dd350ea728b49f63.PNG",
+    "static/media/No_Image.jpg": "/react-gh-pages/static/media/No_Image.586151e605de71371db1.jpg",
+    "index.html": "/react-gh-pages/index.html",
+    "main.35fcd9a9.css.map": "/react-gh-pages/static/css/main.35fcd9a9.css.map",
+    "main.bb67a144.js.map": "/react-gh-pages/static/js/main.bb67a144.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.35fcd9a9.css",
+    "static/js/main.bb67a144.js"
+  ]
+}
