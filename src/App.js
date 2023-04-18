@@ -36,12 +36,12 @@ function App() {
         <div className="App">
           <REUNavbar />
           <Routes>
-            <Route path="/cs499-real-estate-utility/" element={ <Home /> } />
-            <Route path="/cs499-real-estate-utility/forms" element={ <Forms /> } /> 
-            <Route path="/cs499-real-estate-utility/listings" element={ <PropertyListing /> } />
-            <Route path="/cs499-real-estate-utility/listings/:listing" element={ <DetailedListing /> } />
-            <Route path="/cs499-real-estate-utility/showings" element={ <ShowingsListing /> } />
-            <Route path="/cs499-real-estate-utility/showings/:showing" element={ <DetailedShowing /> } />
+            <Route path="/" element={ <Home /> } />
+            <Route path="/forms" element={ <Forms /> } /> 
+            <Route path="/listings" element={ <PropertyListing /> } />
+            <Route path="/listings/:listing" element={ <DetailedListing /> } />
+            <Route path="/showings" element={ <ShowingsListing /> } />
+            <Route path="/showings/:showing" element={ <DetailedShowing /> } />
           </Routes>
         </div>
       </ImagesContext.Provider>
