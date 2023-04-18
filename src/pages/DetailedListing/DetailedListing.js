@@ -12,7 +12,9 @@ const PropertyListings = () => {
     const [listings, setListings] = useState(undefined);
     const [showForm, toggleForm] = useState(false);
     const [error, setError] = useState({ thumbnail: undefined, photo: undefined });
-    const [uploaded, setUploaded] = useState({ thumbnail: undefined, photo: undefined });
+    const [uploading, setUploading] = useState({ thumbnail: true, photo: true });
+    const [uploadedMessage, setUploadedMessage] = useState({ thumbnail: undefined, photo: undefined });
+    const [isSubmitting, setIsSubmitting] = useState({ thumbnail: false, photo: false });
 
     /* ===== FUNCTIONS ===== */
 
@@ -65,10 +67,22 @@ const PropertyListings = () => {
     const getNumRemaining = () => {
         let count = 0;
         largeArr.forEach(field => listings.property[field] === null ? count += 1 : count += 0);
+        console.log(listings);
         return count;
     };
 
-    // FUNCTION 5: validateFile - function that returns a string error if the file has any errors. otherwise, undefined is returned.
+    // FUNCTION 5: handleFileInputChange: function that is called when the file input detects a change, or during the photo submission functions
+    // PRECONDITIONS (2 parameters):
+    // 1.) ref: a ref hook, that refers to either the thumbnailRef or photoRef hooks
+    // 2.) field: specifies which ref is being refered to. can be either string value: "photo" or "thumbnail"
+    // POSTCONDITIONS (1 possible outcome):
+    // the uploading state is updated using the field parameter. if a file has been uploaded, the field is set to
+    // false. otherwise, it is set to false
+    const handleFileInputChange = (ref, field) => {
+        setUploading({ ...uploading, [field]: ref.current.files.length === 0 });
+    };
+
+    // FUNCTION 6: validateFile - function that returns a string error if the file has any errors. otherwise, undefined is returned.
     // PRECONDITIONS (1 parameter):
     // 1.) file: a file object generated when a user uploads an image
     // POSTCONDITIONS (2 possible outcomes):
@@ -94,7 +108,7 @@ const PropertyListings = () => {
         return undefined;        
     };
 
-    // FUNCTION 6: uploadPhoto - given a photoRef, upload a large photo, and update the property database
+    // FUNCTION 7: uploadPhoto - given a photoRef, upload a large photo, and update the property database
     // PRECONDITIONS (2 parameters):
     // 1.) e: an event object that is generated when the agent hits the "upload" button for a photo
     // 2.) photoRef: a ref hook, that references the file input for photos
@@ -105,7 +119,8 @@ const PropertyListings = () => {
     const uploadPhoto = async (e, photoRef) => {
         e.preventDefault();
         const file = photoRef.current.files[0];
-        setUploaded({ ...uploaded, photo: undefined });
+        setUploadedMessage({ ...uploadedMessage, photo: undefined });
+        setIsSubmitting({ ...isSubmitting, photo: true });
 
         // first, let's validate the file
         const photoError = validateFile(file);  
@@ -113,6 +128,9 @@ const PropertyListings = () => {
         
         // check for error
         if (photoError) {
+            setIsSubmitting({ ...isSubmitting, photo: false });
+            photoRef.current.value = "";
+            handleFileInputChange(photoRef, "photo");
             return;
         }
 
@@ -132,17 +150,20 @@ const PropertyListings = () => {
             const listingId = listings.listing_id;
             await getCurrListing(listingId);
 
-            // finally, update the uploaded state
-            setUploaded({ ...uploaded, photo: "Photo was successfully uploaded. If it does not display immediately, give it some time." });
+            // finally, update the uploadedMessage state
+            setUploadedMessage({ ...uploadedMessage, photo: "Photo was successfully uploaded. If it does not display immediately, give it some time." });
 
         } catch (queryError) {
             console.log(queryError);
             alert(queryError.message);
             setError({ ...error, photo: queryError });
         }
+        photoRef.current.value = "";
+        setIsSubmitting({ ...isSubmitting, photo: false });
+        handleFileInputChange(photoRef, "photo");
     };
 
-    // FUNCTION 7: uploadThumbnail - given a thumbnailRef, upload a thumbnail, and update the property database
+    // FUNCTION 8: uploadThumbnail - given a thumbnailRef, upload a thumbnail, and update the property database
     // PRECONDITIONS (2 parameters):
     // 1.) e: an event object that is generated when the agent hits the "upload" button for a photo
     // 2.) thumbnailRef: a ref hook, that references the file input for thumbnails
@@ -153,7 +174,8 @@ const PropertyListings = () => {
     const uploadThumbnail = async (e, thumbnailRef) => {
         e.preventDefault();
         const file = thumbnailRef.current.files[0];
-        setUploaded({ ...uploaded, thumbnail: undefined });
+        setUploadedMessage({ ...uploadedMessage, thumbnail: undefined });
+        setIsSubmitting({ ...isSubmitting, thumbnail: true });
 
         // first, let's validate the file
         const thumbnailError = validateFile(file);  
@@ -161,6 +183,9 @@ const PropertyListings = () => {
         
         // check for error
         if (thumbnailError) {
+            thumbnailRef.current.value = "";
+            setIsSubmitting({ ...isSubmitting, thumbnail: false });
+            handleFileInputChange(thumbnailRef, "thumbnail");
             return;
         }
 
@@ -179,14 +204,17 @@ const PropertyListings = () => {
             const listingId = listings.listing_id;
             await getCurrListing(listingId);
 
-            // finally, update the uploaded state
-            setUploaded({ ...uploaded, thumbnail: "Thumbnail was successfully updated. If it does not update immediately, give it some time." })
+            // finally, update the uploadedMessage state
+            setUploadedMessage({ ...uploadedMessage, thumbnail: "Thumbnail was successfully updated. If it does not update immediately, give it some time." })
 
         } catch (queryError) {
             console.log(queryError);
             alert(queryError.message);
             setError({ ...error, thumbnail: queryError });
         }
+        thumbnailRef.current.value = "";
+        handleFileInputChange(thumbnailRef, "thumbnail");
+        setIsSubmitting({ ...isSubmitting, thumbnail: false });
     };
 
     return { 
@@ -195,9 +223,12 @@ const PropertyListings = () => {
         generateCopyListing,
         showForm, 
         error, 
-        uploaded, 
+        uploading,
+        uploadedMessage, 
+        isSubmitting,
         toggleForm, 
         getNumRemaining,
+        handleFileInputChange,
         uploadPhoto, 
         uploadThumbnail,
         setPageHits

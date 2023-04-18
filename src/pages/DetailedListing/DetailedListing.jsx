@@ -28,10 +28,6 @@ function DetailedListing() {
   const photoRef = useRef(null);
   const thumbnailRef = useRef(null);
 
-  /* ===== STATES ===== */
-  const [imageUploaded, setImageUploaded] = useState(false);
-  const [thumbnailUploaded, setThumbnailUploaded] = useState(false);
-
   // states and functions from the PropertyListing js file
   const { 
     listings, 
@@ -39,9 +35,12 @@ function DetailedListing() {
     generateCopyListing,
     showForm, 
     error, 
-    uploaded, 
+    uploading,
+    uploadedMessage, 
+    isSubmitting,
     toggleForm, 
     getNumRemaining,
+    handleFileInputChange,
     uploadPhoto, 
     uploadThumbnail,
     setPageHits
@@ -142,10 +141,10 @@ function DetailedListing() {
                   id="property-thumbnail-upload"
                   accept=".jpg,.jpeg,.png"
                   ref={ thumbnailRef }
-                  onChange={ () => setThumbnailUploaded(thumbnailRef.current.files.length > 0) }
+                  onChange={ () => handleFileInputChange(thumbnailRef, "thumbnail") }
                 />
                 <button
-                  disabled={ !thumbnailUploaded }
+                  disabled={ uploading.thumbnail || isSubmitting.thumbnail }
                   onClick={ (e) => uploadThumbnail(e, thumbnailRef) }
                   >Upload
                 </button>
@@ -154,7 +153,7 @@ function DetailedListing() {
                 { error.thumbnail && <p>Error: { error.thumbnail }</p> }
     
                 { /* If the thumbnail successfully updates, render a success message here. */ }
-                { uploaded.thumbnail && <p>{ uploaded.thumbnail }</p> }
+                { uploadedMessage.thumbnail && <p>{ uploadedMessage.thumbnail }</p> }
     
               </div>
     
@@ -172,10 +171,10 @@ function DetailedListing() {
                       id="property-image-upload"
                       accept=".jpg,.jpeg,.png"
                       ref={ photoRef }
-                      onChange={ () => setImageUploaded(photoRef.current.files.length > 0) }
+                      onChange={ () => handleFileInputChange(photoRef, "photo") }
                     />
                     <button 
-                      disabled={ !imageUploaded } 
+                      disabled={ uploading.photo || isSubmitting.photo } 
                       onClick={ (e) => uploadPhoto(e, photoRef) }
                       >Upload
                     </button>
@@ -184,7 +183,7 @@ function DetailedListing() {
                     { error.photo && <p>Error: { error.photo }</p> }
     
                     { /* If the photo successfully updates, render a success message here. */ }
-                    { uploaded.photo && <p>{ uploaded.photo }</p> }
+                    { uploadedMessage.photo && <p>{ uploadedMessage.photo }</p> }
                   </>
     
                 }
