@@ -127,69 +127,72 @@ function DetailedListing() {
         <div className="detailed-listing-photo-upload">
           
         </div>
-
-        { /* Property Image Uploader */ }
-        <h2>Upload Property Images</h2>
-        <div className="detailed-listing-image">
-
-          { /* Update thumbnail */ }
-          <div className="detailed-listing-thumbnail-upload">
-            <h3><UploadIcon />Update thumbnail</h3>
-            <label htmlFor="property-thumbnail-upload"></label>
-            <input
-              type="file"
-              id="property-thumbnail-upload"
-              accept=".jpg,.jpeg,.png"
-              ref={ thumbnailRef }
-              onChange={ () => setThumbnailUploaded(thumbnailRef.current.files.length > 0) }
-            />
-            <button
-              disabled={ !thumbnailUploaded }
-              onClick={ (e) => uploadThumbnail(e, thumbnailRef) }
-              >Upload
-            </button>
-
-            { /* If the thumbnail fails to validate, render the error message here. */ }
-            { error.thumbnail && <p>Error: { error.thumbnail }</p> }
-
-            { /* If the thumbnail successfully updates, render a success message here. */ }
-            { uploaded.thumbnail && <p>{ uploaded.thumbnail }</p> }
-
-          </div>
-
-          { /* Upload large photo */ }
-          <div className="detailed-listing-image-upload">
-
-            { /* Only render this uploader if the property has image fields that are null */ }
-            { getNumRemaining() > 0 &&
-
-              <>
-                <h3><UploadIcon />Upload photo ({ getNumRemaining() } remaning)</h3>
-                <label htmlFor="property-image-upload"></label>
+        { /* Property Image Uploader: only renders if agent is logged in, and they belong to same agent as current listing */ }
+        { agent && listings.agent.agency.agency_id === agent.agency.agency_id && 
+          <>
+            <h2>Upload Property Images</h2>
+            <div className="detailed-listing-image">
+    
+              { /* Update thumbnail */ }
+              <div className="detailed-listing-thumbnail-upload">
+                <h3><UploadIcon />Update thumbnail</h3>
+                <label htmlFor="property-thumbnail-upload"></label>
                 <input
                   type="file"
-                  id="property-image-upload"
+                  id="property-thumbnail-upload"
                   accept=".jpg,.jpeg,.png"
-                  ref={ photoRef }
-                  onChange={ () => setImageUploaded(photoRef.current.files.length > 0) }
+                  ref={ thumbnailRef }
+                  onChange={ () => setThumbnailUploaded(thumbnailRef.current.files.length > 0) }
                 />
-                <button 
-                  disabled={ !imageUploaded } 
-                  onClick={ (e) => uploadPhoto(e, photoRef) }
+                <button
+                  disabled={ !thumbnailUploaded }
+                  onClick={ (e) => uploadThumbnail(e, thumbnailRef) }
                   >Upload
                 </button>
-
-                { /* If the photo fails to validate, render the error message here. */ }
-                { error.photo && <p>Error: { error.photo }</p> }
-
-                { /* If the photo successfully updates, render a success message here. */ }
-                { uploaded.photo && <p>{ uploaded.photo }</p> }
-              </>
-
-            }
-
-          </div>
-        </div>
+    
+                { /* If the thumbnail fails to validate, render the error message here. */ }
+                { error.thumbnail && <p>Error: { error.thumbnail }</p> }
+    
+                { /* If the thumbnail successfully updates, render a success message here. */ }
+                { uploaded.thumbnail && <p>{ uploaded.thumbnail }</p> }
+    
+              </div>
+    
+              { /* Upload large photo */ }
+              <div className="detailed-listing-image-upload">
+    
+                { /* Only render this uploader if the property has image fields that are null */ }
+                { getNumRemaining() > 0 &&
+    
+                  <>
+                    <h3><UploadIcon />Upload photo ({ getNumRemaining() } remaning)</h3>
+                    <label htmlFor="property-image-upload"></label>
+                    <input
+                      type="file"
+                      id="property-image-upload"
+                      accept=".jpg,.jpeg,.png"
+                      ref={ photoRef }
+                      onChange={ () => setImageUploaded(photoRef.current.files.length > 0) }
+                    />
+                    <button 
+                      disabled={ !imageUploaded } 
+                      onClick={ (e) => uploadPhoto(e, photoRef) }
+                      >Upload
+                    </button>
+    
+                    { /* If the photo fails to validate, render the error message here. */ }
+                    { error.photo && <p>Error: { error.photo }</p> }
+    
+                    { /* If the photo successfully updates, render a success message here. */ }
+                    { uploaded.photo && <p>{ uploaded.photo }</p> }
+                  </>
+    
+                }
+    
+              </div>
+            </div> 
+          </>
+        }
       </div>
       <div className="right">
         <h2>
