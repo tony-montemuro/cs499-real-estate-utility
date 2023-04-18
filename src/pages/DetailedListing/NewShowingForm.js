@@ -1,5 +1,5 @@
 import { useState, useReducer } from "react";
-import Update from "/app/src/database/Update.js";
+import Update from "../../database/Update.js";
 
 
 

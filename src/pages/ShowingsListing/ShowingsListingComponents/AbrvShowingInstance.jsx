@@ -1,5 +1,5 @@
 import './AbrvShowingInstance.css';
-import PropertyImage from "/app/src/ui/PropertyImage/PropertyImage.jsx";
+import PropertyImage from "../../../ui/PropertyImage/PropertyImage.jsx";
 
 
 function AbrvShowingInstance({ address, street, startTime, endTime, listAgentInfo, image, showAgentInfo, listing_id }){

@@ -1,4 +1,4 @@
-import Read from "/app/src/database/Read";
+import Read from "../../database/Read";
 import { useReducer, useState } from "react";
 
 const ListOfShowingsCmp = () => {

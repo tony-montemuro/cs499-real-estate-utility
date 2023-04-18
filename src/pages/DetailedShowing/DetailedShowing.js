@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRef } from "react";
-import Read from "/app/src/database/Read.js";
-import Update from "/app/src/database/Update.js"
+import Read from "../../database/Read.js";
+import Update from "../../database/Update.js"
 
 const DetailedShowing = () => {
 
