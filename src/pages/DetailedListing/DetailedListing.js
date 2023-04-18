@@ -8,6 +8,7 @@ const PropertyListings = () => {
     const largeArr = ["large_1", "large_2", "large_3", "large_4", "large_5"];
 
     /* ===== STATES ===== */
+    const [hasUpdatedHits, updateHits] = useState(false);
     const [listings, setListings] = useState(undefined);
     const [showForm, toggleForm] = useState(false);
     const [error, setError] = useState({ thumbnail: undefined, photo: undefined });
@@ -17,15 +18,46 @@ const PropertyListings = () => {
 
     // database functions
     const { fetchFullListing } = Read();
-    const { uploadFile, updatePhotoName } = Update();
+    const { uploadFile, updatePhotoName, UpdatePageHits } = Update();
 
     const getCurrListing = async (id) => {
         // fetch current listing from the database, and update the listings state
+
         const currentListing = await fetchFullListing(id);
         setListings(currentListing);
     };
 
-    // FUNCTION 2: getNumRemaining - function that counts the number of image (large) fields that are null for a property
+    const generateCopyListing = () => {
+        // first, create listing object
+        const listing = { listing_id: listings.listing_id, price: listings.price };
+
+        // next, the property object
+        const property = { ...listings.property };
+        delete property.room;
+        // we want to replace all null fields with empty strings for the form
+        for (const [key, value] of Object.entries(property)) {
+            if (value === null && !largeArr.concat(["small"]).includes(key)) {
+                property[key] = "";
+            }
+        }
+
+        // finally, create the rooms array
+        const rooms = listings.property.room;
+
+        // return copy of listing object, formatted for the edit property popup
+        const copyListing = { listing: listing, property: property, rooms: rooms };
+        return copyListing;
+    };
+
+    const setPageHits = async (id) => {
+        if(!hasUpdatedHits)
+        { 
+            await UpdatePageHits(id); 
+            updateHits(true); 
+        }
+    }
+
+    // FUNCTION 4: getNumRemaining - function that counts the number of image (large) fields that are null for a property
     // PRECONDITIONS (1 requirement):
     // the listings state must be defiend before this function is called!
     // POSTCONDITIONS (1 possible outcome):
@@ -36,7 +68,7 @@ const PropertyListings = () => {
         return count;
     };
 
-    // FUNCTION 3: validateFile - function that returns a string error if the file has any errors. otherwise, undefined is returned.
+    // FUNCTION 5: validateFile - function that returns a string error if the file has any errors. otherwise, undefined is returned.
     // PRECONDITIONS (1 parameter):
     // 1.) file: a file object generated when a user uploads an image
     // POSTCONDITIONS (2 possible outcomes):
@@ -62,7 +94,7 @@ const PropertyListings = () => {
         return undefined;        
     };
 
-    // FUNCTION 4: uploadPhoto - given a photoRef, upload a large photo, and update the property database
+    // FUNCTION 6: uploadPhoto - given a photoRef, upload a large photo, and update the property database
     // PRECONDITIONS (2 parameters):
     // 1.) e: an event object that is generated when the agent hits the "upload" button for a photo
     // 2.) photoRef: a ref hook, that references the file input for photos
@@ -110,7 +142,7 @@ const PropertyListings = () => {
         }
     };
 
-    // FUNCTION 5: uploadThumbnail - given a thumbnailRef, upload a thumbnail, and update the property database
+    // FUNCTION 7: uploadThumbnail - given a thumbnailRef, upload a thumbnail, and update the property database
     // PRECONDITIONS (2 parameters):
     // 1.) e: an event object that is generated when the agent hits the "upload" button for a photo
     // 2.) thumbnailRef: a ref hook, that references the file input for thumbnails
@@ -160,13 +192,15 @@ const PropertyListings = () => {
     return { 
         listings, 
         getCurrListing, 
+        generateCopyListing,
         showForm, 
         error, 
         uploaded, 
         toggleForm, 
         getNumRemaining,
         uploadPhoto, 
-        uploadThumbnail 
+        uploadThumbnail,
+        setPageHits
     };   
 };
 

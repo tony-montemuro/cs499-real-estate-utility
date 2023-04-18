@@ -29,28 +29,28 @@
     flex: 0.75;
 }
 
-a:link {
+.showings-row a:link {
     text-decoration: none;
     color: black;
 }
 
 
-a:visited {
+.showings-row a:visited {
     text-decoration: none;
     color: black;
 }
 
-a:hover {
+.showings-row a:hover {
     text-decoration: none;
     color: black;
 }
 
-a:focus {
+.showings-row a:focus {
     text-decoration: none;
     color: black;
 }
 
-a:active {
+.showings-row a:active {
     text-decoration: none;
     color: black;
 }

@@ -7,6 +7,7 @@ import ShowingsListingLogic from "./ShowingsListings.js";
 import { AgentContext } from "../../Contexts";
 import {useContext} from "react";
 import Auth from "../../database/Auth.js";
+import "./ShowingsListing.css"
 
 
 function ShowingsListing() {
@@ -26,7 +27,7 @@ function ShowingsListing() {
         <>  
             {agent ? 
             <>
-            <h1>Showings</h1>
+            <div className="showings-header"><h1>Showings</h1></div>
             <div className = "showings-body">
                 <Box id="ShowingsListingContainingBox" overflow="hidden" width="75%">
                     <ListOfShowingsCmp showings={showings} pageNumber={pageNumber} 

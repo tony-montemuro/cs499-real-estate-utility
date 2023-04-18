@@ -1,5 +1,5 @@
 /* ===== POPUP STYLING ===== */
-.add-property-popup {
+.edit-property-popup {
     position: fixed;
     z-index: 100;
     top: 0;
@@ -12,19 +12,18 @@
     align-items: center;
 }
 
-.add-property-popup-inner {
-    background: rgb(186, 215, 235);
+.edit-property-popup-inner {
+    background: white;
     width: 95%;
     max-width: calc(100vw - 2rem);
     max-height: calc(100vh - 2rem);
     overflow-y: auto;
     position: relative;
-    border: 1px solid rgb(186, 215, 235);
+    border: 1px solid #ccc;
     border-radius: 0.3rem;
-    box-shadow: 0 12px 8px rgba(0, 0, 0, 0.2); 
 }
 
-.add-property-popup-inner .close-btn {
+.edit-property-popup-inner .close-btn {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -35,85 +34,91 @@
 
 /* ===== CONTENT STYLING ===== */
 
-.add-property-popup-container {
+.edit-property-popup-container {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.add-property-popup-container h1 {
+.edit-property-popup-container h1 {
     text-align: center;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.add-property-popup-body {
+.edit-property-popup-body {
     display: flex;
 }
 
-.add-property-popup-section {
+.edit-property-popup-section {
     flex: 1;
     margin: 0 auto;
 }
 
-.add-property-popup-wrapper {
+.edit-property-popup-wrapper {
     width: 80%;
     margin: 0 auto;
 }
 
-.add-property-popup-input-group {
+.edit-property-popup-input-group {
     display: flex;
     flex-direction: column;
 }
 
-.add-property-popup-input-group .add-room-btn {
+.edit-property-popup-input-group .edit-room-btn {
     width: 35%;
     display: flex;
     align-items: center;
 }
 
-.add-property-popup-input-group .delete-room-btn {
+.edit-property-popup-input-group .add-room-btn {
+    width: 35%;
+    display: flex;
+    align-items: center;
+}
+
+.edit-property-popup-input-group .delete-room-btn {
     width: 40%;
     display: flex;
     align-items: center;
 }
 
-.add-property-popup-input-group .add-shopping-area-btn {
+.edit-property-popup-input-group .add-shopping-area-btn {
     width: 50%;
     display: flex;
     align-items: center;
 }
 
-.add-property-popup-input-group .delete-shopping-area-btn {
+.edit-property-popup-input-group .delete-shopping-area-btn {
     width: 58%;
     display: flex;
     align-items: center;
 }
 
-.add-property-popup-input-group svg {
+.edit-property-popup-input-group svg {
     padding-left: 0;
     padding-right: 5%;
 }
 
-.add-property-popup-input-group label {
+.edit-property-popup-input-group label {
     margin-bottom: 3px;
 }
 
-.add-property-popup-input-group input {
+.edit-property-popup-input-group input {
     width: 100%;
 }
 
-.add-property-popup-input-group textarea {
+.edit-property-popup-input-group textarea {
     width: 100%;
 }
 
-.add-property-popup-input-group button {
+.edit-property-popup-input-group button {
     margin: 0 auto;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.add-property-popup-input-group input[type="checkbox"] {
+.edit-property-popup-input-group input[type="checkbox"] {
     width: 15px;
     height: 15px;
     padding: 0;
@@ -123,17 +128,17 @@
     top: -1px;
 }
 
-.add-property-popup-input-group select {
+.edit-property-popup-input-group select {
     width: 100%;
 }
 
-#add-property-popup-submit {
+#edit-property-popup-submit {
     margin: 0 auto;
     display: block;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-#add-property-popup-submitted {
+#edit-property-popup-submitted {
     text-align: center;
 }

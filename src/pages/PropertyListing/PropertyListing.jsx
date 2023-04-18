@@ -45,6 +45,10 @@ function PropertyListing() {
             { /* Property Listing Header - contains header information for this page */ }
             <div className="property-listings-header">
                 <h1>Property Listings</h1>
+
+                { /* Add Property Listing Button - only renders if an agent is currently logged in */ }
+                { agent && <button onClick={ () => setAddPopup(true) }><AddCircleOutlineIcon /> Add Property Listing</button> }
+
             </div>
 
             { /* Render the body of this component if listings is defined. Otherwise, render a loading component. */ }
@@ -56,24 +60,21 @@ function PropertyListing() {
                         { /* Multiple Listing Service */ }
                         <div className="property-listing-mls">
 
-                            { /* Add Property Listing Button - only renders if an agent is currently logged in */ }
-                            { agent && <button onClick={ () => setAddPopup(true) }><AddCircleOutlineIcon /> Add Property Listing</button> }
-
-                            <table>
+                            <table className="property-listing-table">
 
                                 { /* Table Header */ }
                                 <thead>
                                     <tr>
                                         <th>Details</th>
-                                        <th>Property Photo</th>
-                                        <th>List Price</th>
+                                        <th>Photo</th>
+                                        <th>Price</th>
                                         <th>Address</th>
                                         <th>Square Footage</th>
-                                        <th>Listing Agency</th>
-                                        <th>Listing Agent</th>
+                                        <th>Agency</th>
+                                        <th>Agent</th>
 
                                         { /* Delete column header - only renders if an agent is logged in. */ }
-                                        { agent && <th>Delete Property</th> }
+                                        { agent && <th>Delete Listing</th> }
                                         
                                     </tr>
                                 </thead>
@@ -90,7 +91,12 @@ function PropertyListing() {
 
                                     // Otherwise, render a single row, stating that no properties could be found.
                                         <tr>
-                                            <td className="property-listing-empty-row" colSpan={ MLS_WIDTH }><i>No properties exist within your filters!</i></td>
+                                            <td 
+                                                className="property-listing-empty-row" 
+                                                colSpan={ agent ? MLS_WIDTH+1 : MLS_WIDTH }
+                                            >
+                                                <i>No properties exist within your filters!</i>
+                                            </td>
                                         </tr>
                                     }
 
@@ -116,12 +122,12 @@ function PropertyListing() {
                             disabled={ pageNumber.current === 1 } 
                             onClick={ () => handlePageChange(pageNumber.current-1) }
                         >
-                            Previous Page
+                            &lt;
                         </button>
 
                         { /* Page number selector - allows user to select any page from 1 to pageNumber.max */ }
                         <div className="property-listing-page-select">
-                            <label htmlFor="pageNumber">Page Number: </label>
+                            <label htmlFor="pageNumber">Page Number:&nbsp;</label>
                             <select disabled={ pageNumber.max < 2 } id="pageNumber" value={ pageNumber.current } onChange={ (e) => handlePageChange(parseInt(e.target.value)) }>
                             { Array.from({ length: pageNumber.max }, (_, i) => i + 1).map(num => (
                                 <option key={ num } value={ num }>
@@ -136,7 +142,7 @@ function PropertyListing() {
                             disabled={ pageNumber.current === pageNumber.max || pageNumber.max === 0 } 
                             onClick={ () => handlePageChange(pageNumber.current+1) }
                         >
-                            Next Page
+                            &gt;
                         </button>
 
                     </div>

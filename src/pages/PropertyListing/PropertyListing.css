@@ -4,6 +4,20 @@
     text-align: center;
 }
 
+.property-listings-header button {
+    line-height: 2.25rem;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.property-listings-header button svg {
+    float: left;
+    padding-right: 5px;
+    margin: auto;
+    vertical-align: middle;
+}
+
 /* ===== BODY STYLING ===== */
 
 .property-listing-body {
@@ -16,35 +30,40 @@
     flex: 0.75;
 }
 
-.property-listing-mls button {
-    line-height: 2.25rem;
-    margin-bottom: 10px;
-}
-
-.property-listing-mls button svg {
-    float: left;
-    padding-right: 5px; /* or some other padding value */
-}
-
-.property-listing-mls table {
-    border: 1px solid black;
-    border-collapse: collapse;
+.property-listing-table {
+    border-collapse: separate;
+    border-spacing: 0 15px;
     margin-left: auto;
     margin-right: auto;
+    font-size: 0.95em;
 }
 
-.property-listing-mls th {
-    border: 1px solid black;
-    padding: 5px;
+.property-listing-table thead tr {
+    background-color: rgb(68, 146, 191);
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
 }
 
-.property-listing-mls td {
-    border: 1px solid black;
+.property-listing-table thead th {
+    padding: 10px;
+}
+
+.property-listing-table tbody td {
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: 5px;
     padding-right: 10px;
     height: 112.5px;
+}
+
+.property-listing-table tbody tr {
+    background-color: white;
+    box-shadow: 0 8px 4px rgba(0, 0, 0, 0.2); 
+}
+
+.property-listing-table tbody tr:nth-of-type(even) {
+    background-color: lightgray;
 }
 
 .property-listing-delete {
@@ -98,6 +117,7 @@
 
 .property-listing-filters-form {
     border: 1px solid black;
+    background-color: lightgrey;
     border-radius: 10px;
 }
 
@@ -108,6 +128,10 @@
 
 .property-listings-range-inputs input[type="number"] {
     width: 55%;
+}
+
+.property-listing-error {
+    color: red;
 }
 
 /* ===== FOOTER STYLING ===== */
@@ -122,6 +146,8 @@
 }
 
 .property-listing-page-select {
+    display: flex;
+    align-items: center;
     margin-left: 10px;
     margin-right: 10px;
 }
