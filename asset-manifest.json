@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cs499-real-estate-utility/static/css/main.35298963.css",
-    "main.js": "/cs499-real-estate-utility/static/js/main.7811b453.js",
+    "main.js": "/cs499-real-estate-utility/static/js/main.00740d59.js",
     "static/media/purchase_agreement.pdf": "/cs499-real-estate-utility/static/media/purchase_agreement.998fc2c953871680b585.pdf",
     "static/media/Logo_withText.png": "/cs499-real-estate-utility/static/media/Logo_withText.413c15fbbabdf1cd085f.png",
     "static/media/estimate_closing_template.pdf": "/cs499-real-estate-utility/static/media/estimate_closing_template.127aaeae1c7f62a32dd8.pdf",
@@ -12,10 +12,10 @@
     "static/media/No_Image.jpg": "/cs499-real-estate-utility/static/media/No_Image.586151e605de71371db1.jpg",
     "index.html": "/cs499-real-estate-utility/index.html",
     "main.35298963.css.map": "/cs499-real-estate-utility/static/css/main.35298963.css.map",
-    "main.7811b453.js.map": "/cs499-real-estate-utility/static/js/main.7811b453.js.map"
+    "main.00740d59.js.map": "/cs499-real-estate-utility/static/js/main.00740d59.js.map"
   },
   "entrypoints": [
     "static/css/main.35298963.css",
-    "static/js/main.7811b453.js"
+    "static/js/main.00740d59.js"
   ]
 }
