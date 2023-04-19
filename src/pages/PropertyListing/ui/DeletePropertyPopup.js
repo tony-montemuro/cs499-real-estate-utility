@@ -4,7 +4,6 @@ import Delete from "../../../database/Delete";
 
 const DeletePropertyPopup = () => {
     /* ===== STATES ===== */
-    const [deleted, setDeleted] = useState(undefined);
     const [deleteProperty, setDeleteProperty] = useState(false);
     
     /* ===== FUNCTIONS ===== */
@@ -20,9 +19,9 @@ const DeletePropertyPopup = () => {
     // POSTCONDITIONS (2 parameters):
     // if deleteProperty is true, we call the delete based on the propertyId (checkbox is checked)
     // if deleteProperty is false, we call the delete based on the listingId (checkbox is NOT checked)
-    // in both cases, delete is set to a string letting the user know that the deletion was successful by calling
-    // the setDeleted() function with a string argument
-    const confirmRemoval = async (ids) => {
+    // in both cases, delete is set to a string letting the user know that the deletion was successful by alerting
+    // them with a message, and closing the popup
+    const confirmRemoval = async (ids, setPopup) => {
         // extract ids from the ids paramter
         const listingId = ids.listingId;
         const propertyId = ids.propertyId;
@@ -30,10 +29,13 @@ const DeletePropertyPopup = () => {
         // if deleteProperty is set to true, delete based on property id. otherwise, delete based on listing id
         if (deleteProperty) {
             await deletePropertyById(propertyId);
-            setDeleted("Listing, and all property data, successfully removed from the REU system.");
+            alert("Listing, and all property data, successfully removed from the REU system")
+            closePopup(setPopup);
+
         } else {
             await deleteListingById(listingId);
-            setDeleted("Listing successfully removed from REU system.");   
+            alert("Listing successfully removed from REU system.");   
+            closePopup(setPopup);
         }
     };
 
@@ -44,12 +46,11 @@ const DeletePropertyPopup = () => {
     // all states defined in this file are set to default values by calling their set functions, and the popup
     // state defined in DeletePropertyPopup.js is set to false by calling setPopup(false)
     const closePopup = (setPopup) => {
-        setDeleted(undefined);
         setDeleteProperty(false);
         setPopup(false);
     };
 
-    return { deleted, deleteProperty, setDeleteProperty, confirmRemoval, closePopup };
+    return { deleteProperty, setDeleteProperty, confirmRemoval, closePopup };
 };
 
 /* ===== EXPORTS ===== */

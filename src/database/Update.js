@@ -124,9 +124,8 @@ const Update = () => {
 
         }
         catch (error) {
-            console.log(error);
-            console.log("huh");
-            alert(error.message);
+            // handle error in caller function
+            throw error;
         }
     };
 

@@ -35,9 +35,11 @@ function PropertyListing() {
 
     /* ===== EFFECTS ===== */
     useEffect(() => {
-        getListings(NUM_PAGE_RESULTS);
+        if (!deletePopup) {
+            getListings(NUM_PAGE_RESULTS);
+        }
         // eslint-disable-next-line
-    }, []);
+    }, [deletePopup]);
 
     /* ===== PROPERTY LISTING COMPONENT ===== */
     return (

@@ -23,7 +23,6 @@ function EditPropertyPopup({ popup, setPopup, formData }) {
   // states and functions from the PropertyListing js file
   const { 
     roomTypes, 
-    submitted,
     propertyForm,
     error,
     agents,
@@ -303,10 +302,9 @@ function EditPropertyPopup({ popup, setPopup, formData }) {
                 </div>
               </div>
             </div>
-            <button id="edit-property-popup-submit" disabled={ submitted } onClick={(e) => {handleSubmit(e, setPopup)}}>
+            <button id="edit-property-popup-submit" onClick={(e) => {handleSubmit(e, setPopup)}}>
               Edit Listing
             </button>
-            { submitted && <p id="edit-property-popup-submitted">{ submitted }</p> }
           </form>
         </div>
       </div>
