@@ -7,7 +7,7 @@ import "./NewShowingForm.css"
 import DetailedListingsLogic from "./DetailedListing.js";
 
 
-function NewShowingForm({toggleForm, listing_id}) {
+function NewShowingForm({toggleForm, listing_id, setPopup}) {
 
     const { 
         showingForm, 
@@ -24,7 +24,7 @@ function NewShowingForm({toggleForm, listing_id}) {
           Close Form
         </button>
 
-        <form onSubmit={(e) => submitShowingForm(e, listing_id)} className="new-showing-form">
+        <form onSubmit={(e) => {submitShowingForm(e, listing_id, setPopup)}} className="new-showing-form" >
             <h2>Starting Date</h2>
         
             <label htmlFor="Showing Date"></label>
@@ -32,6 +32,7 @@ function NewShowingForm({toggleForm, listing_id}) {
                 id="date" 
                 name="date" 
                 type="date" 
+                min= {(new Date(Date.now()).toISOString().split('T')[0])}
                 value={ showingForm.date }
                 onChange={ (e) => dispatchShowingForm({ type: e.target.id, value: e.target.value }) }
             />

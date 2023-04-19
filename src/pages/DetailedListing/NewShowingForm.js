@@ -8,7 +8,7 @@ const NewShowingForm = () => {
     const {CreateShowings} = Update();
 
     const initShowingForm = {
-        date: "2000-01-01",
+        date: (new Date(Date.now()).toISOString().split('T')[0]),
         startTime: "00:00",
         length: "0",
         showingAgent: "",
@@ -32,11 +32,19 @@ const NewShowingForm = () => {
 
     const [showingForm, dispatchShowingForm] = useReducer(updateShowingFormState, initShowingForm);
 
-    const submitShowingForm = (e, listing_id) => {
+    const submitShowingForm = (e, listing_id, setPopup) => {
         // prevent page from reloading (default form submission behavior)
         e.preventDefault();
-        CreateShowings(showingForm.date, showingForm.startTime, showingForm.length, listing_id, showingForm.showingAgent, showingForm.buyer);
-        
+        try{
+            CreateShowings(showingForm.date, showingForm.startTime, showingForm.length, 
+                listing_id, showingForm.showingAgent, showingForm.buyer);
+            alert("Successfully created showing!");
+            setPopup(false); 
+        }
+        catch(error){
+            alert(error.message)
+        }
+
     };
 
     return({showingForm, dispatchShowingForm, submitShowingForm});

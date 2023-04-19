@@ -185,10 +185,9 @@ const Update = () => {
             }
         }
         catch(error) {
-            console.log(error);
-            alert(error.message);
+            throw error;
         }
-    }
+    };
 
     // FUNCTION 6: uploadFile - given a fileName and file object, upload an image to database storage
     // PRECONDITIONS (2 parameters):
