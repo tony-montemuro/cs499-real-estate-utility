@@ -138,7 +138,7 @@ const PropertyListings = () => {
         // property
         try {
             // first, upload the file to storage
-            const fileName = file.name;
+            const fileName = new Date().toISOString();
             await uploadFile(fileName, file);
 
             // if query is successful, we then update the property's first large field that is non-null
@@ -193,7 +193,7 @@ const PropertyListings = () => {
         // property
         try {
             // first, upload the file to storage
-            const fileName = file.name;
+            const fileName = new Date().toISOString();
             await uploadFile(fileName, file);
 
             // if query is successful, we then update the property's small field
