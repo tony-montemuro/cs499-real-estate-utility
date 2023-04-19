@@ -109,7 +109,6 @@ const AddPropertyPopup = () => {
     /* ===== STATES & REDUCERS ===== */
     const [error, setError] = useState(initError);
     const [propertyForm, dispatchPropertyForm] = useReducer(updatePropertyFormState, initPropertyForm);
-    const [submitted, setSubmitted] = useState(null);
 
     /* ===== FUNCTIONS ===== */
 
@@ -296,19 +295,14 @@ const AddPropertyPopup = () => {
             }));
             await Promise.all(promises);
 
-            // if all goes smoothly, let the agent know their property was successfully inserted
-            setSubmitted("Property has successfully been added to the REU Properties system!");
+            // if all goes smoothly, let the agent know their property was successfully inserted, and close the popup
+            alert("Listing successfully added to the REU Properties system");
+            closePopup(setPopup);
             
         } catch (error) {
             alert(error.message);
             console.log(error);
         }
-        alert("Succesfully made showing");
-
-        if(setPopup) {
-            closePopup(setPopup);
-        }
-
     };
 
     // FUNCTION 13 - closePopup: function that is called when the agent hits the 'X' button at the top right of the popup
@@ -319,7 +313,6 @@ const AddPropertyPopup = () => {
     const closePopup = (setPopup) => {
         dispatchPropertyForm({ type: "all" });
         setError(initError);
-        setSubmitted(null);
         setPopup(false);
     };
     
@@ -328,7 +321,6 @@ const AddPropertyPopup = () => {
         error,
         propertyForm, 
         roomTypes, 
-        submitted,
         handleChange, 
         handleRoomChange, 
         addRoom,

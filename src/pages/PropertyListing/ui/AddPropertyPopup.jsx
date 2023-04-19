@@ -27,7 +27,6 @@ function AddPropertyPopup({ popup, setPopup }) {
     error,
     propertyForm, 
     roomTypes, 
-    submitted,
     handleChange, 
     handleRoomChange, 
     addRoom, 
@@ -308,8 +307,7 @@ function AddPropertyPopup({ popup, setPopup }) {
             </div>
 
             { /* Add Property button - when pressed, the application will attempt to add the property listing to the database */ }
-            <button id="add-property-popup-submit" disabled={ submitted }>Add Property</button>
-            { submitted && <p id="add-property-popup-submitted">{ submitted }</p> }
+            <button id="add-property-popup-submit">Add Property</button>
 
           </form>
         </div>

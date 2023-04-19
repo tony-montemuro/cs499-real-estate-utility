@@ -111,7 +111,6 @@ const EditListing = () => {
 	/* ===== STATES & REDUCERS ===== */
 	const [error, setError] = useState(initError);
 	const [propertyForm, dispatchPropertyForm] = useReducer(updatePropertyFormState, initPropertyForm);
-	const [submitted, setSubmitted] = useState(null);
     const [agents, setAgents] = useState(null);
 
     /* ===== FUNCTIONS ===== */
@@ -260,31 +259,24 @@ const EditListing = () => {
             });
             await Promise.all(roomPromises);
 
-            // if all queries are successful, update the submitted state
-            setSubmitted("Listing has successfully been updated in the REU Properties system!");
+            // if all queries are successful, let user know update was successful, and close the popup
+            alert("Successfully edited listing!");
+            closePopup(setPopup);
             
         } catch (error) {
             alert(error.message);
             console.log(error);
-        }
-        
-        alert("Successfully edited listing!");
-
-        if(setPopup){
-            closePopup(setPopup);
         }
     };
 
 	const closePopup = (setPopup) => {
         dispatchPropertyForm({ type: "all" });
         setError(initError);
-        setSubmitted(null);
         setPopup(false);
     };
 
     return { 
         roomTypes, 
-        submitted,
         propertyForm,
         error,
         agents,

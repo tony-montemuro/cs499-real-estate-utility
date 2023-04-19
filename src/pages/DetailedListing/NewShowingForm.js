@@ -32,17 +32,25 @@ const NewShowingForm = () => {
 
     const [showingForm, dispatchShowingForm] = useReducer(updateShowingFormState, initShowingForm);
 
-    const submitShowingForm = (e, listing_id, setPopup) => {
+    const submitShowingForm = async (e, listing_id, setPopup) => {
         // prevent page from reloading (default form submission behavior)
         e.preventDefault();
         try{
-            CreateShowings(showingForm.date, showingForm.startTime, showingForm.length, 
+            await CreateShowings(showingForm.date, showingForm.startTime, showingForm.length, 
                 listing_id, showingForm.showingAgent, showingForm.buyer);
+
+            // if query is a success, let the user know, and close the popup
             alert("Successfully created showing!");
             setPopup(false); 
         }
         catch(error){
-            alert(error.message)
+            // otherwise, we alert the user the error. most common is error 23505, which means the user entered the wrong agent id
+            console.log(error);
+            if (error.code === "23503") {
+                alert("Error: Invalid agent ID.");
+            } else {
+                alert(error.message);
+            }
         }
 
     };

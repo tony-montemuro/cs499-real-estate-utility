@@ -25,7 +25,7 @@ const Read = () => {
 
         // declare sqrFeet query variables
         const sqrFeet = filterObj.sqrFeet;
-        const maxSqrFeet = sqrFeet.max ? sqrFeet.max : 100000;
+        const maxSqrFeet = sqrFeet.max ? sqrFeet.max : 10000000;
         const minSqrFeet = sqrFeet.min ? sqrFeet.min : 0;
 
         // determine if query should include a filter for zip code based on the value of zip code

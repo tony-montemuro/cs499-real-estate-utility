@@ -5,7 +5,7 @@ import DeletePropertyPopupLogic from "./DeletePropertyPopup.js";
 
 function DeletePropertyPopup({ popup, setPopup }) {
   /* ===== STATES & FUNCTIONS ===== */
-  const { deleted, deleteProperty, setDeleteProperty, confirmRemoval, closePopup } = DeletePropertyPopupLogic();
+  const { deleteProperty, setDeleteProperty, confirmRemoval, closePopup } = DeletePropertyPopupLogic();
 
   /* ===== DELETE PROPERTY POPUP COMPONENT ===== */
   return popup && (
@@ -25,7 +25,6 @@ function DeletePropertyPopup({ popup, setPopup }) {
             type="checkbox"
             value={ deleteProperty }
             onChange={ () => setDeleteProperty(!deleteProperty) }
-            disabled={ deleted }
           />
         </div>
 
@@ -33,12 +32,9 @@ function DeletePropertyPopup({ popup, setPopup }) {
         if agent selects 'No', the popup will close, similar to the close button. NOTE: Buttons disable after user
         selects 'Yes'. */ }
         <div className="delete-property-popup-buttons">
-          <button onClick={ () => confirmRemoval(popup) } disabled={ deleted }>Yes</button>
-          <button onClick={ () => closePopup(setPopup) } disabled={ deleted }>No</button>
+          <button onClick={ () => confirmRemoval(popup, setPopup) }>Yes</button>
+          <button onClick={ () => closePopup(setPopup) }>No</button>
         </div>
-
-        { /* Message that renders if the agent successfully removes the listing. */ }
-        { deleted && <p>{ deleted }</p> }
 
       </div>
     </div>
