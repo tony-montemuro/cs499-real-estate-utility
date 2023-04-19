@@ -84,10 +84,10 @@ function DetailedListing() {
                 <button disabled={true} class="button-style" >
                 Create Showing
                 </button>
-                <NewShowingForm toggleForm={toggleForm} listing_id = {page_id}></NewShowingForm>
+                <NewShowingForm toggleForm={toggleForm} listing_id = {page_id} setPopup = {toggleForm}></NewShowingForm>
               </>
               : 
-                <button class="button-style" onClick = {() => toggleForm(true)} >
+                <button class="button-style" onClick = {() => {toggleForm(true)}} >
                 Create Showing
                 </button>
               }
@@ -198,9 +198,13 @@ function DetailedListing() {
           Price: { floatToUSD(listings.price) } &emsp; 
           { listings.property.room.filter(item => item.room_type === "bedroom").length } bed |
           { ` ${ listings.property.room.filter(item => item.room_type === "bathroom").length }` } bathroom |
-          { ` ${ formatFloat(listings.property.sqr_feet) }` } sqft</h2>
-        <h2>{ getAddress(listings.property) }</h2>
-        <p>Interested?&emsp;<button className="button-style"><Link to = {showing_link}>Book A Listing!</Link></button></p>
+          { ` ${ formatFloat(listings.property.sqr_feet) }` } sqft
+        </h2>
+        
+        <h2>
+          { getAddress(listings.property) }
+        </h2>
+
         <hr className="insert-line"/>
         <hr className="insert-line"/>
         <h3>Listed By:</h3>
@@ -210,8 +214,17 @@ function DetailedListing() {
         <p>&emsp; &emsp; { listings.agent.email }</p>
         <hr className="insert-line"/>
         <h3>Overview:</h3>
-        <p>Dwelling Type: { snakeToTitle(listings.property.dwelling_type) }</p>
-        { listings.property.subdivision && <p>Subdivision: { listings.property.subdivision }</p> }
+
+        <p>
+          Dwelling Type: { snakeToTitle(listings.property.dwelling_type) }
+        </p>
+
+        { listings.property.subdivision && 
+          <p>
+            Subdivision: { listings.property.subdivision }
+          </p> 
+        }
+
         <p>School District: { listings.property.school_district }</p>
         <p>Shopping Areas:  
           { listings.property.shopping_areas.map((area, index) => {

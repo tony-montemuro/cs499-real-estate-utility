@@ -249,7 +249,7 @@ const AddPropertyPopup = () => {
     // If form validation succeeds, but queries fail, user is notified of the query error.
     // Otherwise, this function validates the form, cleans non-required inputs, and inserts the property listing: property, rooms,
     // and listing, to the database
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, setPopup) => {
         // prevent default form behavior of reloading upon submission
         e.preventDefault();
 
@@ -303,6 +303,12 @@ const AddPropertyPopup = () => {
             alert(error.message);
             console.log(error);
         }
+        alert("Succesfully made showing");
+
+        if(setPopup) {
+            closePopup(setPopup);
+        }
+
     };
 
     // FUNCTION 13 - closePopup: function that is called when the agent hits the 'X' button at the top right of the popup

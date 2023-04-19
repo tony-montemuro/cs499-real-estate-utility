@@ -57,7 +57,7 @@ function AddPropertyPopup({ popup, setPopup }) {
           </div>
 
           { /* Add popup form: allows an agent to enter information about a property */ }
-          <form onSubmit={ handleSubmit }>
+          <form onSubmit={(e) => handleSubmit(e, setPopup) }>
             <div className="add-property-popup-body">
 
               { /* LEFT SECTION of Add Property Popup Form */ }

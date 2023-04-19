@@ -303,7 +303,9 @@ function EditPropertyPopup({ popup, setPopup, formData }) {
                 </div>
               </div>
             </div>
-            <button id="edit-property-popup-submit" disabled={ submitted } onClick={handleSubmit}>Edit Listing</button>
+            <button id="edit-property-popup-submit" disabled={ submitted } onClick={(e) => {handleSubmit(e, setPopup)}}>
+              Edit Listing
+            </button>
             { submitted && <p id="edit-property-popup-submitted">{ submitted }</p> }
           </form>
         </div>
