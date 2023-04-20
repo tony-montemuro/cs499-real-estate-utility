@@ -9,6 +9,11 @@
     margin-bottom: 10px;
     display: inline-flex;
     align-items: center;
+    background-color: rgba(151, 195, 220, 0.712);
+    border: 2px solid rgb(96, 97, 104);
+    color: black;
+    padding: 5px 5px;
+    border-radius: 8px;
 }
 
 .property-listings-header button svg {
