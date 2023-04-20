@@ -52,7 +52,7 @@ function AddPropertyPopup({ popup, setPopup }) {
 
           { /* Popup header */ }
           <div className="add-property-popup-header">
-            <h1>Add Property</h1>
+            <h1>Add Listing</h1>
           </div>
 
           { /* Add popup form: allows an agent to enter information about a property */ }
@@ -307,7 +307,7 @@ function AddPropertyPopup({ popup, setPopup }) {
             </div>
 
             { /* Add Property button - when pressed, the application will attempt to add the property listing to the database */ }
-            <button id="add-property-popup-submit">Add Property</button>
+            <button id="add-property-popup-submit">Add Listing</button>
 
           </form>
         </div>

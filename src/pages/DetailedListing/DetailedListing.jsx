@@ -225,13 +225,17 @@ function DetailedListing() {
           })}
         </p>
         <p>Lot Size: { formatFloat(listings.property.lot_size) } sqft</p>
-        <hr className="insert-line"/>
-        <h3>Room Details:</h3>
-        <div>
-          { listings.property.room.map((room, index) => {
-            return <Room room={ room } index={ index } />
-          })}
-        </div>
+        { listings.property.room.length > 0 &&
+          <>
+            <hr className="insert-line"/>
+            <h3>Room Details:</h3>
+            <div>
+              { listings.property.room.map((room, index) => {
+                return <Room room={ room } index={ index } />
+              })}
+            </div>
+          </>
+        }
         { listings.property.other &&
           <>
             <hr className="insert-line"/>
