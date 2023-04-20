@@ -1,4 +1,4 @@
-// for presentation
+/* ===== IMPORTS ===== */
 import "./Home.css";
 import PropertyImage from "../../ui/PropertyImage/PropertyImage.jsx";
 import { Link } from "react-router-dom";
@@ -7,22 +7,23 @@ import FrontendHelper from "../../util/FrontendHelper.js";
 import { useEffect } from "react";
 
 function Home() {
-    
-    
+    /* ===== FUNCTIONS ===== */
+
     // states and functions from the Home.js file
-    const { listings, getListings } = HomeLogic();
+    const { listing, getListing } = HomeLogic();
 
     // helper functions
     const { floatToUSD, formatFloat, getAddress } = FrontendHelper();
 
+    /* ===== EFFECTS ===== */
+
+    // code that is executed when the home component mounts
     useEffect(() => {
-        getListings();
+        getListing();
         // eslint-disable-next-line
     }, []);
 
-    var hot_listing = Math.floor(Math.random() * 10);
-    var listing_link = "/listings/" + hot_listing;
-
+    /* ===== HOME COMPONENT ===== */
     return (
         <>
             <div className="container">
@@ -34,17 +35,17 @@ function Home() {
                 </div>
                 <div className="hotproperty">
                     <h1>Check out this hot property!</h1>
-                    { listings ? 
+                    { listing ? 
                         <>
                         <div className="hot-property-listing-img">
                             <div className="property-listing-img-container">
-                                <PropertyImage filename={ listings[hot_listing].property.small } />
+                                <PropertyImage filename={ listing.property.small } />
                             </div>
                         </div>
-                        <p>{ getAddress(listings[hot_listing].property) }</p>
-                        <p>{ formatFloat(listings[hot_listing].property.sqr_feet) } Square Feet</p>
-                        <p>{ floatToUSD(listings[hot_listing].price) }</p>
-                        <p><Link to= {listing_link} >Learn More!</Link></p>
+                        <p>{ getAddress(listing.property) }</p>
+                        <p>{ formatFloat(listing.property.sqr_feet) } Square Feet</p>
+                        <p>{ floatToUSD(listing.price) }</p>
+                        <p><Link to= {`/listings/${ listing.listing_id }`} >Learn More!</Link></p>
                         </>
                     :
                         <p>Loading...</p>
@@ -55,4 +56,5 @@ function Home() {
     )
 };
 
+/* ===== EXPORTS ===== */
 export default Home;
