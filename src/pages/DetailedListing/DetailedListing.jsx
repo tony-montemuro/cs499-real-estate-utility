@@ -2,6 +2,7 @@
 import "./DetailedListing.css";
 import { useLocation, Link  } from "react-router-dom";
 import { Fragment, useEffect, useRef, useState, useContext } from "react";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FrontendHelper from "../../util/FrontendHelper";
 import DetailedListingsLogic from "./DetailedListing.js";
 import EditListing from "./ui/EditPropertyPopup.jsx";
@@ -11,6 +12,7 @@ import NewShowingForm from "./NewShowingForm.jsx";
 import DefaultImage from "./ui/No_Image.jpg"
 import Room from "./ui/Room";
 import UploadIcon from "@mui/icons-material/Upload";
+import EditIcon from "@mui/icons-material/Edit";
 
 function DetailedListing() {
   /* ===== VARIABLES ===== */
@@ -68,39 +70,26 @@ function DetailedListing() {
   return listings ?
     <> 
       { /* Listing header */ }
-    <div>
       <div className="detailed-listings-header">
-        <h1>Detailed Property Listing {path[2]}&emsp;&emsp;
-        {/* Button conditionally shown to edit the listing */}
-        { agent && agent.agency.agency_id === listings.agent.agency.agency_id && 
-          <button onClick={ () => setPopup(true)} class="button-style">Edit Listing</button>
+        <h1>{ getAddress(listings.property) }</h1>
+
+        { agent && agent.agency.agency_id === listings.agent.agency.agency_id&&
+          <div className="detailed-listing-buttons">
+            {/* Button conditionally shown to edit the listing */}
+            <button onClick={ () => setPopup(true)} class="button-style">
+              <EditIcon /> Edit Listing
+            </button>
+
+            {/* Button conditionally shown to add a showing for the listing */}
+            <button disabled={ showForm } class="button-style" onClick = {() => toggleForm(true)} >
+              <AddCircleOutlineIcon /> Create Showing
+            </button>
+          </div>
         }
-        &emsp;
-        {/* Button conditionally shown to add a showing for the listing */}
-          { agent ? 
-            <>
-            {showForm ? 
-              <>
-                <button disabled={true} class="button-style" >
-                Create Showing
-                </button>
-                <NewShowingForm toggleForm={toggleForm} listing_id = {page_id} setPopup = {toggleForm}></NewShowingForm>
-              </>
-              : 
-                <button class="button-style" onClick = {() => {toggleForm(true)}} >
-                Create Showing
-                </button>
-              }
-            </>
-            :
-            <></>
-          }
-        </h1>
       </div>
-    </div>
 
     {/*body of the listing */}
-    <div className="container">
+    <div className="detailed-listing-container">
       <div className="left">
         <p></p>
         <div className="image1">
@@ -206,7 +195,6 @@ function DetailedListing() {
         </h2>
 
         <hr className="insert-line"/>
-        <hr className="insert-line"/>
         <h3>Listed By:</h3>
         <p>{ listings.agent.agency.name }: { listings.agent.agency.phone_number }</p>
         <p>&emsp; &emsp; { getAddress(listings.agent.agency) }</p>
@@ -237,11 +225,17 @@ function DetailedListing() {
           })}
         </p>
         <p>Lot Size: { formatFloat(listings.property.lot_size) } sqft</p>
-        <hr className="insert-line"/>
-        <h3>Room Details:</h3>
-        { listings.property.room.map((room, index) => {
-          return <Room room={ room } index={ index } />
-        })}
+        { listings.property.room.length > 0 &&
+          <>
+            <hr className="insert-line"/>
+            <h3>Room Details:</h3>
+            <div>
+              { listings.property.room.map((room, index) => {
+                return <Room room={ room } index={ index } />
+              })}
+            </div>
+          </>
+        }
         { listings.property.other &&
           <>
             <hr className="insert-line"/>
@@ -251,6 +245,7 @@ function DetailedListing() {
         }
       </div>
     </div>
+    <NewShowingForm listing_id = {page_id} showForm={ showForm } toggleForm={toggleForm}></NewShowingForm>
     <EditListing popup={ popup } setPopup={ setPopup } formData={ generateCopyListing() } />
     </>
   : 

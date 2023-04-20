@@ -6,6 +6,25 @@
     text-align: right;
 }
 
+.detailed-listing-buttons button {
+    margin: 5px;
+    background-color: rgba(151, 195, 220, 0.712);
+    border: 2px solid rgb(96, 97, 104);
+    color: black;
+    padding: 5px 5px;
+    border-radius: 8px;
+    line-height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.detailed-listing-buttons button svg {
+    float: left;
+    padding-right: 5px;
+    margin: auto;
+    vertical-align: middle;
+}
+
 .image1 {
     display: inline-block;
     margin-left: 5px;
@@ -41,10 +60,8 @@
     flex: 1;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
+.detailed-listing-container {
+    display: flex;
 }
   
 .inner-1 {
@@ -52,16 +69,11 @@
 }
 
 .right {
-    height: auto;
-    width: 600px;
-    overflow-y: scroll;
+    flex: 0 0 45%;
 }
   
 .left {
-    border-right: 1px solid black;
-    height: auto;
-    width: 900px;
-    overflow-y: scroll;
+    flex: 0 0 55%;
 }
 
 .insert-line {
@@ -74,15 +86,6 @@
 .td {
     border: 1px solid black;
     padding: 10px;
-}
-
-.button-style {
-    background-color: rgba(151, 195, 220, 0.712);
-    border: 2px solid rgb(96, 97, 104);
-    color: black;
-    padding: 5px 5px;
-    display: inline-block;
-    border-radius: 8px;
 }
 
 .button-style:hover {
@@ -108,6 +111,7 @@
     width: 190px;
     min-height: 190px;
     display: inline-block;
+    vertical-align: top;
     margin: 10px;
     padding: 10px;
     border: 1px solid black;

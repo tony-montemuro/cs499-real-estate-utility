@@ -334,7 +334,7 @@ const Read = () => {
         }
     }
 
-    // FUNCTION 5 - fetchAgentById - given a user id, fetch an agent object from the database, and return it
+    // FUNCTION 7 - fetchAgentById - given a user id, fetch an agent object from the database, and return it
     // PRECONDITIONS (1 parameter):
     // 1.) id - a string value, representing a uuid belonging to a unique agent user in the database
     // POSTCONDITIONS (1 return, 2 possible outcomes):
@@ -369,7 +369,7 @@ const Read = () => {
         }
     };
 
-    // FUNCTION 6 - fetchAgentsByAgency - given an agency id, fetch information on all agents belonging to that agency
+    // FUNCTION 8 - fetchAgentsByAgency - given an agency id, fetch information on all agents belonging to that agency
     // PRECONDITIONS (1 parameter):
     // 1.) agencyId: an integer representing the id of an agency
     // POSTCONDITIONS (2 possible outcomes):
@@ -397,8 +397,55 @@ const Read = () => {
         };
     };
 
+    // FUNCTION 9: fetchRandomListingId - fetch a random abbreviated listing from the database
+    // PRECONDITIONS: NONE
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the query is successful, the abreviated listing object is simply fetched and returned
+    // if the query is unsuccessful, the user will be notified of the error, and null is returned
+    const fetchRandomAbbreviatedListing = async () => {
+        try {
+            const { data: abbreviatedListing, error } = await supabase
+                .from("random_listing")
+                .select(`
+                    agent (
+                        agency (
+                            agency_id,
+                            name
+                        ),
+                        name
+                    ),
+                    listing_id,
+                    price,
+                    property!inner (
+                        city,
+                        property_id,
+                        small,
+                        sqr_feet,
+                        state,
+                        street,
+                        zip
+                    )
+                `)
+                .limit(1)
+                .maybeSingle();
+
+            // error handling
+            if (error) {
+                throw error;
+            }
+
+            // if we made it this far, simply return the listing
+            return abbreviatedListing;
+
+        } catch (error) {
+            console.log(error);
+            alert(error.message);
+            return null;
+        }
+    };
+
     return { fetchAbbreviatedListings, fetchFullListing, fetchAbbreviatedShowings, fetchAbbreviatedShowingsFiltered, 
-        fetchImageByFilename, fetchFullShowing, fetchAgentById, fetchAgentsByAgency };
+        fetchImageByFilename, fetchFullShowing, fetchAgentById, fetchAgentsByAgency, fetchRandomAbbreviatedListing };
 };
 
 /* ===== EXPORTS ===== */
