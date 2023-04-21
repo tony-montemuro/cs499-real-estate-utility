@@ -22,6 +22,8 @@ const PropertyListings = () => {
     const { fetchFullListing } = Read();
     const { uploadFile, updatePhotoName, UpdatePageHits } = Update();
 
+    // Function 1: Using the id passed in, this fetches the corresponding listing from the 
+    // database and returns all information requested in relation to it
     const getCurrListing = async (id) => {
         // fetch current listing from the database, and update the listings state
 
@@ -29,6 +31,8 @@ const PropertyListings = () => {
         setListings(currentListing);
     };
 
+    // Function 2: Creates copies of the listing, property, and room objects to hold information
+    // and returns the copies - used for the edit property pop-up
     const generateCopyListing = () => {
         // first, create listing object
         const listing = { listing_id: listings.listing_id, price: listings.price };
@@ -51,6 +55,8 @@ const PropertyListings = () => {
         return copyListing;
     };
 
+    // Function 3: given the id of the property, this function will check if the hit count has been updated
+    // if not, will update with the help of fucntions within the database function file "Update.js"
     const setPageHits = async (id) => {
         if(!hasUpdatedHits)
         { 

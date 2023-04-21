@@ -1,6 +1,6 @@
 /* ===== IMPORTS ===== */
 import "./DetailedListing.css";
-import { useLocation, Link  } from "react-router-dom";
+import { useLocation  } from "react-router-dom";
 import { Fragment, useEffect, useRef, useState, useContext } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FrontendHelper from "../../util/FrontendHelper";
@@ -9,7 +9,6 @@ import EditListing from "./ui/EditPropertyPopup.jsx";
 import { AgentContext } from "../../Contexts";
 import PropertyImage from '../../ui/PropertyImage/PropertyImage.jsx';
 import NewShowingForm from "./NewShowingForm.jsx";
-import DefaultImage from "./ui/No_Image.jpg"
 import Room from "./ui/Room";
 import UploadIcon from "@mui/icons-material/Upload";
 import EditIcon from "@mui/icons-material/Edit";
@@ -20,8 +19,6 @@ function DetailedListing() {
   const path = location.pathname.split("/");
   const page_id = path[2];
   const [popup, setPopup] = useState(false);
-
-  var showing_link = "/showings/" + page_id;
 
   /* ====== CONTEXTS ====== */
   const { agent } = useContext(AgentContext);
@@ -73,6 +70,7 @@ function DetailedListing() {
       <div className="detailed-listings-header">
         <h1>{ getAddress(listings.property) }</h1>
 
+        { /* displays agent only information */}
         { agent && agent.agency.agency_id === listings.agent.agency.agency_id&&
           <div className="detailed-listing-buttons">
             {/* Button conditionally shown to edit the listing */}
@@ -86,10 +84,13 @@ function DetailedListing() {
             </button>
           </div>
         }
+
       </div>
 
     {/*body of the listing */}
     <div className="detailed-listing-container">
+
+      {/* content within the "left" class will be related to the photos displaying and uploading the images */}
       <div className="left">
         <p></p>
         <div className="image1">
@@ -182,6 +183,8 @@ function DetailedListing() {
           </>
         }
       </div>
+
+      { /* displays the information about the listing to be displayed to all users */ }
       <div className="right">
         <h2>
           Price: { floatToUSD(listings.price) } &emsp; 
@@ -225,6 +228,8 @@ function DetailedListing() {
           })}
         </p>
         <p>Lot Size: { formatFloat(listings.property.lot_size) } sqft</p>
+
+        { /* displays all room information in the database */}
         { listings.property.room.length > 0 &&
           <>
             <hr className="insert-line"/>
@@ -236,6 +241,8 @@ function DetailedListing() {
             </div>
           </>
         }
+
+        { /* displays any additional details (if there are any) */}
         { listings.property.other &&
           <>
             <hr className="insert-line"/>
@@ -245,6 +252,8 @@ function DetailedListing() {
         }
       </div>
     </div>
+
+    {/* toggles to control the edit listing and create showing buttons */}
     <NewShowingForm listing_id = {page_id} showForm={ showForm } toggleForm={toggleForm}></NewShowingForm>
     <EditListing popup={ popup } setPopup={ setPopup } formData={ generateCopyListing() } />
     </>

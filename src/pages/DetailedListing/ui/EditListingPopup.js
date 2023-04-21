@@ -124,47 +124,55 @@ const EditListing = () => {
         dispatchPropertyForm({ type: "set", value: formData });
     };
 
+    //gets all agents that belong to the same agency by using the agency id
     const getAgents = async (agencyId) => {
         const agents = await fetchAgentsByAgency(agencyId);
         setAgents(agents);
     };
 
+    //handles the changes for all form sections except room and shopping area
 	const handleChange = (e) => {
         const { checked, id, value } = e.target;
         dispatchPropertyForm({ type: id, value: id === "occupied" ? checked : value });
     };
 
+    //handles changes to the information relating to a room that exists
 	const handleRoomChange = (e, room) => {
         const { id, value } = e.target;
         dispatchPropertyForm({ type: id, value: value, room: room });
     };
 
+    //adds a new room to be edited
 	const addRoom = (e) => {
         e.preventDefault();
         dispatchPropertyForm({ type: "add_room", value: initRoom });
     };
 
+    //removes a room from the listing
 	const removeRoom = (e, room) => {
         e.preventDefault();
         dispatchPropertyForm({ type: "delete_room", value: room });
     };
 
+    //handles changes to the text field for a shopping that exists
 	const handleShoppingAreaChange = (e, index) => {
         const { id, value } = e.target;
         dispatchPropertyForm({ type: id, value: value, index: index })
     };
 
+    //adds a shopping area to be edited
 	const addShoppingArea = (e) => {
         e.preventDefault();
         dispatchPropertyForm({ type: "add_shopping_area", value: initShoppingArea });
     };
 
+    //removes a shopping area
 	const removeShoppingArea = (e, index) => {
         e.preventDefault();
         dispatchPropertyForm({ type: "delete_shopping_area", index: index });
     };
 
-    // FUNCTION 9 - validateRequiredField: function that validates whether or not a required field exists or not
+    // validateRequiredField: function that validates whether or not a required field exists or not
     // PRECONDITIONS (1 parameter):
     // 1.) field: one of the string fields from the propertyForm that is required
     // POSTCONDITIONS (2 possible outcomes):
@@ -269,6 +277,7 @@ const EditListing = () => {
         }
     };
 
+    //auto closing for the pop-up on editing
 	const closePopup = (setPopup) => {
         dispatchPropertyForm({ type: "all" });
         setError(initError);

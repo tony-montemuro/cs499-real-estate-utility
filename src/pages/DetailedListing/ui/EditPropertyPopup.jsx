@@ -65,6 +65,7 @@ function EditPropertyPopup({ popup, setPopup, formData }) {
           <form onSubmit={ handleSubmit }>
             <div className="edit-property-popup-body">
               <div className="edit-property-popup-section">
+              { /* LEFT SECTION OF Edit Property Popup */ }
                 <div className="edit-property-popup-wrapper">
                   <h2>Agency Details</h2>
                   <div className="edit-property-popup-input-group">
@@ -157,7 +158,7 @@ function EditPropertyPopup({ popup, setPopup, formData }) {
                 </div>
               </div>
 
-              { /* MIDDLE SECTION OF Add Property Popup */ }
+              { /* MIDDLE SECTION OF Edit Property Popup */ }
               <div className="edit-property-popup-section">
                 <div className="edit-property-popup-wrapper">
                   <h2>Rooms</h2>
@@ -202,7 +203,7 @@ function EditPropertyPopup({ popup, setPopup, formData }) {
                     }
                 </div>
               </div>
-
+              { /* RIGHT SECTION OF Edit Property Popup */ }
               <div className="edit-property-popup-section">
                 <div className="edit-property-popup-wrapper">
                   <h2>Location Details</h2>
@@ -302,6 +303,7 @@ function EditPropertyPopup({ popup, setPopup, formData }) {
                 </div>
               </div>
             </div>
+            { /* Submit button for edit listing form */ }
             <button id="edit-property-popup-submit" onClick={(e) => {handleSubmit(e, setPopup)}}>
               Edit Listing
             </button>
