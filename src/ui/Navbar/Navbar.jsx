@@ -1,4 +1,4 @@
-import classes from "./Navbar.css";
+import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import PopUp from "../Login/Login.jsx";
@@ -41,12 +41,12 @@ function REUNavbar(props){
 					 <></> }
 				</ul>
 				{ agent ? 
-                	<login>
+					<div className="login">
 						Welcome, {agent.name}! <button onClick={() => logOut()}>Log Out</button>
-					</login> :
-                	<login>
+					</div> :
+					<div className="login">
 						Welcome, Guest! <button onClick={() => setButtonLogin(true)}>Log In</button>
-					</login> 
+					</div> 
 				}
 			</nav>
 			<PopUp trigger={loginbutton} setTrigger={setButtonLogin}></PopUp>

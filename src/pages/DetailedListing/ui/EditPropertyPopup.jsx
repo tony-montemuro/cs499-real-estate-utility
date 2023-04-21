@@ -49,6 +49,7 @@ function EditPropertyPopup({ popup, setPopup, formData }) {
       setPropertyForm(formData);
       getAgents(agent.agency.agency_id);
     }
+    // eslint-disable-next-line
   }, [popup]);
 
   /* ===== ADD PROPERTY POPUP ===== */

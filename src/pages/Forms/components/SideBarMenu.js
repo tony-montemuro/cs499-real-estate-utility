@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import classes from "./SideBarMenu.module.css";
-import BuildIcon from '@mui/icons-material/Build';
 
 function SideBarMenu(props) {
     function handleECC() {

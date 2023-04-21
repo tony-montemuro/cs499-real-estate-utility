@@ -54,7 +54,7 @@ const DetailedShowing = () => {
             case 1: setQuestion4({ words: "Just Right", number: 1 }); break;
             default: setQuestion4({ words: "Somewhat Cheap", number: 0 });
         }
-        setTextField(currentShowing.showing.notes);
+        currentShowing.showing.notes === null ? setTextField("") : setTextField(currentShowing.showing.notes);
 
     };
 

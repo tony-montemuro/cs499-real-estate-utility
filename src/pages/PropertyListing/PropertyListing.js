@@ -36,6 +36,8 @@ const PropertyListings = () => {
                 return { ...state, zip: action.value };
             case "error":
                 return { ...state, error: action.value };
+            default:
+                return state;
         };
     };
 

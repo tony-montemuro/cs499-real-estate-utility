@@ -1,6 +1,6 @@
 /* ===== IMPORTS ===== */
 import "./DetailedListing.css";
-import { useLocation  } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Fragment, useEffect, useRef, useState, useContext } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FrontendHelper from "../../util/FrontendHelper";
@@ -53,6 +53,7 @@ function DetailedListing() {
   // code that updates the page hit count each time the component mounts
   useEffect(() => {
     setPageHits(page_id);
+    // eslint-disable-next-line
   }, []);
   
   useEffect(() => {
@@ -61,6 +62,7 @@ function DetailedListing() {
       getCurrListing(page_id);
     }
     getCurrListing(page_id);
+    // eslint-disable-next-line
   }, [popup]);
 
   /* ===== DETAILED LISTING COMPONENT ==== */
@@ -74,12 +76,12 @@ function DetailedListing() {
         { agent && agent.agency.agency_id === listings.agent.agency.agency_id&&
           <div className="detailed-listing-buttons">
             {/* Button conditionally shown to edit the listing */}
-            <button onClick={ () => setPopup(true)} class="button-style">
+            <button onClick={ () => setPopup(true)} className="button-style">
               <EditIcon /> Edit Listing
             </button>
 
             {/* Button conditionally shown to add a showing for the listing */}
-            <button disabled={ showForm } class="button-style" onClick = {() => toggleForm(true)} >
+            <button disabled={ showForm } className="button-style" onClick = {() => toggleForm(true)} >
               <AddCircleOutlineIcon /> Create Showing
             </button>
           </div>
@@ -236,7 +238,7 @@ function DetailedListing() {
             <h3>Room Details:</h3>
             <div>
               { listings.property.room.map((room, index) => {
-                return <Room room={ room } index={ index } />
+                return <Room room={ room } index={ index } key={ index } />
               })}
             </div>
           </>

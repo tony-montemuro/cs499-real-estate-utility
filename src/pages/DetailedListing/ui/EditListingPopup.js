@@ -263,7 +263,7 @@ const EditListing = () => {
             // if all goes smoothly, next we need to re-insert all rooms
             const roomPromises = propertyForm.rooms.map((room) => {
                 room.property = propertyId;
-                insertRoom(room);
+                return insertRoom(room);
             });
             await Promise.all(roomPromises);
 
