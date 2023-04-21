@@ -22,7 +22,7 @@ function DetailedShowing() {
         if (!fullShowing) {
             getCurrShowing(pageID);
         }
-
+        // eslint-disable-next-line
     }, [fullShowing]);
 
     return (
@@ -138,7 +138,7 @@ function DetailedShowing() {
 
                                         </div>
                                     </div>
-                                    {fullShowing != undefined ?
+                                    {fullShowing !== undefined ?
                                         <>
                                             <div className={classes.infoblock}>
                                                 <div className={classes.prompt}>Occupation Status:</div>

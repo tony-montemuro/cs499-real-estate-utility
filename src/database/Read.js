@@ -80,7 +80,7 @@ const Read = () => {
     
     const fetchFullListing = async (id) => {
         try{
-            const { data: fullListing, error, status } = await supabase
+            const { data: fullListing, error } = await supabase
                 .from("listing")
                 .select(`
                     agent (
@@ -231,9 +231,9 @@ const Read = () => {
     const fetchAbbreviatedShowingsFiltered = async (lower, upper, zip, state, city) => {
 
         try {
-            if(city == null || city == "") {
-                if(state == null || state == "") {
-                    if (zip == null || zip ==""){ // All search fields are null, no filter
+            if(city === null || city === "") {
+                if(state === null || state === "") {
+                    if (zip === null || zip ===""){ // All search fields are null, no filter
                         
                         return await fetchAbbreviatedShowingsNone(lower, upper);
 
@@ -245,7 +245,7 @@ const Read = () => {
                     }
                 } //end of
                 else { // Filter against state and...
-                    if (zip == null || zip == ""){ // Filter just against state
+                    if (zip === null || zip === ""){ // Filter just against state
                         
                         return await fetchAbbreviatedShowingsFilterState(lower, upper, state);
 
@@ -258,8 +258,8 @@ const Read = () => {
                 } //end of not city, but state and...
             } //end of not city...
             else { // Filter against city and..
-                if(state == null || state == "") { // not filter for state
-                    if (zip == null || zip == ""){ // filter only for city
+                if(state === null || state === "") { // not filter for state
+                    if (zip === null || zip === ""){ // filter only for city
                         
                         return await fetchAbbreviatedShowingsFilterCity(lower, upper, city);
 
@@ -271,7 +271,7 @@ const Read = () => {
                     }
                 } //end of city and nont state...
                 else { // Filter against state and city and...
-                    if (zip == null || zip == ""){ // Filter just against state and city
+                    if (zip === null || zip === ""){ // Filter just against state and city
                         
                         return await fetchAbbreviatedShowingsFilterCityState(lower, upper, state, city);
 
