@@ -71,8 +71,9 @@ function ListOfShowingsCmp({showings, pageNumber, getShowingsInit, handlePageCha
 
     useEffect(() => {
         if (!showings){
-        getShowingsInit(pageElems) 
+            getShowingsInit(pageElems) 
         }
+        // eslint-disable-next-line
     }, [showings, pageNumber]);
 
     return (

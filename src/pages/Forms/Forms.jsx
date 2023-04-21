@@ -1,8 +1,5 @@
 import { useState } from "react";
 
-//Importing global user interface components 
-import PageBase from "../../ui/PageBase/PageBase";
-
 import ect_file from "./assets/estimate_closing_template.pdf";
 import mr_file from "./assets/maintenance_request.pdf";
 import pa_file from "./assets/purchase_agreement.pdf";
@@ -79,7 +76,7 @@ function Forms() {
                             onClick = {() => {
                                 window.open(DownloadPath);
                             }}
-                            disabled = {DownloadPath == undefined}
+                            disabled = {DownloadPath === undefined}
                         >
                             Download
                         </Button>

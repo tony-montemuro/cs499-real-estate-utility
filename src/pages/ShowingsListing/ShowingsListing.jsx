@@ -1,4 +1,3 @@
-import AbrvShowingInstance from "./ShowingsListingComponents/AbrvShowingInstance.jsx";
 import ListOfShowingsCmp from "./ShowingsListingComponents/ListOfShowingsCmp.jsx";
 import ShowSortComp from "./ShowingsListingComponents/ShowSortComp.jsx";
 import "./ShowingsListing.css";
@@ -6,7 +5,6 @@ import Box from '@mui/material/Box';
 import ShowingsListingLogic from "./ShowingsListings.js";
 import { AgentContext } from "../../Contexts";
 import {useContext} from "react";
-import Auth from "../../database/Auth.js";
 import "./ShowingsListing.css"
 
 
@@ -19,7 +17,6 @@ function ShowingsListing() {
         applyFilters,
         showings, 
         pageNumber, 
-        getShowings, 
         getShowingsInit, 
         handlePageChange} = ShowingsListingLogic();
 
