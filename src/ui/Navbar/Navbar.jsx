@@ -8,10 +8,8 @@ import Auth from "../../database/Auth.js"
 
 console.log(logo); // /logo.84287d09.png
 
-//import TitleStyle from "../pages/Forms/Components/Styles/TitleStyle";
-//import ButtonStyle from "../pages/Forms/Components/Styles/ButtonStyle";
-
 function REUNavbar(props){
+	
 	const [loginbutton, setButtonLogin ] = useState(false);
     const {agent} = useContext(AgentContext);
 
@@ -20,10 +18,12 @@ function REUNavbar(props){
 	return (
 
 		<header className="header">
+			{ /* Logo */ }
 			<img src={logo} alt="logo" />
 
 			<nav className="nav">
-				<ul className="header ul">
+			{ /* Links to pages */ }
+				<ul className="header ul"> 
 					<li>
 							<Link to="/">Home</Link>				
 					</li>
@@ -33,13 +33,15 @@ function REUNavbar(props){
 					<li>
 							<Link to="/listings">Listings</Link>
 					</li>
+					{ /* Showings page only displays if the agent is logged in. */ }
 					{ agent ? 
 					<li>
 							<Link to="/showings">Showings</Link>
-					</li>
+					</li> 
 					 : 
 					 <></> }
 				</ul>
+				{ /* Login component. Displays differently whether the user is logged in or not. */ }
 				{ agent ? 
 					<div className="login">
 						Welcome, {agent.name}! <button onClick={() => logOut()}>Log Out</button>
