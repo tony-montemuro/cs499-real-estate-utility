@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import ect_file from "./assets/estimate_closing_template.pdf";
-import mr_file from "./assets/maintenance_request.pdf";
-import pa_file from "./assets/purchase_agreement.pdf";
+import ect_file from "../../assets/estimate_closing_template.pdf";
+import mr_file from "../../assets/maintenance_request.pdf";
+import pa_file from "../../assets/purchase_agreement.pdf";
 
 //Importing page specific components
 import Card from "./components/Card";
