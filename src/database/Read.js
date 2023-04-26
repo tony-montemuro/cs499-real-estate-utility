@@ -78,6 +78,13 @@ const Read = () => {
         };
     };
     
+    // FUNCTION 2: fetchFullListing - fetch data of full listings from the database
+    // PRECONDITIONS (1 parameter):
+    // 1.) id: the integer value for the listing index 
+    // POSTCONDITIONS (1 returns, 1 possible outcome):
+    // await the call to fetch full Listings object from the database. if an error is detected, handle it. 
+    // otherwise, we return:
+    // 1.) fullListing: the specified full listing object (an empty object if we get an error)
     const fetchFullListing = async (id) => {
         try{
             const { data: fullListing, error } = await supabase
@@ -175,6 +182,14 @@ const Read = () => {
         }
     };
 
+    // FUNCTION 4: fetchAbbreviatedShowings - fetch array of abbreviated showings from the database
+    // PRECONDITIONS (2 parameters):
+    // 1.) lower: the numeric lower index of the range of showings to grab from the total database list
+    // 2.) upper: the numeric uppder index of the range of showings to grab from the total database list
+    // POSTCONDITIONS (1 returns, 1 possible outcome):
+    // await the call to fetch array of Abbreviated Showing objects from the database. if an error is detected, handle it. 
+    // otherwise, we return:
+    // 1.) abbreviatedShowings: the array of abbreviatedShowings objects from the specified range (an empty array if we get an error) 
     const fetchAbbreviatedShowings = async (lower, upper) => {
         try {
             const { data:abbreviatedShowings, count, error, status} = await supabase
@@ -224,63 +239,78 @@ const Read = () => {
         }
     };
 
+    //========fetchAbbreviatedShowingFiltered Body Start===========================================================================
+
+    // The fetch function calls a unique function for each combination of present fiter parameters. 
     const { fetchAbbreviatedShowingsNone, fetchAbbreviatedShowingsFilterZIP, fetchAbbreviatedShowingsFilterState, 
         fetchAbbreviatedShowingsFilterCity, fetchAbbreviatedShowingsFilterStateZIP, fetchAbbreviatedShowingsFilterCityZIP,
         fetchAbbreviatedShowingsFilterCityState, fetchAbbreviatedShowingsFilterCityStateZIP} = ReadFilterHelper();
 
+    // FUNCTION 5: fetchAbbreviatedShowingsFiltered - fetch array of abbreviated showings from the database, according to filters
+    // PRECONDITIONS (5 parameters):
+    // 1.) lower: the numeric lower index of the range of showings to grab from the total database list
+    // 2.) upper: the numeric uppder index of the range of showings to grab from the total database list
+    // 3-5.) Conditional parameters - if they are set to empty, do not filter by this field
+    //   3.) zip: the zip code of the showings to grab
+    //   4.) state: the state of the showing to grab
+    //   5.) city: the city of the showing to grab
+    // POSTCONDITIONS (1 returns, 1 possible outcome):
+    // await the call to fetch array of Abbreviated Showing objects from the database. if an error is detected, handle it. 
+    // otherwise, we return:
+    // 1.) abbreviatedShowings: the array of abbreviatedShowings objects from the specified range and filters
+    // (an empty array if we get an error) 
     const fetchAbbreviatedShowingsFiltered = async (lower, upper, zip, state, city) => {
 
+        // Each function call will throw its own error if an issue arises.
         try {
             if(city === null || city === "") {
+
                 if(state === null || state === "") {
+
                     if (zip === null || zip ===""){ // All search fields are null, no filter
-                        
                         return await fetchAbbreviatedShowingsNone(lower, upper);
-
                     }
+
                     else { // Filter just against ZIP code
-
                         return await fetchAbbreviatedShowingsFilterZIP(lower, upper, zip);
-
                     }
-                } //end of
+
+                } //end of not city, nor state..
                 else { // Filter against state and...
-                    if (zip === null || zip === ""){ // Filter just against state
-                        
+
+                    if (zip === null || zip === ""){ // Filter just against state 
                         return await fetchAbbreviatedShowingsFilterState(lower, upper, state);
-
                     }
+
                     else { //Filter against state and ZIP code
-                            
                         return await fetchAbbreviatedShowingsFilterStateZIP(lower, upper, zip, state);
-
                     }
+
                 } //end of not city, but state and...
             } //end of not city...
             else { // Filter against city and..
+
                 if(state === null || state === "") { // not filter for state
+
                     if (zip === null || zip === ""){ // filter only for city
-                        
                         return await fetchAbbreviatedShowingsFilterCity(lower, upper, city);
-
                     }
+
                     else { // Filter just against ZIP code and city
-
                         return await fetchAbbreviatedShowingsFilterCityZIP(lower, upper, zip, city);
-
                     }
-                } //end of city and nont state...
+
+                } //end of city and not state...
                 else { // Filter against state and city and...
-                    if (zip === null || zip === ""){ // Filter just against state and city
-                        
-                        return await fetchAbbreviatedShowingsFilterCityState(lower, upper, state, city);
 
+                    if (zip === null || zip === ""){ // Filter just against state and city
+                        return await fetchAbbreviatedShowingsFilterCityState(lower, upper, state, city);
                     }
+
                     else { //Filter against city, state and ZIP code
-                        
                         return await fetchAbbreviatedShowingsFilterCityStateZIP(lower, upper, zip, state, city);
-                            
                     }
+                    
                 } //end of city and state...
             } //end of city and...
         }
@@ -291,6 +321,15 @@ const Read = () => {
         }
     };
 
+    //========fetchAbbreviatedShowingFiltered Body End===========================================================================
+
+    // FUNCTION 6: fetchFullShowing - fetch data of full showing (including agent form) from the database
+    // PRECONDITIONS (1 parameter):
+    // 1.) id: the integer value for the showing index 
+    // POSTCONDITIONS (1 returns, 1 possible outcome):
+    // await the call to fetch full Showing object from the database. if an error is detected, handle it. 
+    // otherwise, we return:
+    // 1.) fullShowing: the specified full showing object (an empty object if we get an error)
     const fetchFullShowing = async (id) => {
         try {
             const { data:showing, error} = await supabase

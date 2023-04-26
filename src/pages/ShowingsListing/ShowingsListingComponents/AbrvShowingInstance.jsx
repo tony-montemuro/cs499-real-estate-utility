@@ -4,6 +4,7 @@ import PropertyImage from "../../../ui/PropertyImage/PropertyImage.jsx";
 
 function AbrvShowingInstance({ address, street, startTime, endTime, listAgentInfo, image, showAgentInfo, listing_id }){
 
+    // The AbrvShowingInstance component - display all fields as passed in to the component 
     return( 
         <div className = "abrv-show-instance">
             <div className = "image-container">
@@ -25,6 +26,7 @@ function AbrvShowingInstance({ address, street, startTime, endTime, listAgentInf
                     Listing Agent: {listAgentInfo}
                     { showAgentInfo ? 
                                     <>
+                                    {/*If the showing agent is not defined, don't display it or the lable */}
                                         <br/>
                                         Showing Agent: {showAgentInfo}
                                     </>            
@@ -38,4 +40,5 @@ function AbrvShowingInstance({ address, street, startTime, endTime, listAgentInf
 
 };
 
+/*==Exports==*/
 export default AbrvShowingInstance;

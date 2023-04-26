@@ -10,8 +10,10 @@ import "./ShowingsListing.css"
 
 function ShowingsListing() {
 
+    // Agent user authentication
     const {agent} = useContext(AgentContext);
 
+    // States and functions from ShowingsListing.js
     const { filterForm, 
         dispatchFilterForm, 
         applyFilters,
@@ -20,6 +22,7 @@ function ShowingsListing() {
         getShowingsInit, 
         handlePageChange} = ShowingsListingLogic();
 
+    //ShowingsListing component details, will only render if the agent is authenticated
     return (
         <>  
             {agent ? 

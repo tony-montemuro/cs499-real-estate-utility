@@ -1,5 +1,6 @@
 import "./ShowSortComp.css"
 
+// The ShowSortComp provides a means to select a specific kind of showings
 function ShowSortComp({filterForm, dispatchFilterForm, applyFilters}) {
 
     return(
@@ -8,6 +9,7 @@ function ShowSortComp({filterForm, dispatchFilterForm, applyFilters}) {
         <div className="showings-listing-filters-form">
 
             <form onSubmit={ (applyFilters) }>
+            {/*The Filter form allows the setting of a zip, state, and city for which the showings gathered will follow.*/}
 
                 <b><p>Zip</p></b>
                 <div>
@@ -57,4 +59,5 @@ function ShowSortComp({filterForm, dispatchFilterForm, applyFilters}) {
     );
 };
 
+/*==EXPORT==*/
 export default ShowSortComp;

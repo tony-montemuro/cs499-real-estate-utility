@@ -11,13 +11,16 @@ import { useContext } from "react";
 
 function DetailedShowing() {
 
+    /*==VARIABLES==*/
     const pageID = useLocation().pathname.split("/")[2];
     const { agent } = useContext(AgentContext);
 
+    /*==Functions and states from the DetailedShowing.js file==*/
     const { saveFeedbackForm, fullShowing, additionalNotesRef, question1, question2,
         question3, question4, getCurrShowing, question1Handler, question2Handler,
         question3Handler, question4Handler, textHandler, textField } = DetailedShowingLogic();
 
+    // Use Effect, when page is loaded, get the current showing details
     useEffect(() => {
         if (!fullShowing) {
             getCurrShowing(pageID);
@@ -25,20 +28,28 @@ function DetailedShowing() {
         // eslint-disable-next-line
     }, [fullShowing]);
 
+    // DetailedShowing component
     return (
-        <>
+        <> {/*Only render the data if agent is authenticated and the fullShowing has been grabbed*/}
             {agent ?
                 <>
                     {!fullShowing ?
 
-                        <p>Loading...</p>
+                        <p>Loading...</p> 
                         :
 
                         <div className={classes.content}>
 
                             <div className={classes.header}>
-                                <h1>Documents</h1>
+                                <h1>Showing Details</h1>
 
+                                {/* The showing form has questions for the agent to fill in. Each field has a BasicSelect
+                                combo box with 3 options that can be set for the question.
+                                Question1 - Customer Interest
+                                Question2 - Agent Experience
+                                Question3 - Customer Price Rating
+                                Question4 - Agent Price Rating
+                                */}
                                 <form onSubmit={(e) => (saveFeedbackForm(e, pageID))}>
                                     <div className={classes.docheader}>Feedback Form</div>
                                     <div className={classes.block}>
@@ -47,7 +58,7 @@ function DetailedShowing() {
                                         </div>
                                         <BasicSelect
                                             onChange={question1Handler}
-                                            answer1="Exetremely Interested"
+                                            answer1="Extremely Interested"
                                             answer2="Somewhat Interested"
                                             answer3="Not Interested"
                                             currentAnswer={question1.words}
@@ -125,6 +136,8 @@ function DetailedShowing() {
 
                                 </form>
 
+                                {/* The Bottom half contains data on the showing property, including the customer for who the showing
+                                is for, if such a customer exists */}
                                 <BottomHalf>
                                     <div className={classes.infoblock}>
                                         <div className={classes.prompt}>Showing Agent:</div>
@@ -168,4 +181,6 @@ function DetailedShowing() {
         </>
     );
 }
+
+/* ===== EXPORTS ===== */
 export default DetailedShowing;
