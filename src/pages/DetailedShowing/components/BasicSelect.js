@@ -4,6 +4,7 @@ import Select from "@mui/material/Select";
 import { MenuItem } from "@mui/material";
 import classes from "../DetailedShowing.module.css";
 
+// This component provides series of combo boxes that can be selected
 function BasicSelect(props) {
 
     return (

@@ -20,7 +20,7 @@ const PropertyListings = () => {
 
     // database functions
     const { fetchFullListing } = Read();
-    const { uploadFile, updatePhotoName, UpdatePageHits } = Update();
+    const { uploadFile, updatePhotoName, updatePageHits } = Update();
 
     // Function 1: Using the id passed in, this fetches the corresponding listing from the 
     // database and returns all information requested in relation to it
@@ -60,7 +60,7 @@ const PropertyListings = () => {
     const setPageHits = async (id) => {
         if(!hasUpdatedHits)
         { 
-            await UpdatePageHits(id); 
+            await updatePageHits(id); 
             updateHits(true); 
         }
     }

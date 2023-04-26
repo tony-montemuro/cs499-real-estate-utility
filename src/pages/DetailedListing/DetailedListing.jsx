@@ -14,6 +14,7 @@ import UploadIcon from "@mui/icons-material/Upload";
 import EditIcon from "@mui/icons-material/Edit";
 
 function DetailedListing() {
+  
   /* ===== VARIABLES ===== */
   const location = useLocation();
   const path = location.pathname.split("/");
@@ -48,221 +49,221 @@ function DetailedListing() {
   // helper functions
   const { floatToUSD, formatFloat, getAddress, snakeToTitle } = FrontendHelper();
 
-  /* ===== EFFECTS ===== */
-  
-  // code that updates the page hit count each time the component mounts
-  useEffect(() => {
-    setPageHits(page_id);
-    // eslint-disable-next-line
-  }, []);
-  
-  useEffect(() => {
-    // get the current listing when component mounts, and each time popup is closed
-    if (!popup) {
+    /* ===== EFFECTS ===== */
+    
+    // code that updates the page hit count each time the component mounts
+    useEffect(() => {
+      setPageHits(page_id);
+      // eslint-disable-next-line
+    }, []);
+    
+    useEffect(() => {
+      // get the current listing when component mounts, and each time popup is closed
+      if (!popup) {
+        getCurrListing(page_id);
+      }
       getCurrListing(page_id);
-    }
-    getCurrListing(page_id);
-    // eslint-disable-next-line
-  }, [popup]);
+      // eslint-disable-next-line
+    }, [popup]);
 
-  /* ===== DETAILED LISTING COMPONENT ==== */
-  return listings ?
-    <> 
-      { /* Listing header */ }
-      <div className="detailed-listings-header">
-        <h1>{ getAddress(listings.property) }</h1>
+    /* ===== DETAILED LISTING COMPONENT ==== */
+    return listings ?
+      <> 
+        { /* Listing header */ }
+        <div className="detailed-listings-header">
+          <h1>{ getAddress(listings.property) }</h1>
 
-        { /* displays agent only information */}
-        { agent && agent.agency.agency_id === listings.agent.agency.agency_id&&
-          <div className="detailed-listing-buttons">
-            {/* Button conditionally shown to edit the listing */}
-            <button onClick={ () => setPopup(true)} className="button-style">
-              <EditIcon /> Edit Listing
-            </button>
+          { /* displays agent only information */}
+          { agent && agent.agency.agency_id === listings.agent.agency.agency_id&&
+            <div className="detailed-listing-buttons">
+              {/* Button conditionally shown to edit the listing */}
+              <button onClick={ () => setPopup(true)} className="button-style">
+                <EditIcon /> Edit Listing
+              </button>
 
-            {/* Button conditionally shown to add a showing for the listing */}
-            <button disabled={ showForm } className="button-style" onClick = {() => toggleForm(true)} >
-              <AddCircleOutlineIcon /> Create Showing
-            </button>
-          </div>
-        }
-
-      </div>
-
-    {/*body of the listing */}
-    <div className="detailed-listing-container">
-
-      {/* content within the "left" class will be related to the photos displaying and uploading the images */}
-      <div className="left">
-        <p></p>
-        <div className="image1">
-            <PropertyImage filename={ listings.property.small } />
-        </div>
-        <br></br>
-        <div className="image2">
-            <PropertyImage filename={ listings.property.large_1 } />
-        </div>
-        <div className="image2">
-            <PropertyImage filename={ listings.property.large_2 } />
-        </div>
-        <div className="image2">
-            <PropertyImage filename={ listings.property.large_3 } />
-        </div>
-        <br></br>
-        <div className="image2">
-            <PropertyImage filename={ listings.property.large_4 } />
-        </div>
-        <div className="image2">
-            <PropertyImage filename={ listings.property.large_5 } />
-        </div>
-        <div className="detailed-listing-photo-upload">
-          
-        </div>
-        { /* Property Image Uploader: only renders if agent is logged in, and they belong to same agent as current listing */ }
-        { agent && listings.agent.agency.agency_id === agent.agency.agency_id && 
-          <>
-            <h2>Upload Property Images</h2>
-            <div className="detailed-listing-image">
-    
-              { /* Update thumbnail */ }
-              <div className="detailed-listing-thumbnail-upload">
-                <h3><UploadIcon />Update thumbnail</h3>
-                <label htmlFor="property-thumbnail-upload"></label>
-                <input
-                  type="file"
-                  id="property-thumbnail-upload"
-                  accept=".jpg,.jpeg,.png"
-                  ref={ thumbnailRef }
-                  onChange={ () => handleFileInputChange(thumbnailRef, "thumbnail") }
-                />
-                <button
-                  disabled={ uploading.thumbnail || isSubmitting.thumbnail }
-                  onClick={ (e) => uploadThumbnail(e, thumbnailRef) }
-                  >Upload
-                </button>
-    
-                { /* If the thumbnail fails to validate, render the error message here. */ }
-                { error.thumbnail && <p>Error: { error.thumbnail }</p> }
-    
-                { /* If the thumbnail successfully updates, render a success message here. */ }
-                { uploadedMessage.thumbnail && <p>{ uploadedMessage.thumbnail }</p> }
-    
-              </div>
-    
-              { /* Upload large photo */ }
-              <div className="detailed-listing-image-upload">
-    
-                { /* Only render this uploader if the property has image fields that are null */ }
-                { getNumRemaining() > 0 &&
-    
-                  <>
-                    <h3><UploadIcon />Upload photo ({ getNumRemaining() } remaning)</h3>
-                    <label htmlFor="property-image-upload"></label>
-                    <input
-                      type="file"
-                      id="property-image-upload"
-                      accept=".jpg,.jpeg,.png"
-                      ref={ photoRef }
-                      onChange={ () => handleFileInputChange(photoRef, "photo") }
-                    />
-                    <button 
-                      disabled={ uploading.photo || isSubmitting.photo } 
-                      onClick={ (e) => uploadPhoto(e, photoRef) }
-                      >Upload
-                    </button>
-    
-                    { /* If the photo fails to validate, render the error message here. */ }
-                    { error.photo && <p>Error: { error.photo }</p> }
-    
-                    { /* If the photo successfully updates, render a success message here. */ }
-                    { uploadedMessage.photo && <p>{ uploadedMessage.photo }</p> }
-                  </>
-    
-                }
-    
-              </div>
-            </div> 
-          </>
-        }
-      </div>
-
-      { /* displays the information about the listing to be displayed to all users */ }
-      <div className="right">
-        <h2>
-          Price: { floatToUSD(listings.price) } &emsp; 
-          { listings.property.room.filter(item => item.room_type === "bedroom").length } bed |
-          { ` ${ listings.property.room.filter(item => item.room_type === "bathroom").length }` } bathroom |
-          { ` ${ formatFloat(listings.property.sqr_feet) }` } sqft
-        </h2>
-        
-        <h2>
-          { getAddress(listings.property) }
-        </h2>
-
-        <hr className="insert-line"/>
-        <h3>Listed By:</h3>
-        <p>{ listings.agent.agency.name }: { listings.agent.agency.phone_number }</p>
-        <p>&emsp; &emsp; { getAddress(listings.agent.agency) }</p>
-        <p>{ listings.agent.name }: { listings.agent.phone_number }</p>
-        <p>&emsp; &emsp; { listings.agent.email }</p>
-        <hr className="insert-line"/>
-        <h3>Overview:</h3>
-
-        <p>
-          Dwelling Type: { snakeToTitle(listings.property.dwelling_type) }
-        </p>
-
-        { listings.property.subdivision && 
-          <p>
-            Subdivision: { listings.property.subdivision }
-          </p> 
-        }
-
-        <p>School District: { listings.property.school_district }</p>
-        <p>Shopping Areas:  
-          { listings.property.shopping_areas.map((area, index) => {
-            return (
-              <Fragment key={ index }>
-                { ` ${area}` }
-                { index < listings.property.shopping_areas.length-1 && "," }
-              </Fragment>
-            )
-          })}
-        </p>
-        <p>Lot Size: { formatFloat(listings.property.lot_size) } sqft</p>
-
-        { /* displays all room information in the database */}
-        { listings.property.room.length > 0 &&
-          <>
-            <hr className="insert-line"/>
-            <h3>Room Details:</h3>
-            <div>
-              { listings.property.room.map((room, index) => {
-                return <Room room={ room } index={ index } key={ index } />
-              })}
+              {/* Button conditionally shown to add a showing for the listing */}
+              <button disabled={ showForm } className="button-style" onClick = {() => toggleForm(true)} >
+                <AddCircleOutlineIcon /> Create Showing
+              </button>
             </div>
-          </>
-        }
+          }
 
-        { /* displays any additional details (if there are any) */}
-        { listings.property.other &&
-          <>
-            <hr className="insert-line"/>
-            <h3>Additional Information:</h3>
-            <p>{ listings.property.other }</p>
-          </>
-        }
+        </div>
+
+      {/*body of the listing */}
+      <div className="detailed-listing-container">
+
+        {/* content within the "left" class will be related to the photos displaying and uploading the images */}
+        <div className="left">
+          <p></p>
+          <div className="image1">
+              <PropertyImage filename={ listings.property.small } />
+          </div>
+          <br></br>
+          <div className="image2">
+              <PropertyImage filename={ listings.property.large_1 } />
+          </div>
+          <div className="image2">
+              <PropertyImage filename={ listings.property.large_2 } />
+          </div>
+          <div className="image2">
+              <PropertyImage filename={ listings.property.large_3 } />
+          </div>
+          <br></br>
+          <div className="image2">
+              <PropertyImage filename={ listings.property.large_4 } />
+          </div>
+          <div className="image2">
+              <PropertyImage filename={ listings.property.large_5 } />
+          </div>
+          <div className="detailed-listing-photo-upload">
+            
+          </div>
+          { /* Property Image Uploader: only renders if agent is logged in, and they belong to same agent as current listing */ }
+          { agent && listings.agent.agency.agency_id === agent.agency.agency_id && 
+            <>
+              <h2>Upload Property Images</h2>
+              <div className="detailed-listing-image">
+      
+                { /* Update thumbnail */ }
+                <div className="detailed-listing-thumbnail-upload">
+                  <h3><UploadIcon />Update thumbnail</h3>
+                  <label htmlFor="property-thumbnail-upload"></label>
+                  <input
+                    type="file"
+                    id="property-thumbnail-upload"
+                    accept=".jpg,.jpeg,.png"
+                    ref={ thumbnailRef }
+                    onChange={ () => handleFileInputChange(thumbnailRef, "thumbnail") }
+                  />
+                  <button
+                    disabled={ uploading.thumbnail || isSubmitting.thumbnail }
+                    onClick={ (e) => uploadThumbnail(e, thumbnailRef) }
+                    >Upload
+                  </button>
+      
+                  { /* If the thumbnail fails to validate, render the error message here. */ }
+                  { error.thumbnail && <p>Error: { error.thumbnail }</p> }
+      
+                  { /* If the thumbnail successfully updates, render a success message here. */ }
+                  { uploadedMessage.thumbnail && <p>{ uploadedMessage.thumbnail }</p> }
+      
+                </div>
+      
+                { /* Upload large photo */ }
+                <div className="detailed-listing-image-upload">
+      
+                  { /* Only render this uploader if the property has image fields that are null */ }
+                  { getNumRemaining() > 0 &&
+      
+                    <>
+                      <h3><UploadIcon />Upload photo ({ getNumRemaining() } remaning)</h3>
+                      <label htmlFor="property-image-upload"></label>
+                      <input
+                        type="file"
+                        id="property-image-upload"
+                        accept=".jpg,.jpeg,.png"
+                        ref={ photoRef }
+                        onChange={ () => handleFileInputChange(photoRef, "photo") }
+                      />
+                      <button 
+                        disabled={ uploading.photo || isSubmitting.photo } 
+                        onClick={ (e) => uploadPhoto(e, photoRef) }
+                        >Upload
+                      </button>
+      
+                      { /* If the photo fails to validate, render the error message here. */ }
+                      { error.photo && <p>Error: { error.photo }</p> }
+      
+                      { /* If the photo successfully updates, render a success message here. */ }
+                      { uploadedMessage.photo && <p>{ uploadedMessage.photo }</p> }
+                    </>
+      
+                  }
+      
+                </div>
+              </div> 
+            </>
+          }
+        </div>
+
+        { /* displays the information about the listing to be displayed to all users */ }
+        <div className="right">
+          <h2>
+            Price: { floatToUSD(listings.price) } &emsp; 
+            { listings.property.room.filter(item => item.room_type === "bedroom").length } bed |
+            { ` ${ listings.property.room.filter(item => item.room_type === "bathroom").length }` } bathroom |
+            { ` ${ formatFloat(listings.property.sqr_feet) }` } sqft
+          </h2>
+          
+          <h2>
+            { getAddress(listings.property) }
+          </h2>
+
+          <hr className="insert-line"/>
+          <h3>Listed By:</h3>
+          <p>{ listings.agent.agency.name }: { listings.agent.agency.phone_number }</p>
+          <p>&emsp; &emsp; { getAddress(listings.agent.agency) }</p>
+          <p>{ listings.agent.name }: { listings.agent.phone_number }</p>
+          <p>&emsp; &emsp; { listings.agent.email }</p>
+          <hr className="insert-line"/>
+          <h3>Overview:</h3>
+
+          <p>
+            Dwelling Type: { snakeToTitle(listings.property.dwelling_type) }
+          </p>
+
+          { listings.property.subdivision && 
+            <p>
+              Subdivision: { listings.property.subdivision }
+            </p> 
+          }
+
+          <p>School District: { listings.property.school_district }</p>
+          <p>Shopping Areas:  
+            { listings.property.shopping_areas.map((area, index) => {
+              return (
+                <Fragment key={ index }>
+                  { ` ${area}` }
+                  { index < listings.property.shopping_areas.length-1 && "," }
+                </Fragment>
+              )
+            })}
+          </p>
+          <p>Lot Size: { formatFloat(listings.property.lot_size) } sqft</p>
+
+          { /* displays all room information in the database */}
+          { listings.property.room.length > 0 &&
+            <>
+              <hr className="insert-line"/>
+              <h3>Room Details:</h3>
+              <div>
+                { listings.property.room.map((room, index) => {
+                  return <Room room={ room } index={ index } key={ index } />
+                })}
+              </div>
+            </>
+          }
+
+          { /* displays any additional details (if there are any) */}
+          { listings.property.other &&
+            <>
+              <hr className="insert-line"/>
+              <h3>Additional Information:</h3>
+              <p>{ listings.property.other }</p>
+            </>
+          }
+        </div>
       </div>
-    </div>
 
-    {/* toggles to control the edit listing and create showing buttons */}
-    <NewShowingForm listing_id = {page_id} showForm={ showForm } toggleForm={toggleForm}></NewShowingForm>
-    <EditListing popup={ popup } setPopup={ setPopup } formData={ generateCopyListing() } />
-    </>
-  : 
-    // Loading component
-    <p>Loading...</p>
-};
+      {/* toggles to control the edit listing and create showing buttons */}
+      <NewShowingForm listing_id = {page_id} showForm={ showForm } toggleForm={toggleForm}></NewShowingForm>
+      <EditListing popup={ popup } setPopup={ setPopup } formData={ generateCopyListing() } />
+      </>
+    : 
+      // Loading component
+      <p>Loading...</p>
+  };
 
 /* ===== EXPORTS ===== */
 export default DetailedListing;

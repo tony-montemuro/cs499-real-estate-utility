@@ -2,10 +2,13 @@ import Read from "../../database/Read";
 import { useReducer, useState } from "react";
 
 const ListOfShowingsCmp = () => {
+
+    // States and Reducers
     const [showings, setShowings] = useState(undefined);
     const [pageNumber, setPageNumber] = useState(undefined);
     const [pageLength, setPageLength] = useState(undefined);
 
+    // Functions for reading the database
     const { fetchAbbreviatedShowings, fetchAbbreviatedShowingsFiltered } = Read();
 
     // Filter stuff below here
@@ -48,14 +51,14 @@ const ListOfShowingsCmp = () => {
     // FUNCTION 3: applyFilters function
     // PRECONDITIONS (1 parameter):
     // 1.) e: an event object generated when the form is submitted
+    // POSTCONDITIONS (1 outcome):
+    // When the function is called, the showings are set to a subset of the showings in the database
+    // If an error occurs, the showings are left empty, otherwise the showings are filtered accordingly
     const applyFilters = async (e) => {
         // prevent page from reloading (default form submission behavior)
         e.preventDefault();
         
         await setFilters(filterForm);
-
-        // log filterForm object to console
-        console.log(usedFilter);
 
         const lower = 0;
         const upper = pageLength.current - 1;
@@ -70,21 +73,21 @@ const ListOfShowingsCmp = () => {
     };
 
 
-    // Page handling below
-
+    // Function 4: getShowings
+    // get the specified number of showings according to num and the current page number
     const getShowings = async (num) => {
 
         const lower = num * (pageNumber.current-1);
         const upper = lower + num - 1;
-
-        console.log(lower);
-        console.log(upper);
 
         const { abbreviatedShowings } = await fetchAbbreviatedShowings(lower, upper);
         setShowings(abbreviatedShowings);
 
     };
 
+    // Function 5: getShowingsInit
+    // On the first pass of database access, sets up the page size from the passed in num, uses
+    // it to set the page length and get the database
     const getShowingsInit = async (num) => {
 
         const {abbreviatedShowings, count} = await fetchAbbreviatedShowings(0, num - 1);
@@ -96,6 +99,8 @@ const ListOfShowingsCmp = () => {
 
     };
 
+    // Function 6: handlePageChange
+    // When users change the page, get a new subset from the database
     const handlePageChange = async (num) => {
         setPageNumber({ current: num, max: pageNumber.max });
         
@@ -106,8 +111,6 @@ const ListOfShowingsCmp = () => {
             = await fetchAbbreviatedShowingsFiltered(lower, upper, usedFilter.zip, usedFilter.state, usedFilter.city);
         setShowings(abbreviatedShowings);
     };
-
-    // return
 
     return { 
         filterForm, 
@@ -121,4 +124,5 @@ const ListOfShowingsCmp = () => {
 
 }
 
+/* ===== EXPORTS ===== */
 export default ListOfShowingsCmp;

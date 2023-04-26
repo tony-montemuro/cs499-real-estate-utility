@@ -76,18 +76,30 @@ const Update = () => {
         };
     };
     
-    const CreateShowings = async (day, time, hours, listing_number, agent_number, buyer) => {
+    // FUNCTION 4: createShowings - given parameters for a showing object, insert that object into the database for showings
+    // PRECONDITIONS (6 parameters):
+    // 1.) day: the day for the showing to start
+    // 2.) time: the time of day for the showing to start
+    // 3.) hours: the length of the showing in hours
+    // 4.) listing_number: the listing to have a showing set for
+    // 5.) agent_number: the agent to be set as the showing agent (if agent exists, can be set blank)
+    // 6.) buyer: the name of the interested customer
+    // POSTCONDITIONS (2 possible outcomes, 1 return)
+    // if the query was successful, the database entry is created and nothing is returrned
+    // otherwise, we throw the erro to the caller function, where it will be handled
+    const createShowings = async (day, time, hours, listing_number, agent_number, buyer) => {
 
+        // If hours is somehow not set, set it to one
         hours = hours ? hours : 1;
 
-        console.log(day, time, hours, listing_number, agent_number)
-
+        // Calculate time objects from the given date and time parameters
         var time_start = new Date(day + "T" + time + ":00");
         var time_end = new Date();
         time_end.setTime(time_start.getTime() + (hours * 3600000));
 
         try {
-            if(agent_number){
+            if(agent_number){   // If a showing agent exists, set that for the showing
+
             const { error, status } = await supabase
                 .from("showing")
                 .insert([{
@@ -104,7 +116,8 @@ const Update = () => {
                 }
             }
 
-            else {
+            else {              // If a showing agent is not existant, skip that optional field
+
                 const { error, status } = await supabase
                 .from("showing")
                 .insert([{
@@ -119,16 +132,20 @@ const Update = () => {
                 }
             }
      
-
-
-
         }
         catch (error) {
+
             // handle error in caller function
             throw error;
         }
     };
 
+    // FUNCTION 5: editListing - given a newListing object, update the entry with the matching listing ID
+    // PRECONDITIONS (1 parameter):
+    // 1.) newListing: a listing object, which contains fields required by the listing table in the database (must be validated!)
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the query is successful, the function will update the entry's fields to match newListing and simply return
+    // otherwise, we throw the error to the caller function, where it will be handled
     const editListing = async (newListing) => {
         try {
             const { error } = await supabase
@@ -147,6 +164,12 @@ const Update = () => {
         };
     };
 
+    // FUNCTION 6: editProperty - given a newProperty object, update the entry with the matching property ID
+    // PRECONDITIONS (1 parameter):
+    // 1.) newProperty: a property object, which contains fields required by the property table in the database (must be validated!)
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the query is successful, the function will update the entry's fields to match newProperty and simply return
+    // otherwise, we throw the error to the caller function, where it will be handled
     const editProperty = async (newProperty) => {
         try {
             const { error } = await supabase         
@@ -165,7 +188,18 @@ const Update = () => {
         }
     };
 
-    const UpdateShowingSurvey = async (showingID, customer_interest, agent_experience, customer_price_rating, agent_price_rating, notes) => {
+    // FUNCTION 7: updateShowingSurvey - given the fields in a showing survey, update the entry with the matching showing ID
+    // PRECONDITIONS (1 parameter):
+    // 1.) showingID: the entry to update
+    // 2.) customer_interest: the integer entry for the customer_interest field
+    // 3.) agent_experience: the integer entry for the agent_experience field
+    // 4.) customer_price_rating: the integer entry for the customer_price_rating field
+    // 5.) agent_price_rating: the integer entry for the agent_price_rating field
+    // 6.) notes: the sring entry for the notes field
+    // POSTCONDITIONS (2 possible outcomes):
+    // if the query is successful, the function will update the entry's fields to match newListing and simply return
+    // otherwise, we throw the error to the caller function, where it will be handled
+    const updateShowingSurvey = async (showingID, customer_interest, agent_experience, customer_price_rating, agent_price_rating, notes) => {
         try{
             console.log(showingID, customer_interest, agent_experience, notes);
             const { error } = await supabase
@@ -238,11 +272,19 @@ const Update = () => {
         }
     };
 
-    const UpdatePageHits = async (listing_id) => {
+    // FUNCTION 8: updatePageHits - update the number of page visits on the specified listing
+    // PRECONDITIONS (1 parameters):
+    // 1.) listing_id: the integer index of the entry in the database to update
+    // POSTCONDITIONS (1 possible outcomes):
+    // if the update query is successful, the function will simply return
+    // if an error occurs, alert the window of the issue and return
+    const updatePageHits = async (listing_id) => {
         try {
             const{error} = await supabase.rpc('increment_hit_count', {id_of_listing: listing_id});
 
+            // If an error occurs, throw an error to handle
             if (error) {throw error;}
+
         } catch(error) {
             console.log(error);
             alert(error.message);
@@ -251,7 +293,8 @@ const Update = () => {
 
     };
 
-    return { insertProperty, insertListing, insertRoom, CreateShowings, editListing, editProperty, UpdateShowingSurvey, uploadFile, updatePhotoName, UpdatePageHits };
+    return { insertProperty, insertListing, insertRoom, createShowings, editListing, editProperty, 
+        updateShowingSurvey, uploadFile, updatePhotoName, updatePageHits };
 };
 
 /* ===== EXPORTS ===== */

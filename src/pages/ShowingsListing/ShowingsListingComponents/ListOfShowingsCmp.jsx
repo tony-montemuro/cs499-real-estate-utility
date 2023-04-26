@@ -4,11 +4,14 @@ import { FixedSizeList } from 'react-window';
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
-
+// The row component is a utility for the list of showings component - do not export
 function Row({ data, index, style }){
 
-    // console.log(data);
+    // The data, index, and style passed to the row contain the array of abbreviated showings, the row#, and style needed for
+    // rendering the row correctly. Two showings are displayed per row, so index*2 and index*2+1 are used.
 
+    // Set the first and second abbreviated showing objects for the row - 
+    // if only one object remains in the list, skip the second assignment
     var showingA = data[(index*2)]
     if (index*2 + 1 < data.length) {
         var showingB = data[(index*2+1)]
@@ -18,7 +21,7 @@ function Row({ data, index, style }){
         <div style={style}>
             
             <div className = "showings-row">
-
+                {/*Create both instances using the A and B abreviated showing objects*/}
                 <Link to={ `${ showingA.showing_id }` } >
                     <AbrvShowingInstance 
                         address={showingA.listing.property.city + ' ' + showingA.listing.property.state}
@@ -30,7 +33,6 @@ function Row({ data, index, style }){
                         showAgentInfo= {showingA.agent ? showingA.agent.name + ', ' + showingA.agent.agency.name : null}
                         listing_id={showingA.listing.listing_id}
                         >
-                            {/*console.log(showingA.listing.property.small)*/}
                     </AbrvShowingInstance>
                 </Link>
 
@@ -46,7 +48,6 @@ function Row({ data, index, style }){
                         showAgentInfo = {showingB.agent ? showingB.agent.name + ', ' + showingB.agent.agency.name : null}
                         listing_id={showingB.listing.listing_id}
                         >
-                            {/*console.log(showingB.listing.property.small)*/}
                     </AbrvShowingInstance>
                 </Link>
                 :
@@ -60,15 +61,16 @@ function Row({ data, index, style }){
 
 }
 
+// The ListOfShowingsCmp component contains the actual list of components
 function ListOfShowingsCmp({showings, pageNumber, getShowingsInit, handlePageChange}) {
 
+    // variables for list rendering
     var pageElems = 16;
-    //const {showings, pageNumber, getShowings, getShowingsInit, handlePageChange} = ListOfShowingsCmpLogic();
-
     const listWidth = document.querySelector("#ShowingsListingContainingBox") ? 
         document.querySelector("#ShowingsListingContainingBox").clientWidth : 50;
     const listHeight = 470;
 
+    // When the page is loaded, get the list of showings
     useEffect(() => {
         if (!showings){
             getShowingsInit(pageElems) 
@@ -76,12 +78,14 @@ function ListOfShowingsCmp({showings, pageNumber, getShowingsInit, handlePageCha
         // eslint-disable-next-line
     }, [showings, pageNumber]);
 
+    // ListOfShowingsCmp details
     return (
 
         <>  
-            
+            {/*Dispaly loading until the showings list is set */}
             { showings ?
                 <>
+                    {/*First render the buttons for changing the page of showings listings.*/}
                     <div className="showing-selector">
                     <button 
                         disabled={ pageNumber.current === 1 } 
@@ -90,6 +94,7 @@ function ListOfShowingsCmp({showings, pageNumber, getShowingsInit, handlePageCha
                         &lt;
                     </button>
 
+                    {/* Page numbers are set if length of database list is greater than elements per page*/}
                     <div className="showing-page-select">
                         <label htmlFor="pageNumber">Page: </label>
                         <select id="pageNumber" value={ pageNumber.current } onChange={ (e) => handlePageChange(parseInt(e.target.value)) }>
@@ -101,6 +106,7 @@ function ListOfShowingsCmp({showings, pageNumber, getShowingsInit, handlePageCha
                         </select>
                     </div>
 
+                    {/* Disable the next page button if on the last page*/}
                     <button 
                         disabled={ pageNumber.current === pageNumber.max } 
                         onClick={ () => handlePageChange(pageNumber.current+1) }
@@ -130,5 +136,5 @@ function ListOfShowingsCmp({showings, pageNumber, getShowingsInit, handlePageCha
 };
 
 
-
+/*==EXPORTS==*/
 export default ListOfShowingsCmp;
